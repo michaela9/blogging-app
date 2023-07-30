@@ -27,7 +27,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function RootLayout({ children }: Props) {
+const RootLayout = ({ children }: Props) => {
   const locale = "en";
   const shortLocaleVerified = verifyLocale(locale);
 
@@ -44,4 +44,6 @@ export default function RootLayout({ children }: Props) {
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

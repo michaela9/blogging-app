@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import CustomLink from "@/components/CustomLink";
 import Heading from "@/components/Heading";
 
 import ArticleItem from "./ArticleItem";
@@ -57,9 +57,9 @@ const RecentArticles = () => {
       <div className="space-y-6">
         {articles.map((article) => (
           <div key={article.id}>
-            <Link href={`/blog-posts/${article.id}`}>
+            <CustomLink href={`/blog-posts/${article.id}`}>
               <ArticleItem article={article} />
-            </Link>
+            </CustomLink>
           </div>
         ))}
       </div>

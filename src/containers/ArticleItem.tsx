@@ -3,9 +3,10 @@
 import type { Article } from "./RecentArticles";
 
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
+import { useIntl } from "react-intl";
 
+import CustomLink from "@/components/CustomLink";
 import Heading from "@/components/Heading";
 
 type Props = {
@@ -13,11 +14,12 @@ type Props = {
 };
 
 const ArticleItem = ({ article }: Props) => {
+  const intl = useIntl();
   return (
     <div className="flex gap-6">
       <Image
         src={article.image}
-        alt="Cat image"
+        alt={article.heading}
         className="shrink-0"
         width={272}
         height={244}
@@ -32,11 +34,22 @@ const ArticleItem = ({ article }: Props) => {
         </div>
         <p>{article.description}</p>
         <div className="text-xs flex gap-4 items-center">
-          <Link href={article.link} className="text-primary">
-            Read the whole aricle
-          </Link>
+          <CustomLink href={article.link} style="primary">
+            {intl.formatMessage({
+              id: "containers.ArticleItem.heading",
+              defaultMessage: "Read the whole article",
+            })}
+          </CustomLink>
           <p className="text-secondary-text">
-            {article.numberOfComments} comments
+            {intl.formatMessage(
+              {
+                id: "containers.ArticleItem.heading",
+                defaultMessage: "{number_of_comments} comments",
+              },
+              {
+                number_of_comments: article.numberOfComments,
+              },
+            )}
           </p>
         </div>
       </div>

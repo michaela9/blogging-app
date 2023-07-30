@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 
-import MyArticles from "@/containers/MyArticles";
-
 export const metadata: Metadata = {
-  title: "Admin - My Articles",
+  title: "About",
 };
 
 const Page = () => {
-  return <MyArticles />;
+  return <div>About</div>;
 };
-
 export default Page;

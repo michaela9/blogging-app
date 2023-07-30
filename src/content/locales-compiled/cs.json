@@ -1,4 +1,116 @@
 {
+  "containers.ArticleDetail.heading": [
+    {
+      "type": 0,
+      "value": "Related articles"
+    }
+  ],
+  "containers.ArticleItem.heading": [
+    {
+      "type": 0,
+      "value": "Comments "
+    },
+    {
+      "type": 1,
+      "value": "number_of_comments"
+    }
+  ],
+  "containers.createArticle.articlePublish": [
+    {
+      "type": 0,
+      "value": "Publish Article"
+    }
+  ],
+  "containers.createArticle.articleTitle": [
+    {
+      "type": 0,
+      "value": "Article Title"
+    }
+  ],
+  "containers.createArticle.content": [
+    {
+      "type": 0,
+      "value": "Content"
+    }
+  ],
+  "containers.createArticle.featuredImage": [
+    {
+      "type": 0,
+      "value": "Featured Image"
+    }
+  ],
+  "containers.createArticle.heading": [
+    {
+      "type": 0,
+      "value": "Create Article"
+    }
+  ],
+  "containers.createArticle.uploadTheImage": [
+    {
+      "type": 0,
+      "value": "upload the image"
+    }
+  ],
+  "containers.joinDiscussion.label": [
+    {
+      "type": 0,
+      "value": "Join the disccussion"
+    }
+  ],
+  "containers.login.button": [
+    {
+      "type": 0,
+      "value": "Log In"
+    }
+  ],
+  "containers.login.email": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "containers.login.heading": [
+    {
+      "type": 0,
+      "value": "Log In"
+    }
+  ],
+  "containers.login.password": [
+    {
+      "type": 0,
+      "value": "Password"
+    }
+  ],
+  "containers.myArticles.createNewArticle": [
+    {
+      "type": 0,
+      "value": "Create New Article"
+    }
+  ],
+  "containers.myArticles.heading": [
+    {
+      "type": 0,
+      "value": "My articles"
+    }
+  ],
+  "containers.navbar.about": [
+    {
+      "type": 0,
+      "value": "About"
+    }
+  ],
+  "containers.navbar.login": [
+    {
+      "type": 0,
+      "value": "Log In"
+    }
+  ],
+  "containers.navbar.recentArticles": [
+    {
+      "type": 0,
+      "value": "Recent articles"
+    }
+  ],
   "containers.recentArticles.heading": [
     {
       "type": 0,

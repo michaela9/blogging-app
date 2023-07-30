@@ -1,3 +1,21 @@
 {
+  "containers.ArticleDetail.heading": "Related articles",
+  "containers.ArticleItem.heading": "Comments {number_of_comments}",
+  "containers.createArticle.articlePublish": "Publish Article",
+  "containers.createArticle.articleTitle": "Article Title",
+  "containers.createArticle.content": "Content",
+  "containers.createArticle.featuredImage": "Featured Image",
+  "containers.createArticle.heading": "Create Article",
+  "containers.createArticle.uploadTheImage": "upload the image",
+  "containers.joinDiscussion.label": "Join the disccussion",
+  "containers.login.button": "Log In",
+  "containers.login.email": "Email",
+  "containers.login.heading": "Log In",
+  "containers.login.password": "Password",
+  "containers.myArticles.createNewArticle": "Create New Article",
+  "containers.myArticles.heading": "My articles",
+  "containers.navbar.about": "About",
+  "containers.navbar.login": "Log In",
+  "containers.navbar.recentArticles": "Recent articles",
   "containers.recentArticles.heading": "Recent Articles"
 }

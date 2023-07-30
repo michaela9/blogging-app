@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
+import { useIntl } from "react-intl";
 
 const profilePhoto = "/img.png";
 const JoinDiscussion = () => {
+  const intl = useIntl();
   return (
     <div className="flex gap-6">
       <Image
@@ -13,7 +17,12 @@ const JoinDiscussion = () => {
         height={100}
       />
       <form className="w-full">
-        <label className="sr-only">Join the disccussion</label>
+        <label className="sr-only">
+          {intl.formatMessage({
+            id: "containers.joinDiscussion.label",
+            defaultMessage: "Join the disccussion",
+          })}
+        </label>
         <input
           placeholder="Join the discussion"
           name="joinDiscussion"

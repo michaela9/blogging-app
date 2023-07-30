@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Homepage - Recent Articles",
 };
 
-export default function Page() {
+const Page = () => {
   return <RecentArticles />;
-}
+};
+export default Page;

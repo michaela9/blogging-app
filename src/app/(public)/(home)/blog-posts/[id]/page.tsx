@@ -24,6 +24,8 @@ type Props = {
   };
 };
 
-export default function Page({ params: { id } }: Props) {
+const Page = ({ params: { id } }: Props) => {
   return <ArticleDetail id={id} article={article} />;
-}
+};
+
+export default Page;

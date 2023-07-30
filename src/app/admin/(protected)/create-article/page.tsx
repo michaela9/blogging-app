@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   title: "Admin - Create Article",
 };
 
-export default function Page() {
+const Page = () => {
   return <CreateArticle />;
-}
+};
+
+export default Page;

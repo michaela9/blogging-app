@@ -1,17 +1,28 @@
-import React from "react";
+"use client";
 
+import React from "react";
+import { useIntl } from "react-intl";
+
+import Button from "@/components/Button";
 import Heading from "@/components/Heading";
 
 const MyArticles = () => {
+  const intl = useIntl();
   return (
     <div className="space-y-6">
       <div className="flex gap-4 items-center">
         <Heading headingLevel="h1" size="s1">
-          My articles
+          {intl.formatMessage({
+            id: "containers.myArticles.heading",
+            defaultMessage: "My articles",
+          })}
         </Heading>
-        <button className="bg-primary rounded-md px-4 py-2 text-white">
-          Create New Article
-        </button>
+        <Button>
+          {intl.formatMessage({
+            id: "containers.myArticles.createNewArticle",
+            defaultMessage: "Create New Article",
+          })}
+        </Button>
       </div>
       <table>
         <thead className="border-b border-gray-300">

@@ -1,7 +1,10 @@
+"use client";
+
 import type { Article } from "./RecentArticles";
 
 import Image from "next/image";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import Heading from "@/components/Heading";
 
@@ -51,6 +54,7 @@ type Props = {
 };
 
 const ArticleDetail = ({ id, article }: Props) => {
+  const intl = useIntl();
   return (
     <div className="grid grid-cols-[2fr,1fr]">
       <div className="space-y-6 pr-6">
@@ -65,7 +69,7 @@ const ArticleDetail = ({ id, article }: Props) => {
           <div className="">
             <Image
               src={myArticle.image}
-              alt="Cat image"
+              alt={myArticle.heading}
               className="shrink-0 object-cover overflow-hidden"
               width={760}
               height={500}
@@ -77,7 +81,10 @@ const ArticleDetail = ({ id, article }: Props) => {
       </div>
       <div className="pl-6 border-l border-l-gray-300 space-y-8">
         <Heading headingLevel="h2" size="s3">
-          Related articles
+          {intl.formatMessage({
+            id: "containers.ArticleDetail.heading",
+            defaultMessage: "Related articles",
+          })}
         </Heading>
         <div className="space-y-6">
           {relatedArticles.map((article) => (
