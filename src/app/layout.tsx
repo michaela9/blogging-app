@@ -1,7 +1,14 @@
+"use client";
+
 import "../styles/globals.css";
+
 import type { Metadata } from "next";
+
 import { Inter } from "next/font/google";
-import clsxm from "@/utils/clsxm";
+import { useMemo } from "react";
+import { IntlProvider } from "react-intl";
+
+import { getMessagesByLocale, verifyLocale } from "@/service/intl";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +26,22 @@ export const metadata: Metadata = {
 type Props = {
   children: React.ReactNode;
 };
+
 export default function RootLayout({ children }: Props) {
+  const locale = "en";
+  const shortLocaleVerified = verifyLocale(locale);
+
+  const messages = useMemo(() => {
+    return getMessagesByLocale(shortLocaleVerified);
+  }, [shortLocaleVerified]);
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <IntlProvider locale={shortLocaleVerified} messages={messages}>
+          {children}
+        </IntlProvider>
+      </body>
     </html>
   );
 }
