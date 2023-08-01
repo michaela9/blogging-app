@@ -2,13 +2,19 @@
 
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import useIsLoggedIn from "@/hooks/useIsLoggedIn";
+
 import CustomLink from "@/components/CustomLink";
+import Button from "@/components/Button";
 
 const Navbar = () => {
   const intl = useIntl();
+  const isLoggedIn = useIsLoggedIn();
+  const router = useRouter();
   return (
     <nav className="h-14 bg-light-gray">
       <div className="h-full flex w-full justify-between items-center max-w-6xl mx-auto">
@@ -36,15 +42,30 @@ const Navbar = () => {
             })}
           </CustomLink>
         </div>
-        <CustomLink href="/login" style="secondary">
-          <div className="flex gap-2 items-center">
+        {isLoggedIn ? (
+          <CustomLink href="/login" style="secondary">
+            <div className="flex gap-2 items-center">
+              {intl.formatMessage({
+                id: "containers.navbar.login",
+                defaultMessage: "Log In",
+              })}
+              <ArrowRightIcon className="w-4" />
+            </div>
+          </CustomLink>
+        ) : (
+          <Button
+            style="primary"
+            onClick={() => {
+              localStorage.setItem("accessToken", "");
+              router.push("/");
+            }}
+          >
             {intl.formatMessage({
-              id: "containers.navbar.login",
-              defaultMessage: "Log In",
+              id: "containers.navbar.logout",
+              defaultMessage: "Log Out",
             })}
-            <ArrowRightIcon className="w-4" />
-          </div>
-        </CustomLink>
+          </Button>
+        )}
       </div>
     </nav>
   );

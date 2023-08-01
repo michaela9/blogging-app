@@ -3,6 +3,7 @@
 import "../styles/globals.css";
 
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
 import { Inter } from "next/font/google";
 import { useMemo } from "react";
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const RootLayout = ({ children }: Props) => {
@@ -39,7 +40,7 @@ const RootLayout = ({ children }: Props) => {
     <html lang="en">
       <body className={inter.className}>
         <IntlProvider locale={shortLocaleVerified} messages={messages}>
-          {children}
+          <div>{children}</div>
         </IntlProvider>
       </body>
     </html>

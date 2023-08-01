@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 
+import useIsLoggedIn from "@/hooks/useIsLoggedIn";
+
 export const metadata: Metadata = {
   title: "Admin - Homepage",
 };
 
-const Page = () => {
+const ProtectedPage = () => {
+  const isLoggedIn = useIsLoggedIn();
+
+  if (!isLoggedIn) {
+    return <h1>add redirect</h1>;
+  }
   return (
     <div>
-      <h1 className="text-center text-4xl text-nb-blue">Admin</h1>
+      <h1>Protected Page</h1>
     </div>
   );
 };
 
-export default Page;
+export default ProtectedPage;
