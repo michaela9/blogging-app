@@ -15,6 +15,7 @@ const Navbar = () => {
   const intl = useIntl();
   const isLoggedIn = useIsLoggedIn();
   const router = useRouter();
+
   return (
     <nav className="h-14 bg-light-gray">
       <div className="h-full flex w-full justify-between items-center max-w-6xl mx-auto">
@@ -42,17 +43,18 @@ const Navbar = () => {
             })}
           </CustomLink>
         </div>
-        {isLoggedIn ? (
+        {isLoggedIn && (
           <CustomLink href="/login" style="secondary">
             <div className="flex gap-2 items-center">
               {intl.formatMessage({
                 id: "containers.navbar.login",
-                defaultMessage: "Log In",
+                defaultMessage: "Log Out",
               })}
               <ArrowRightIcon className="w-4" />
             </div>
           </CustomLink>
-        ) : (
+        )}
+        {!isLoggedIn && (
           <Button
             style="primary"
             onClick={() => {
@@ -62,7 +64,7 @@ const Navbar = () => {
           >
             {intl.formatMessage({
               id: "containers.navbar.logout",
-              defaultMessage: "Log Out",
+              defaultMessage: "Log In",
             })}
           </Button>
         )}
