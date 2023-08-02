@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import Heading from "@/components/Heading";
 
 import Comment from "./Comment";
-import JoinDiscussion from "./JoinDiscussion";
+import JoinDiscussion from "./forms/JoinDiscussion";
 
 export type CommentT = {
   id: string;

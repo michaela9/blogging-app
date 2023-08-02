@@ -1,7 +1,6 @@
 import type { FieldValues, UseFormRegister } from "react-hook-form";
 
 import clsxm from "@/utils/clsxm";
-import FormErrorMessage from "./FormErrorMessage";
 
 // import FormErrorMessage from "@/component/front/form/FormErrorMessage";
 
@@ -12,13 +11,7 @@ type Props = Omit<JSX.IntrinsicElements["input"], "className"> & {
   errorMessage?: string;
 };
 
-export default function TextField({
-  name,
-  label,
-  register,
-  errorMessage,
-  ...rest
-}: Props) {
+const TextField = ({ name, label, register, errorMessage, ...rest }: Props) => {
   return (
     <div className="relative">
       <input
@@ -39,7 +32,9 @@ export default function TextField({
       >
         {label}
       </label>
-      {errorMessage && <FormErrorMessage errorMessage={errorMessage} />}
+      {errorMessage && "sihsu"}
     </div>
   );
-}
+};
+
+export default TextField;

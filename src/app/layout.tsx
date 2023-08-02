@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import { IntlProvider } from "react-intl";
 
 import { getMessagesByLocale, verifyLocale } from "@/service/intl";
+import Navbar from "@/containers/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,23 +29,23 @@ type Props = {
   children: ReactNode;
 };
 
-const RootLayout = ({ children }: Props) => {
+export default function RootLayout({ children }: Props) {
   const locale = "en";
   const shortLocaleVerified = verifyLocale(locale);
 
   const messages = useMemo(() => {
     return getMessagesByLocale(shortLocaleVerified);
   }, [shortLocaleVerified]);
-
   return (
     <html lang="en">
       <body className={inter.className}>
         <IntlProvider locale={shortLocaleVerified} messages={messages}>
-          <div>{children}</div>
+          <main className="px-4 xl:px-0 max-w-6xl mx-auto">
+            <Navbar />
+            <div className="py-6 sm:py-12">{children}</div>
+          </main>
         </IntlProvider>
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}

@@ -3,63 +3,29 @@
 import React from "react";
 import { useIntl } from "react-intl";
 
-import CustomLink from "@/components/CustomLink";
 import Heading from "@/components/Heading";
 
 import ArticleItem from "./ArticleItem";
+import type { Article } from "@/data/dummy";
 
-export type Article = {
-  id: string;
-  image: string;
-  heading: string;
-  author: string;
-  date: string;
-  description: string;
-  link: string;
-  numberOfComments: number;
+type Props = {
+  articles: Article[];
 };
 
-const articles: Article[] = [
-  {
-    id: "1",
-    image: "/img.png",
-    heading: "Why Do Cats Have Whiskers?",
-    author: "Elisabeth Strain",
-    date: "02/13/17",
-    description:
-      "A cat's whiskers — or vibrissae — are a well-honed sensory tool that helps a cat see in the dark and steer clear of hungry predators. Whiskers are highly sensitive tactile hairs that grow in patterns on a cat's muzzle, above its eyes and elsewhere on its body, like the ears, jaw and forelegs",
-    link: "/",
-    numberOfComments: 0,
-  },
-  {
-    id: "2",
-    image: "/img.png",
-    heading: "Why Do Cats Eat Lasagnas?",
-    author: "Paul Randalph",
-    date: "02/13/17",
-    description:
-      "A cat's whiskers — or vibrissae — are a well-honed sensory tool that helps a cat see in the dark and steer clear of hungry predators. Whiskers are highly sensitive tactile hairs that grow in patterns on a cat's muzzle, above its eyes and elsewhere on its body, like the ears, jaw and forelegs",
-    link: "/",
-    numberOfComments: 5,
-  },
-];
-
-const RecentArticles = () => {
+const RecentArticles = ({ articles }: Props) => {
   const intl = useIntl();
   return (
-    <div className="space-y-10">
+    <div className="space-y-4 sm:space-y-12">
       <Heading headingLevel="h1" size="s1">
         {intl.formatMessage({
           id: "containers.recentArticles.heading",
           defaultMessage: "Recent Articles",
         })}
       </Heading>
-      <div className="space-y-6">
+      <div className="space-y-10 sm:space-y-6">
         {articles.map((article) => (
-          <div key={article.id}>
-            <CustomLink href={`/blog-posts/${article.id}`}>
-              <ArticleItem article={article} />
-            </CustomLink>
+          <div key={article.articleId}>
+            <ArticleItem article={article} />
           </div>
         ))}
       </div>

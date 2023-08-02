@@ -11,13 +11,13 @@ type Props = Omit<JSX.IntrinsicElements["input"], "className"> & {
   errorMessage?: string;
 };
 
-export default function CheckboxField({
+const CheckboxField = ({
   name,
   label,
   register,
   errorMessage,
   ...rest
-}: Props) {
+}: Props) => {
   return (
     <div className="flex items-center">
       <input
@@ -39,4 +39,6 @@ export default function CheckboxField({
       </label>
     </div>
   );
-}
+};
+
+export default CheckboxField;

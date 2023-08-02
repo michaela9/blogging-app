@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 
 import Heading from "@/components/Heading";
+import Description from "@/components/Description";
 
 type Props = {
   comment: CommentT;
@@ -24,7 +25,9 @@ const Comment = ({ comment }: Props) => {
           <Heading headingLevel="h3" size="s4">
             {comment.name}
           </Heading>
-          <p className="text-sm text-secondary-text">{comment.dateAndTime}</p>
+          <Description size="sm" className="text-secondary-text">
+            {comment.dateAndTime}
+          </Description>
         </div>
         <div>{comment.text}</div>
         <div>+6 </div>
