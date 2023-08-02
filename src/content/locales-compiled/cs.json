@@ -102,6 +102,12 @@
   "containers.navbar.login": [
     {
       "type": 0,
+      "value": "Log Out"
+    }
+  ],
+  "containers.navbar.logout": [
+    {
+      "type": 0,
       "value": "Log In"
     }
   ],

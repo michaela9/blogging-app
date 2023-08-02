@@ -15,7 +15,8 @@
   "containers.myArticles.createNewArticle": "Create New Article",
   "containers.myArticles.heading": "My articles",
   "containers.navbar.about": "About",
-  "containers.navbar.login": "Log In",
+  "containers.navbar.login": "Log Out",
+  "containers.navbar.logout": "Log In",
   "containers.navbar.recentArticles": "Recent articles",
   "containers.recentArticles.heading": "Recent Articles"
 }

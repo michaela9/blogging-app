@@ -1,7 +1,5 @@
 "use client";
 
-import type { Article } from "./RecentArticles";
-
 import Image from "next/image";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -11,7 +9,7 @@ import Heading from "@/components/Heading";
 import ArticleShortItem from "./ArticleShortItem";
 import Comments from "./Comments";
 
-const relatedArticles: Article[] = [
+const relatedArticles = [
   {
     id: "1",
     image: "/img.png",
@@ -48,9 +46,15 @@ const myArticle = {
   numberOfComments: 5,
 };
 
+type ArticleT = {
+  articleId: string;
+  createdAt: string;
+  content: string;
+};
+
 type Props = {
   id: string;
-  article: Article;
+  article: ArticleT;
 };
 
 const ArticleDetail = ({ id, article }: Props) => {
@@ -59,12 +63,14 @@ const ArticleDetail = ({ id, article }: Props) => {
     <div className="grid grid-cols-[2fr,1fr]">
       <div className="space-y-6 pr-6">
         <Heading headingLevel="h1" size="s1">
-          {myArticle.heading}
+          {myArticle.heading} - {id}
         </Heading>
+        <p>{article.articleId}</p>
+
         <div className="space-y-6 border-b border-b-gray-300 pb-10">
           <div className="text-secondary-text text-xs flex gap-4">
             <p>{myArticle.author}</p>
-            <p>{myArticle.date}</p>
+            <p>{article.createdAt}</p>
           </div>
           <div className="">
             <Image
@@ -75,7 +81,7 @@ const ArticleDetail = ({ id, article }: Props) => {
               height={500}
             />
           </div>
-          <p>{myArticle.description}</p>
+          <p>{article.content}</p>
         </div>
         <Comments />
       </div>
