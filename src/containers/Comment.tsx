@@ -3,8 +3,8 @@ import type { CommentT } from "./Comments";
 import Image from "next/image";
 import React from "react";
 
-import Heading from "@/components/Heading";
 import Description from "@/components/Description";
+import Heading from "@/components/Heading";
 
 type Props = {
   comment: CommentT;

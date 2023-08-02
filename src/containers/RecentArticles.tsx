@@ -5,8 +5,9 @@ import { useIntl } from "react-intl";
 
 import Heading from "@/components/Heading";
 
-import ArticleItem from "./ArticleItem";
 import type { Article } from "@/data/dummy";
+
+import ArticleItem from "./ArticleItem";
 
 type Props = {
   articles: Article[];

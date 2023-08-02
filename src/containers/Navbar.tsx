@@ -8,8 +8,8 @@ import { useIntl } from "react-intl";
 
 import useIsLoggedIn from "@/hooks/useIsLoggedIn";
 
-import CustomLink from "@/components/CustomLink";
 import Button from "@/components/Button";
+import CustomLink from "@/components/CustomLink";
 
 const Navbar = () => {
   const intl = useIntl();

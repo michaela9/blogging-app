@@ -1,6 +1,7 @@
 import React from "react";
 
 import Heading from "@/components/Heading";
+
 import type { Article } from "@/data/dummy";
 
 type Props = {

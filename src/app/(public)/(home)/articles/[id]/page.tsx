@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import ArticleDetail from "@/containers/ArticleDetail";
-import { useEffect, useState } from "react";
+
 import { articles } from "@/data/dummy";
 
 export const metadata: Metadata = {

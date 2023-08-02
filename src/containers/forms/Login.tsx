@@ -1,17 +1,16 @@
 "use client";
 
-import type { FormEvent } from "react";
 
+import type { SubmitHandler } from "react-hook-form";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
+import { z } from "zod";
 
 import Button from "@/components/Button";
 import Heading from "@/components/Heading";
-import type { SubmitHandler } from "react-hook-form";
-import { z } from "zod";
-
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 const userSchema = z.object({
   username: z.string().min(1, { message: "Username is required" }),

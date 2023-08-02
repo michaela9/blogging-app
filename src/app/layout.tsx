@@ -9,8 +9,9 @@ import { Inter } from "next/font/google";
 import { useMemo } from "react";
 import { IntlProvider } from "react-intl";
 
-import { getMessagesByLocale, verifyLocale } from "@/service/intl";
 import Navbar from "@/containers/Navbar";
+
+import { getMessagesByLocale, verifyLocale } from "@/service/intl";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -1,12 +1,13 @@
 "use client";
 
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import Button from "@/components/Button";
 import Heading from "@/components/Heading";
+
 import type { Article } from "@/data/dummy";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 type Props = {
   articles: Article[];

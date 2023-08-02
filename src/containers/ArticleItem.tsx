@@ -5,9 +5,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import CustomLink from "@/components/CustomLink";
-import Heading from "@/components/Heading";
 import Description from "@/components/Description";
-import { AppUrl } from "@/config/router";
+import Heading from "@/components/Heading";
+
 import type { Article } from "@/data/dummy";
 
 type Props = {
