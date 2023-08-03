@@ -19,7 +19,7 @@ const RecentArticles = ({ articles }: Props) => {
     <div className="space-y-4 sm:space-y-12">
       <Heading headingLevel="h1" size="s1">
         {intl.formatMessage({
-          id: "containers.recentArticles.heading",
+          id: "containers.recentArticles.title",
           defaultMessage: "Recent Articles",
         })}
       </Heading>

@@ -6,14 +6,14 @@ type Props = Omit<JSX.IntrinsicElements["input"], "className"> & {
   errorMessage?: string;
 };
 
-const TextField = ({ name, register, errorMessage, ...rest }: Props) => {
+const PasswordField = ({ name, register, errorMessage, ...rest }: Props) => {
   return (
     <>
       <input
         id={name}
-        type="text"
+        type="password"
+        {...register("password")}
         className="rounded-md border-gray-300"
-        {...register(name)}
         {...rest}
       />
 
@@ -22,4 +22,4 @@ const TextField = ({ name, register, errorMessage, ...rest }: Props) => {
   );
 };
 
-export default TextField;
+export default PasswordField;

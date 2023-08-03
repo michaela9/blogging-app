@@ -3,12 +3,19 @@
 import type { SubmitHandler } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { z } from "zod";
 
+import { AdminUrl, baseUrl } from "@/config/router";
+
 import Button from "@/components/Button";
+import FormFieldWrapper from "@/components/form/FormFieldWrapper";
+import Label from "@/components/form/Label";
+import PasswordField from "@/components/form/PasswordField";
+import TextField from "@/components/form/TextField";
 import Heading from "@/components/Heading";
 
 const userSchema = z.object({
@@ -19,60 +26,46 @@ const userSchema = z.object({
 });
 
 export type UserSchemaT = z.infer<typeof userSchema>;
-
-export type LoginData = {
-  username: string;
-  password: string;
+type LoginResponseData = {
+  access_token: string;
 };
-
-export type LoginResponse = {
-  accessToken: string;
-};
-
 const Login = () => {
   const intl = useIntl();
   const router = useRouter();
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm<UserSchemaT>({
     resolver: zodResolver(userSchema),
   });
 
-  const onSubmit: SubmitHandler<UserSchemaT> = async (formData, e) => {
-    console.log(formData);
-    // setErrorMessages([]);
-    // login with username and PasswordInput with loading error handling,
-    e.preventDefault();
+  const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
     try {
-      const response = await fetch(
-        "https://fullstack.exercise.applifting.cz/login",
+      const response = await axios.post<LoginResponseData>(
+        `${baseUrl}/login`,
         {
-          method: "POST",
+          username: formData.username,
+          password: formData.password,
+        },
+        {
           headers: {
             "Content-Type": "application/json",
             "X-API-KEY": "682a44a4-eced-4f1c-8749-752b5776ee22",
           },
-          body: JSON.stringify({
-            username: formData.username,
-            password: formData.password,
-          }),
         },
       );
-      if (!response.ok) {
-        throw new Error("Login failed");
+      if (!response.data) {
+        throw new Error("Network response was not ok.");
       }
-      // TODO: fix typescript
-      const data = await response.json();
-      const accessToken: string = data.access_token;
-      localStorage.setItem("accessToken", accessToken);
-      router.push("/admin");
+      if (response.data) {
+        const data = response.data;
+        const accessToken = data.access_token;
+        localStorage.setItem("accessToken", accessToken);
+        router.push(AdminUrl.index);
+      }
     } catch (error) {
-      // TODO: error handling
-      // <FormErrorMessage errorMessage={error.message} />;
-      console.error("Login failed:", error.message);
+      throw new Error("Error editing article. Please try again later.");
     }
   };
 
@@ -80,7 +73,7 @@ const Login = () => {
     <div className="space-y-6 px-6 py-8 shadow-xl border border-gray-100 max-w-sm rounded-md mx-auto">
       <Heading headingLevel="h1" size="s2">
         {intl.formatMessage({
-          id: "containers.login.heading",
+          id: "containers.login.title",
           defaultMessage: "Log In",
         })}
       </Heading>
@@ -89,45 +82,27 @@ const Login = () => {
         className="space-y-8 flex flex-col justify-end items-end"
       >
         <div className="w-full flex flex-col gap-4">
-          <label>
-            {intl.formatMessage({
-              id: "containers.login.email",
-              defaultMessage: "Email",
-            })}
-            <input
-              id="username"
-              type="text"
-              {...register("username")}
-              placeholder="jmeno@gmail.com"
-              className="rounded-md border-gray-300 block w-full"
-            />
-            {errors.username && (
-              <p className="text-xs italic text-red-500 mt-2">
-                {errors.username?.message}
-              </p>
-            )}
-          </label>
-          <label htmlFor="password">
+          <FormFieldWrapper>
+            <Label name="username">
+              {intl.formatMessage({
+                id: "containers.login.username",
+                defaultMessage: "Username",
+              })}
+            </Label>
+            <TextField name="username" placeholder="Username123" />
+            {errors.username && <span>{errors.username.message}</span>}
+          </FormFieldWrapper>
+          <Label name="password">
             {intl.formatMessage({
               id: "containers.login.password",
               defaultMessage: "Password",
             })}
-            <input
-              id="password"
-              type="password"
-              {...register("password")}
-              className="rounded-md border-gray-300 block w-full"
-            />
-            {errors.password && (
-              <p className="text-xs italic text-red-500 mt-2">
-                {errors.password?.message}
-              </p>
-            )}
-          </label>
+            <PasswordField name="password" />
+          </Label>
         </div>
         <Button style="primary" type="submit">
           {intl.formatMessage({
-            id: "containers.login.button",
+            id: "containers.login.submitButton",
             defaultMessage: "Log In",
           })}
         </Button>

@@ -19,7 +19,7 @@ const JoinDiscussion = () => {
       <form className="w-full">
         <label className="sr-only">
           {intl.formatMessage({
-            id: "containers.joinDiscussion.label",
+            id: "containers.forms.joinDiscussion.label",
             defaultMessage: "Join the disccussion",
           })}
         </label>

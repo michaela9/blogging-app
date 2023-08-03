@@ -67,31 +67,31 @@ const MyArticlesTable = ({
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.th.title",
+              id: "containers.myArticles.table.th.title",
               defaultMessage: "Article title",
             })}
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.th.perex",
+              id: "containers.myArticles.table.th.perex",
               defaultMessage: "Perex",
             })}
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.th.author",
+              id: "containers.myArticles.table.th.author",
               defaultMessage: "Author",
             })}
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.th.CommentsCount",
+              id: "containers.myArticles.table.th.numberOfComments",
               defaultMessage: "# of comments",
             })}
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.th.actions",
+              id: "containers.myArticles.table.th.actions",
               defaultMessage: "Actions",
             })}
           </Th>

@@ -46,7 +46,7 @@ const ArticleDetail = ({ article, relatedArticles }: Props) => {
       <div className="pl-6 border-l border-l-gray-300 space-y-8">
         <Heading headingLevel="h2" size="s3">
           {intl.formatMessage({
-            id: "containers.ArticleDetail.heading",
+            id: "containers.articleDetail.title",
             defaultMessage: "Related articles",
           })}
         </Heading>

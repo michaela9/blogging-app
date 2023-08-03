@@ -42,7 +42,7 @@ const Comments = () => {
       <Heading headingLevel="h2" size="s3">
         {intl.formatMessage(
           {
-            id: "containers.ArticleItem.heading",
+            id: "containers.comments.title",
             defaultMessage: "Comments {number_of_comments}",
           },
           {

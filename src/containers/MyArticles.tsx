@@ -41,7 +41,7 @@ const MyArticles = ({ articles }: Props) => {
           >
             <TrashIcon className="w-5" />
             {intl.formatMessage({
-              id: "containers.myArticles.button.createNewArticle",
+              id: "containers.myArticles.button.delete",
               defaultMessage: "Delete Selected Articles",
             })}
           </button>

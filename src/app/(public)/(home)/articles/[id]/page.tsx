@@ -1,7 +1,13 @@
+"use client";
+
 import type { Metadata } from "next";
+
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 import ArticleDetail from "@/containers/ArticleDetail";
 
+import type { Article} from "@/data/dummy";
 import { articles } from "@/data/dummy";
 
 export const metadata: Metadata = {
@@ -15,31 +21,32 @@ type Props = {
 };
 
 export default function Page({ params: { id } }: Props) {
-  // const [article, setArticle] = useState({
-  //   articleId: "",
-  //   createdAt: "",
-  //   content: "",
-  // });
+  const [article, setArticle] = useState<Article | null>(null);
 
-  // const article = await getBlogPost();
-  // console.log(article);
+  useEffect(() => {
+    const getApiData = async () => {
+      try {
+        const response = await axios.get<Article>(
+          `https://fullstack.exercise.applifting.cz/articles/${id}`,
+          {
+            headers: {
+              "X-API-KEY": "682a44a4-eced-4f1c-8749-752b5776ee22",
+            },
+          },
+        );
 
-  // const getApiData = async () => {
-  //   const response = await fetch(
-  //     `https://fullstack.exercise.applifting.cz/articles/${id}`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         "X-API-KEY": "682a44a4-eced-4f1c-8749-752b5776ee22",
-  //       },
-  //     },
-  //   ).then((response) => response.json());
+        setArticle(response.data);
+      } catch (error) {
+        console.error("Error fetching article:", error);
+      }
+    };
 
-  //   setArticle(response);
-  // };
+    void getApiData();
+  }, [id]);
 
-  // useEffect(() => {
-  //   getApiData();
-  // }, []);
-  return <ArticleDetail article={articles[0]} relatedArticles={articles} />;
+  if (!article) {
+    return <div>Loading...</div>;
+  }
+
+  return <ArticleDetail article={article} relatedArticles={articles} />;
 }

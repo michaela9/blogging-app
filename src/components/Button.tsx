@@ -21,7 +21,7 @@ const Button = ({
     <button
       className={clsxm(className, "px-4 py-2 rounded-md", {
         "bg-primary text-white": style === "primary",
-        "bg-gray-500 text-white": style === "secondary",
+        "text-primary border border-primary": style === "secondary",
       })}
       type={type}
       {...rest}

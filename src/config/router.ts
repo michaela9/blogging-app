@@ -1,3 +1,5 @@
+export const baseUrl = "https://fullstack.exercise.applifting.cz";
+
 export enum AppUrl {
   home = "/",
   login = "/login",

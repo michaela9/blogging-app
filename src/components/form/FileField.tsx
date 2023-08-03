@@ -6,13 +6,13 @@ type Props = Omit<JSX.IntrinsicElements["input"], "className"> & {
   errorMessage?: string;
 };
 
-const TextField = ({ name, register, errorMessage, ...rest }: Props) => {
+const FileField = ({ name, register, errorMessage, ...rest }: Props) => {
   return (
     <>
       <input
         id={name}
-        type="text"
-        className="rounded-md border-gray-300"
+        type="file"
+        accept="image/png, image/jpeg"
         {...register(name)}
         {...rest}
       />
@@ -22,4 +22,4 @@ const TextField = ({ name, register, errorMessage, ...rest }: Props) => {
   );
 };
 
-export default TextField;
+export default FileField;

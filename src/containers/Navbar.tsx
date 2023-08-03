@@ -47,7 +47,7 @@ const Navbar = () => {
           <CustomLink href="/login" style="secondary">
             <div className="flex gap-2 items-center">
               {intl.formatMessage({
-                id: "containers.navbar.login",
+                id: "containers.navbar.logout",
                 defaultMessage: "Log Out",
               })}
               <ArrowRightIcon className="w-4" />
@@ -63,7 +63,7 @@ const Navbar = () => {
             }}
           >
             {intl.formatMessage({
-              id: "containers.navbar.logout",
+              id: "containers.navbar.login",
               defaultMessage: "Log In",
             })}
           </Button>

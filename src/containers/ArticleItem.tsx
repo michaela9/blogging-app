@@ -37,14 +37,14 @@ const ArticleItem = ({ article }: Props) => {
         <div className="text-sm flex gap-4 items-center">
           <CustomLink href={`/articles/${article.articleId}`} style="secondary">
             {intl.formatMessage({
-              id: "containers.ArticleItem.heading",
+              id: "containers.articleItem.title",
               defaultMessage: "Read the whole article",
             })}
           </CustomLink>
           <Description className="text-secondary-text">
             {intl.formatMessage(
               {
-                id: "containers.ArticleItem.heading",
+                id: "containers.articleItem.numberOfComments",
                 defaultMessage: "{number_of_comments} comments",
               },
               {

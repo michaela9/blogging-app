@@ -38,7 +38,7 @@ export default function BaseModal({ isOpen, closeModal, children }: Props) {
             >
               <Dialog.Panel
                 className={clsxm(
-                  "transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all",
+                  "transform overflow-hidden rounded-2xl bg-white p-10 text-left align-middle shadow-xl transition-all",
                 )}
               >
                 {children}
