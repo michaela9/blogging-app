@@ -1,7 +1,7 @@
 "use client";
 
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
-import React from "react";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Button from "@/components/Button";
@@ -9,12 +9,16 @@ import Heading from "@/components/Heading";
 
 import type { Article } from "@/data/dummy";
 
+import MyArticlesTable from "./MyArticlesTable";
+
 type Props = {
   articles: Article[];
 };
 
 const MyArticles = ({ articles }: Props) => {
   const intl = useIntl();
+  const [selectedArticlesIds, setSelectedArticlesIds] = useState<string[]>([]);
+
   return (
     <div className="space-y-14">
       <div className="flex gap-6 items-center">
@@ -30,68 +34,24 @@ const MyArticles = ({ articles }: Props) => {
             defaultMessage: "Create New Article",
           })}
         </Button>
+        {selectedArticlesIds.length ? (
+          <button
+            className="flex gap-2 text-red-500"
+            onClick={() => console.log("Delete Selected Articles")}
+          >
+            <TrashIcon className="w-5" />
+            {intl.formatMessage({
+              id: "containers.myArticles.button.createNewArticle",
+              defaultMessage: "Delete Selected Articles",
+            })}
+          </button>
+        ) : null}
       </div>
-      <table>
-        <thead className="border-b border-gray-300">
-          <tr className="border-b border-gray-400">
-            <th className="text-left px-4">--</th>
-            <th className="text-left px-4">
-              {intl.formatMessage({
-                id: "containers.myArticles.th.title",
-                defaultMessage: "Article title",
-              })}
-            </th>
-            <th className="text-left px-4">
-              {intl.formatMessage({
-                id: "containers.myArticles.th.perex",
-                defaultMessage: "Perex",
-              })}
-            </th>
-            <th className="text-left px-4">
-              {intl.formatMessage({
-                id: "containers.myArticles.th.author",
-                defaultMessage: "Author",
-              })}
-            </th>
-            <th className="text-left px-4">
-              {intl.formatMessage({
-                id: "containers.myArticles.th.CommentsCount",
-                defaultMessage: "# of comments",
-              })}
-            </th>
-            <th className="text-left px-4">
-              {intl.formatMessage({
-                id: "containers.myArticles.th.actions",
-                defaultMessage: "Actions",
-              })}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {articles.map((article) => (
-            <tr
-              className="p-3 border-b border-gray-300"
-              key={article.articleId}
-            >
-              <td className="px-4 py-3">--</td>
-              <td className="px-4 py-3">{article.title}</td>
-              <td className="px-4 py-3">{article.perex}</td>
-              <td className="px-4 py-3">{article.author}</td>
-              <td className="px-4 py-3">{article.numberOfComments}</td>
-              <td className="px-4 py-3 text-center">
-                <div className="flex gap-4 items-center">
-                  <button>
-                    <PencilIcon className="w-5" />
-                  </button>
-                  <button>
-                    <TrashIcon className="w-5" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <MyArticlesTable
+        articles={articles}
+        selectedArticlesIds={selectedArticlesIds}
+        setSelectedArticlesIds={setSelectedArticlesIds}
+      />
     </div>
   );
 };
