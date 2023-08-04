@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { z } from "zod";
 
-import { AdminUrl, baseUrl, loginUrl } from "@/config/router";
+import { AdminUrl, baseUrl, tenantsUrl } from "@/config/router";
 
 import Button from "@/components/Button";
 import FormFieldWrapper from "@/components/form/FormFieldWrapper";
@@ -17,34 +17,34 @@ import Label from "@/components/form/Label";
 import PasswordField from "@/components/form/PasswordField";
 import TextField from "@/components/form/TextField";
 import Heading from "@/components/Heading";
-import type { LoginResponse } from "@/types/types";
+import type { Tenant } from "@/types/types";
 
-const userSchema = z.object({
-  username: z.string().min(1, { message: "Username is required" }),
+const createUserSchema = z.object({
+  name: z.string().min(1, { message: "Username is required" }),
   password: z
     .string()
     .min(5, { message: "Heslo musí obsahovat minimálně 5 charakterů" }),
 });
 
-export type UserSchemaT = z.infer<typeof userSchema>;
+export type CreateUserSchemaT = z.infer<typeof createUserSchema>;
 
-const Login = () => {
+const Signup = () => {
   const intl = useIntl();
   const router = useRouter();
 
   const {
     handleSubmit,
     formState: { errors },
-  } = useForm<UserSchemaT>({
-    resolver: zodResolver(userSchema),
+  } = useForm<CreateUserSchemaT>({
+    resolver: zodResolver(createUserSchema),
   });
 
-  const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
+  const onSubmit: SubmitHandler<CreateUserSchemaT> = async (formData) => {
     try {
-      const response = await axios.post<LoginResponse>(
-        loginUrl,
+      const response = await axios.post<Tenant>(
+        tenantsUrl,
         {
-          username: formData.username,
+          name: formData.name,
           password: formData.password,
         },
         {
@@ -73,8 +73,8 @@ const Login = () => {
     <div className="space-y-6 px-6 py-8 shadow-xl border border-gray-100 max-w-sm rounded-md mx-auto">
       <Heading headingLevel="h1" size="s2">
         {intl.formatMessage({
-          id: "containers.login.title",
-          defaultMessage: "Log In",
+          id: "containers.signup.title",
+          defaultMessage: "Sign Up",
         })}
       </Heading>
       <form
@@ -83,18 +83,18 @@ const Login = () => {
       >
         <div className="w-full flex flex-col gap-4">
           <FormFieldWrapper>
-            <Label name="username">
+            <Label name="name">
               {intl.formatMessage({
-                id: "containers.login.username",
-                defaultMessage: "Username",
+                id: "containers.signup.name",
+                defaultMessage: "Name",
               })}
             </Label>
-            <TextField name="username" placeholder="Username123" />
-            {errors.username && <span>{errors.username.message}</span>}
+            <TextField name="name" placeholder="Jan Novák" />
+            {errors.name && <span>{errors.name.message}</span>}
           </FormFieldWrapper>
           <Label name="password">
             {intl.formatMessage({
-              id: "containers.login.password",
+              id: "containers.signup.password",
               defaultMessage: "Password",
             })}
             <PasswordField name="password" />
@@ -102,8 +102,8 @@ const Login = () => {
         </div>
         <Button style="primary" type="submit">
           {intl.formatMessage({
-            id: "containers.login.submitButton",
-            defaultMessage: "Log In",
+            id: "containers.signup.submitButton",
+            defaultMessage: "Sign Up",
           })}
         </Button>
       </form>
@@ -111,4 +111,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

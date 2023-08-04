@@ -18,17 +18,7 @@ import Label from "@/components/form/Label";
 import TextAreaField from "@/components/form/TextAreaField";
 import TextField from "@/components/form/TextField";
 import Heading from "@/components/Heading";
-
-type ArticleResponseData = {
-  id: string;
-  title: string;
-  content: string;
-  perex: string;
-};
-
-type ResponseData = {
-  data: ArticleResponseData;
-};
+import type { ArticleDetail } from "@/types/types";
 
 const createArticleSchema = z.object({
   title: z.string(),
@@ -48,7 +38,7 @@ const CreateArticle = () => {
 
   const onSubmit: SubmitHandler<CreateArticleSchemaT> = async (formData) => {
     try {
-      const response = await axios.post<ResponseData>(
+      const response = await axios.post<ArticleDetail>(
         `${baseUrl}/articles`,
         {
           title: formData.title,
@@ -58,8 +48,8 @@ const CreateArticle = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": "682a44a4-eced-4f1c-8749-752b5776ee22",
-            Authorization: "08709433-7233-476f-9a70-ac1dbf954e87",
+            "X-API-KEY": process.env.APP_API_KEY,
+            Authorization: process.env.APP_TOKEN,
           },
         },
       );

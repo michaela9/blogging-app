@@ -3,35 +3,33 @@
 import axios from "axios";
 import { useIntl } from "react-intl";
 
-import { baseUrl } from "@/config/router";
+import { articlesUrl } from "@/config/router";
 
 import Button from "@/components/Button";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
+import type { ArticleDetail } from "@/types/types";
 
 type Props = {
   articleId: string;
   closeModal: () => void;
 };
 
-type ResponseData = {
-  articleId: string;
-};
 export default function DeleteArticle({ articleId, closeModal }: Props) {
   const intl = useIntl();
 
   const handleDeleteArticle = async () => {
     try {
-      const response = await axios.post<ResponseData>(
-        `${baseUrl}/articles/${articleId}`,
+      const response = await axios.post<ArticleDetail>(
+        `${articlesUrl}/${articleId}`,
         {
           articleId: articleId,
         },
         {
           headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": "682a44a4-eced-4f1c-8749-752b5776ee22",
-            Authorization: "08709433-7233-476f-9a70-ac1dbf954e87",
+            "X-API-KEY": process.env.APP_API_KEY,
+            Authorization: process.env.APP_TOKEN,
           },
         },
       );

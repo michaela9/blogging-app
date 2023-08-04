@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { z } from "zod";
 
-import { baseUrl } from "@/config/router";
+import { articlesUrl, baseUrl } from "@/config/router";
 
 import Button from "@/components/Button";
 import FileField from "@/components/form/FileField";
@@ -21,18 +21,7 @@ import TextField from "@/components/form/TextField";
 import Heading from "@/components/Heading";
 
 import { articles } from "@/data/dummy";
-
-type ArticleResponseData = {
-  id: string;
-  title: string;
-  content: string;
-  perex: string;
-  image: string;
-};
-
-type ResponseData = {
-  data: ArticleResponseData;
-};
+import type { ArticleDetail } from "@/types/types";
 
 type Props = {
   id: string;
@@ -60,8 +49,8 @@ const EditArticle = ({ id }: Props) => {
 
   const onSubmit: SubmitHandler<EditArticleSchemaT> = async (formData) => {
     try {
-      const response = await axios.post<ResponseData>(
-        `${baseUrl}/articles/${id}`,
+      const response = await axios.post<ArticleDetail>(
+        `${articlesUrl}/${id}`,
         {
           title: formData.title,
           content: formData.content,
@@ -71,8 +60,8 @@ const EditArticle = ({ id }: Props) => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": "682a44a4-eced-4f1c-8749-752b5776ee22",
-            Authorization: "08709433-7233-476f-9a70-ac1dbf954e87",
+            "X-API-KEY": process.env.APP_API_KEY,
+            Authorization: process.env.APP_TOKEN,
           },
         },
       );
