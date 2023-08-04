@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
+import MyArticles from "@/containers/MyArticles";
+
+import { articles } from "@/data/dummy";
+
 export const metadata: Metadata = {
-  title: "Admin - Homepage",
+  title: "Admin - My Articles",
 };
 
-export default function ProtectedPage() {
-  return (
-    <div>
-      <h1>Protected Page</h1>
-    </div>
-  );
+export default function Page() {
+  return <MyArticles articles={articles} />;
 }

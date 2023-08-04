@@ -13,7 +13,7 @@ const FileField = ({ name, register, errorMessage, ...rest }: Props) => {
         id={name}
         type="file"
         accept="image/png, image/jpeg"
-        {...register(name)}
+        {...(register ? register(name) : {})}
         {...rest}
       />
 

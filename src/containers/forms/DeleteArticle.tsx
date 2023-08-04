@@ -1,5 +1,7 @@
 "use client";
 
+import type { ArticleDetailT } from "@/types/types";
+
 import axios from "axios";
 import { useIntl } from "react-intl";
 
@@ -8,7 +10,6 @@ import { articlesUrl } from "@/config/router";
 import Button from "@/components/Button";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
-import type { ArticleDetail } from "@/types/types";
 
 type Props = {
   articleId: string;
@@ -20,7 +21,7 @@ export default function DeleteArticle({ articleId, closeModal }: Props) {
 
   const handleDeleteArticle = async () => {
     try {
-      const response = await axios.post<ArticleDetail>(
+      const response = await axios.post<ArticleDetailT>(
         `${articlesUrl}/${articleId}`,
         {
           articleId: articleId,

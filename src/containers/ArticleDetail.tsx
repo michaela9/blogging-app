@@ -1,5 +1,7 @@
 "use client";
 
+import type { ArticleDetailT, ArticleT } from "@/types/types";
+
 import Image from "next/image";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -7,14 +9,12 @@ import { useIntl } from "react-intl";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
 
-import type { Article } from "@/data/dummy";
-
 import ArticleShortItem from "./ArticleShortItem";
 import Comments from "./Comments";
 
 type Props = {
-  article: Article;
-  relatedArticles: Article[];
+  article: ArticleDetailT;
+  relatedArticles: ArticleT[];
 };
 
 const ArticleDetail = ({ article, relatedArticles }: Props) => {
@@ -27,12 +27,12 @@ const ArticleDetail = ({ article, relatedArticles }: Props) => {
         </Heading>
         <div className="space-y-6 border-b border-b-gray-300 pb-10">
           <div className="text-secondary-text text-xs flex gap-4">
-            <Description>{article.author}</Description>
+            {/* <Description>{article.author}</Description> */}
             <Description>{article.createdAt}</Description>
           </div>
           <div className="">
             <Image
-              src={article.image}
+              src={article.imageId}
               alt={article.title}
               className="shrink-0 object-cover overflow-hidden"
               width={760}
@@ -41,7 +41,7 @@ const ArticleDetail = ({ article, relatedArticles }: Props) => {
           </div>
           <Description>{article.content}</Description>
         </div>
-        <Comments />
+        <Comments comments={article.comments} />
       </div>
       <div className="pl-6 border-l border-l-gray-300 space-y-8">
         <Heading headingLevel="h2" size="s3">

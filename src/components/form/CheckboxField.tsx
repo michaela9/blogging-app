@@ -26,7 +26,7 @@ const CheckboxField = ({
         className={clsxm(
           "border-gray text-green focus:ring-green rounded-md border bg-white",
         )}
-        {...register(name)}
+        {...(register ? register(name) : {})}
         {...rest}
       />
       <label

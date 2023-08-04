@@ -9,7 +9,7 @@ export type LoginResponse = {
   token_type: string;
 };
 
-export type Article = {
+export type ArticleT = {
   articleId: string;
   title: string;
   perex: string;
@@ -18,7 +18,7 @@ export type Article = {
   lastUpdatedAt: string;
 };
 
-export type ArticleDetail = {
+export type ArticleDetailT = {
   articleId: string;
   title: string;
   perex: string;
@@ -26,10 +26,10 @@ export type ArticleDetail = {
   createdAt: string;
   lastUpdatedAt?: string;
   content: string;
-  comments: Comment[];
+  comments: CommentT[];
 };
 
-export type Comment = {
+export type CommentT = {
   commentId: string;
   articleId: string;
   author: string;
@@ -38,7 +38,7 @@ export type Comment = {
   score: number;
 };
 
-export type Tenant = {
+export type TenantT = {
   tenantId: string;
   apiKey: string;
   name: string;
@@ -47,12 +47,12 @@ export type Tenant = {
   lastUsedAt: string;
 };
 
-export type ImageInfo = {
+export type ImageInfoT = {
   imageId: string;
   name: string;
 };
 
-export type Pagination = {
+export type PaginationT = {
   offset: number;
   limit: number;
   total: number;

@@ -1,5 +1,7 @@
 "use client";
 
+import type { ArticleT } from "@/types/types";
+
 import { TrashIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -7,12 +9,10 @@ import { useIntl } from "react-intl";
 import Button from "@/components/Button";
 import Heading from "@/components/Heading";
 
-import type { Article } from "@/data/dummy";
-
 import MyArticlesTable from "./MyArticlesTable";
 
 type Props = {
-  articles: Article[];
+  articles: ArticleT[];
 };
 
 const MyArticles = ({ articles }: Props) => {

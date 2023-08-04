@@ -1,6 +1,7 @@
 "use client";
 
 import type { SubmitHandler } from "react-hook-form";
+import type { ArticleDetailT } from "@/types/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -18,7 +19,6 @@ import Label from "@/components/form/Label";
 import TextAreaField from "@/components/form/TextAreaField";
 import TextField from "@/components/form/TextField";
 import Heading from "@/components/Heading";
-import type { ArticleDetail } from "@/types/types";
 
 const createArticleSchema = z.object({
   title: z.string(),
@@ -38,7 +38,7 @@ const CreateArticle = () => {
 
   const onSubmit: SubmitHandler<CreateArticleSchemaT> = async (formData) => {
     try {
-      const response = await axios.post<ArticleDetail>(
+      const response = await axios.post<ArticleDetailT>(
         `${baseUrl}/articles`,
         {
           title: formData.title,

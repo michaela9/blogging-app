@@ -1,6 +1,7 @@
 "use client";
 
 import type { Dispatch } from "react";
+import type { ArticleT } from "@/types/types";
 
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
@@ -17,12 +18,10 @@ import Th from "@/components/table/Th";
 import THead from "@/components/table/THead";
 import TRow from "@/components/table/TRow";
 
-import type { Article } from "@/data/dummy";
-
 import DeleteArticleForm from "./forms/DeleteArticle";
 
 type Props = {
-  articles: Article[];
+  articles: ArticleT[];
   selectedArticlesIds: string[];
   setSelectedArticlesIds: Dispatch<React.SetStateAction<string[]>>;
 };
@@ -111,8 +110,8 @@ const MyArticlesTable = ({
             </Td>
             <Td>{article.title}</Td>
             <Td>{article.perex}</Td>
-            <Td>{article.author}</Td>
-            <Td>{article.numberOfComments}</Td>
+            {/* <Td>{article.author}</Td> */}
+            {/* <Td>{article.numberOfComments}</Td> */}
             <Td className="text-center">
               <div className="flex gap-4 items-center">
                 <CustomLink

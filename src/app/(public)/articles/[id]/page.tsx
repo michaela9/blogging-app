@@ -1,13 +1,15 @@
 "use client";
 
 import type { Metadata } from "next";
+import type { ArticleDetailT } from "@/types/types";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import { articlesUrl } from "@/config/router";
+
 import ArticleDetail from "@/containers/ArticleDetail";
 
-import type { Article} from "@/data/dummy";
 import { articles } from "@/data/dummy";
 
 export const metadata: Metadata = {
@@ -21,13 +23,13 @@ type Props = {
 };
 
 export default function Page({ params: { id } }: Props) {
-  const [article, setArticle] = useState<Article | null>(null);
+  const [article, setArticle] = useState<ArticleDetailT | null>(null);
 
   useEffect(() => {
     const getApiData = async () => {
       try {
-        const response = await axios.get<Article>(
-          `https://fullstack.exercise.applifting.cz/articles/${id}`,
+        const response = await axios.get<ArticleDetailT>(
+          `${articlesUrl}/${id}`,
           {
             headers: {
               "X-API-KEY": "682a44a4-eced-4f1c-8749-752b5776ee22",

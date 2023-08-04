@@ -1,15 +1,17 @@
 "use client";
 
 import type { SubmitHandler } from "react-hook-form";
+import type { TenantT } from "@/types/types";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import { z } from "zod";
 
-import { AdminUrl, baseUrl, tenantsUrl } from "@/config/router";
+import { AppUrl, tenantsUrl } from "@/config/router";
+
+import useZodForm from "@/hooks/useZodForm";
 
 import Button from "@/components/Button";
 import FormFieldWrapper from "@/components/form/FormFieldWrapper";
@@ -17,60 +19,102 @@ import Label from "@/components/form/Label";
 import PasswordField from "@/components/form/PasswordField";
 import TextField from "@/components/form/TextField";
 import Heading from "@/components/Heading";
-import type { Tenant } from "@/types/types";
+
+const createUserDefaultValues = {
+  name: "",
+  password: "",
+};
+
+// passwordRepeat: "",
 
 const createUserSchema = z.object({
-  name: z.string().min(1, { message: "Username is required" }),
+  name: z.string().min(1, { message: "Name is required" }),
   password: z
     .string()
-    .min(5, { message: "Heslo musí obsahovat minimálně 5 charakterů" }),
+    .min(3, { message: "Minimum length of password id 3 letters" }),
 });
+
+// passwordRepeat: z
+//   .string()
+//   .min(1, { message: "FIll in the sa,e password again" }),
+// .superRefine(({ passwordRepeat, password }, ctx) => {
+//   if (passwordRepeat !== password) {
+//     ctx.addIssue({
+//       code: "custom",
+//       message: "Passwords are not the same.",
+//       path: ["passwordRepeat"],
+//     });
+//   }
+// });
 
 export type CreateUserSchemaT = z.infer<typeof createUserSchema>;
 
 const Signup = () => {
   const intl = useIntl();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiKey, setApiKey] = useState("");
 
   const {
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateUserSchemaT>({
-    resolver: zodResolver(createUserSchema),
+    register,
+    reset,
+  } = useZodForm({
+    schema: createUserSchema,
+    defaultValues: createUserDefaultValues,
+    mode: "onSubmit",
   });
 
   const onSubmit: SubmitHandler<CreateUserSchemaT> = async (formData) => {
+    setIsLoading(true);
     try {
-      const response = await axios.post<Tenant>(
-        tenantsUrl,
-        {
-          name: formData.name,
-          password: formData.password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": process.env.APP_API_KEY,
-          },
-        },
-      );
+      const response = await axios.post<TenantT>(tenantsUrl, {
+        name: formData.name,
+        password: formData.password,
+      });
       if (!response.data) {
         throw new Error("Network response was not ok.");
       }
       if (response.data) {
+        console.log(response.data);
         const data = response.data;
-        console.log(data);
-        const accessToken = data.access_token;
-        localStorage.setItem("accessToken", accessToken);
-        router.push(AdminUrl.index);
+        setApiKey(response.data.apiKey);
+        router.push(AppUrl.login);
       }
+      reset(createUserDefaultValues);
+      setIsLoading(false);
     } catch (error) {
-      throw new Error("Error editing article. Please try again later.");
+      throw new Error("Error signup. Please try again later.");
     }
+    reset(createUserDefaultValues);
   };
 
+  // {
+  //   setIsLoading(true);
+
+  //   try {
+  //     const response = await axios.post<TenantT>(tenantsUrl, {
+  //       name: formData.name,
+  //       password: formData.password,
+  //     });
+  //     if (!response.data) {
+  //       throw new Error("Network response was not ok.");
+  //     }
+  //     if (response.data) {
+  //       reset(createUserDefaultValues);
+  //       // router.push(AppUrl.login);
+  //     }
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     throw new Error("Error signup. Please try again later.");
+  //   }
+  // };
+
   return (
-    <div className="space-y-6 px-6 py-8 shadow-xl border border-gray-100 max-w-sm rounded-md mx-auto">
+    <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-xl border border-gray-100 max-w-sm rounded-md mx-auto">
+      {isLoading ? "is loading" : "not loading"}
+      <p>{apiKey}</p>
       <Heading headingLevel="h1" size="s2">
         {intl.formatMessage({
           id: "containers.signup.title",
@@ -89,16 +133,35 @@ const Signup = () => {
                 defaultMessage: "Name",
               })}
             </Label>
-            <TextField name="name" placeholder="Jan Novák" />
+            <TextField
+              name="name"
+              placeholder="Jan Novák"
+              register={register}
+            />
             {errors.name && <span>{errors.name.message}</span>}
           </FormFieldWrapper>
-          <Label name="password">
-            {intl.formatMessage({
-              id: "containers.signup.password",
-              defaultMessage: "Password",
-            })}
-            <PasswordField name="password" />
-          </Label>
+          <FormFieldWrapper>
+            <Label name="password">
+              {intl.formatMessage({
+                id: "containers.signup.password",
+                defaultMessage: "Password",
+              })}
+            </Label>
+            <PasswordField name="password" register={register} />
+          </FormFieldWrapper>
+          {/* <FormFieldWrapper>
+            <Label name="passwordRepeat">
+              {intl.formatMessage({
+                defaultMessage: "Password Repeat",
+                id: "container.forms.signUp.passwordRepeat",
+              })}
+            </Label>
+            <PasswordField
+              name="passwordRepeat"
+              errorMessage={errors?.passwordRepeat?.message}
+              required
+            />
+          </FormFieldWrapper> */}
         </div>
         <Button style="primary" type="submit">
           {intl.formatMessage({
@@ -106,6 +169,11 @@ const Signup = () => {
             defaultMessage: "Sign Up",
           })}
         </Button>
+        {/* <input defaultValue="Jan" {...register("name")} />
+
+        <input defaultValue="pass" {...register("password")} /> */}
+
+        {/* <button type="submit">Sign up</button> */}
       </form>
     </div>
   );

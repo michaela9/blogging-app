@@ -1,6 +1,7 @@
 "use client";
 
 import type { SubmitHandler } from "react-hook-form";
+import type { ArticleDetailT } from "@/types/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -10,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { z } from "zod";
 
-import { articlesUrl, baseUrl } from "@/config/router";
+import { articlesUrl } from "@/config/router";
 
 import Button from "@/components/Button";
 import FileField from "@/components/form/FileField";
@@ -20,8 +21,7 @@ import TextAreaField from "@/components/form/TextAreaField";
 import TextField from "@/components/form/TextField";
 import Heading from "@/components/Heading";
 
-import { articles } from "@/data/dummy";
-import type { ArticleDetail } from "@/types/types";
+import { articleDetail } from "@/data/dummy";
 
 type Props = {
   id: string;
@@ -38,7 +38,7 @@ export type EditArticleSchemaT = z.infer<typeof editArticleSchema>;
 
 const EditArticle = ({ id }: Props) => {
   const intl = useIntl();
-  const article = articles[0];
+  const article = articleDetail;
 
   const {
     handleSubmit,
@@ -49,7 +49,7 @@ const EditArticle = ({ id }: Props) => {
 
   const onSubmit: SubmitHandler<EditArticleSchemaT> = async (formData) => {
     try {
-      const response = await axios.post<ArticleDetail>(
+      const response = await axios.post<ArticleDetailT>(
         `${articlesUrl}/${id}`,
         {
           title: formData.title,
@@ -115,7 +115,7 @@ const EditArticle = ({ id }: Props) => {
             })}
           </Label>
           <Image
-            src={article.image}
+            src={article.imageId}
             alt="Article image"
             className="shrink-0 w-28 h-20 object-cover overflow-hidden"
             width={100}

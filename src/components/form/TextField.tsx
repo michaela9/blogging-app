@@ -1,5 +1,7 @@
 import type { FieldValues, UseFormRegister } from "react-hook-form";
 
+import FormErrorMessage from "./FormErrorMessage";
+
 type Props = Omit<JSX.IntrinsicElements["input"], "className"> & {
   name: string;
   register?: UseFormRegister<FieldValues>;
@@ -12,12 +14,14 @@ const TextField = ({ name, register, errorMessage, ...rest }: Props) => {
       <input
         id={name}
         type="text"
-        className="rounded-md border-gray-300"
-        {...register(name)}
+        className="rounded-md border-gray-300 w-full"
+        {...(register ? register(name) : {})}
         {...rest}
       />
 
-      {errorMessage && "sihsu"}
+      {errorMessage && (
+        <FormErrorMessage errorMessage={errorMessage} style="login" />
+      )}
     </>
   );
 };

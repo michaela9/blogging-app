@@ -21,8 +21,8 @@ const TextAreaField = ({
     <>
       <textarea
         id={name}
-        className={clsxm(className, "rounded-md border-gray-300")}
-        {...register(name)}
+        className={clsxm(className, "rounded-md border-gray-300 w-full")}
+        {...(register ? register(name) : {})}
         {...rest}
       />
 
