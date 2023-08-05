@@ -5,6 +5,7 @@ export const articlesUrl = `${baseUrl}/articles`;
 
 export enum AppUrl {
   home = "/",
+  about = "/about",
   login = "/login",
   article = "/articles/[id]",
 }

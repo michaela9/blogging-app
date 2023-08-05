@@ -20,8 +20,8 @@ const MyArticles = ({ articles }: Props) => {
   const [selectedArticlesIds, setSelectedArticlesIds] = useState<string[]>([]);
 
   return (
-    <div className="space-y-14">
-      <div className="flex gap-6 items-center">
+    <div className="space-y-6 sm:space-y-14">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 items-start sm:items-center">
         <Heading headingLevel="h1" size="s1">
           {intl.formatMessage({
             id: "containers.myArticles.title",

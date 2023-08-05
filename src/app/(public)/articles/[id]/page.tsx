@@ -10,7 +10,7 @@ import { articlesUrl } from "@/config/router";
 
 import ArticleDetail from "@/containers/ArticleDetail";
 
-import { articles } from "@/data/dummy";
+import { articleDetail, articles } from "@/data/dummy";
 
 export const metadata: Metadata = {
   title: "Homepage",
@@ -22,6 +22,8 @@ type Props = {
   };
 };
 
+const apiKey = "b21611a3-d995-499c-80d5-4e0f72db5ae1";
+
 export default function Page({ params: { id } }: Props) {
   const [article, setArticle] = useState<ArticleDetailT | null>(null);
 
@@ -32,7 +34,7 @@ export default function Page({ params: { id } }: Props) {
           `${articlesUrl}/${id}`,
           {
             headers: {
-              "X-API-KEY": "682a44a4-eced-4f1c-8749-752b5776ee22",
+              "X-API-KEY": apiKey,
             },
           },
         );
@@ -50,5 +52,5 @@ export default function Page({ params: { id } }: Props) {
     return <div>Loading...</div>;
   }
 
-  return <ArticleDetail article={article} relatedArticles={articles} />;
+  return <ArticleDetail article={articleDetail} relatedArticles={articles} />;
 }

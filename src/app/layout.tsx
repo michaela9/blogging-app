@@ -9,6 +9,7 @@ import { Inter } from "next/font/google";
 import { useMemo } from "react";
 import { IntlProvider } from "react-intl";
 
+import MobileNavbar from "@/containers/MobileNavbar";
 import Navbar from "@/containers/Navbar";
 
 import { getMessagesByLocale, verifyLocale } from "@/service/intl";
@@ -41,9 +42,12 @@ export default function RootLayout({ children }: Props) {
     <html lang="en">
       <body className={inter.className}>
         <IntlProvider locale={shortLocaleVerified} messages={messages}>
-          <main className="px-4 xl:px-0 max-w-6xl mx-auto">
+          <main className="">
             <Navbar />
-            <div className="py-6 sm:py-12">{children}</div>
+            <MobileNavbar />
+            <div className="py-6 sm:py-12 px-4 xl:px-0 max-w-6xl mx-auto">
+              {children}
+            </div>
           </main>
         </IntlProvider>
       </body>

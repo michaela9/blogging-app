@@ -110,8 +110,8 @@ const MyArticlesTable = ({
             </Td>
             <Td>{article.title}</Td>
             <Td>{article.perex}</Td>
-            {/* <Td>{article.author}</Td> */}
-            {/* <Td>{article.numberOfComments}</Td> */}
+            <Td>TODO author</Td>
+            <Td>TODO number of comments</Td>
             <Td className="text-center">
               <div className="flex gap-4 items-center">
                 <CustomLink

@@ -23,29 +23,29 @@ import Heading from "@/components/Heading";
 const createUserDefaultValues = {
   name: "",
   password: "",
+  passwordRepeat: "",
 };
 
-// passwordRepeat: "",
+const createUserSchema = z
+  .object({
+    name: z.string().min(1, { message: "Name is required" }),
+    password: z
+      .string()
+      .min(3, { message: "Minimum length of password id 3 letters" }),
+    passwordRepeat: z
+      .string()
+      .min(1, { message: "FIll in the sa,e password again" }),
+  })
 
-const createUserSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-  password: z
-    .string()
-    .min(3, { message: "Minimum length of password id 3 letters" }),
-});
-
-// passwordRepeat: z
-//   .string()
-//   .min(1, { message: "FIll in the sa,e password again" }),
-// .superRefine(({ passwordRepeat, password }, ctx) => {
-//   if (passwordRepeat !== password) {
-//     ctx.addIssue({
-//       code: "custom",
-//       message: "Passwords are not the same.",
-//       path: ["passwordRepeat"],
-//     });
-//   }
-// });
+  .superRefine(({ passwordRepeat, password }, ctx) => {
+    if (passwordRepeat !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Passwords are not the same.",
+        path: ["passwordRepeat"],
+      });
+    }
+  });
 
 export type CreateUserSchemaT = z.infer<typeof createUserSchema>;
 
@@ -79,7 +79,7 @@ const Signup = () => {
       if (response.data) {
         console.log(response.data);
         const data = response.data;
-        setApiKey(response.data.apiKey);
+        setApiKey(data.apiKey);
         router.push(AppUrl.login);
       }
       reset(createUserDefaultValues);
@@ -89,27 +89,6 @@ const Signup = () => {
     }
     reset(createUserDefaultValues);
   };
-
-  // {
-  //   setIsLoading(true);
-
-  //   try {
-  //     const response = await axios.post<TenantT>(tenantsUrl, {
-  //       name: formData.name,
-  //       password: formData.password,
-  //     });
-  //     if (!response.data) {
-  //       throw new Error("Network response was not ok.");
-  //     }
-  //     if (response.data) {
-  //       reset(createUserDefaultValues);
-  //       // router.push(AppUrl.login);
-  //     }
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     throw new Error("Error signup. Please try again later.");
-  //   }
-  // };
 
   return (
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-xl border border-gray-100 max-w-sm rounded-md mx-auto">
@@ -137,8 +116,8 @@ const Signup = () => {
               name="name"
               placeholder="Jan Novák"
               register={register}
+              errorMessage={errors?.name?.message}
             />
-            {errors.name && <span>{errors.name.message}</span>}
           </FormFieldWrapper>
           <FormFieldWrapper>
             <Label name="password">
@@ -147,9 +126,13 @@ const Signup = () => {
                 defaultMessage: "Password",
               })}
             </Label>
-            <PasswordField name="password" register={register} />
+            <PasswordField
+              name="password"
+              register={register}
+              errorMessage={errors?.password?.message}
+            />
           </FormFieldWrapper>
-          {/* <FormFieldWrapper>
+          <FormFieldWrapper>
             <Label name="passwordRepeat">
               {intl.formatMessage({
                 defaultMessage: "Password Repeat",
@@ -158,10 +141,10 @@ const Signup = () => {
             </Label>
             <PasswordField
               name="passwordRepeat"
+              register={register}
               errorMessage={errors?.passwordRepeat?.message}
-              required
             />
-          </FormFieldWrapper> */}
+          </FormFieldWrapper>
         </div>
         <Button style="primary" type="submit">
           {intl.formatMessage({
@@ -169,11 +152,6 @@ const Signup = () => {
             defaultMessage: "Sign Up",
           })}
         </Button>
-        {/* <input defaultValue="Jan" {...register("name")} />
-
-        <input defaultValue="pass" {...register("password")} /> */}
-
-        {/* <button type="submit">Sign up</button> */}
       </form>
     </div>
   );

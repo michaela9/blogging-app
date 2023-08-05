@@ -19,8 +19,9 @@ const CustomLink = forwardRef<HTMLAnchorElement, Props>((props, ref) => {
       href={href}
       className={clsxm(className, {
         "": style === "default",
-        "bg-primary rounded-md px-4 py-2 text-white": style === "primary",
-        "text-primary": style === "secondary",
+        "bg-primary rounded-md px-4 py-2 text-white hover:bg-opacity-80":
+          style === "primary",
+        "text-primary hover:opacity-70": style === "secondary",
       })}
       {...rest}
     >

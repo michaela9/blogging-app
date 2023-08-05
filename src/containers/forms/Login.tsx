@@ -26,12 +26,13 @@ const userSchema = z.object({
   username: z.string().min(1, { message: "Username is required" }),
   password: z
     .string()
-    .min(3, { message: "Heslo musí obsahovat minimálně 3 charakterů" }),
+    .min(3, { message: "Your password should have at least 3 characters" }),
 });
 
 export type UserSchemaT = z.infer<typeof userSchema>;
 
 const apiKey = "b21611a3-d995-499c-80d5-4e0f72db5ae1";
+
 const Login = () => {
   const intl = useIntl();
   const router = useRouter();
@@ -107,6 +108,7 @@ const Login = () => {
               name="username"
               placeholder="Username123"
               register={register}
+              errorMessage={errors?.username?.message}
             />
             {errors.username && <span>{errors.username.message}</span>}
           </FormFieldWrapper>
@@ -115,7 +117,11 @@ const Login = () => {
               id: "containers.login.password",
               defaultMessage: "Password",
             })}
-            <PasswordField name="password" register={register} />
+            <PasswordField
+              name="password"
+              register={register}
+              errorMessage={errors?.password?.message}
+            />
           </Label>
         </div>
         <Button style="primary" type="submit">
