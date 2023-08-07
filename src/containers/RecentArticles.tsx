@@ -15,6 +15,7 @@ type Props = {
 
 const RecentArticles = ({ articles }: Props) => {
   const intl = useIntl();
+  console.log(articles);
   return (
     <div className="space-y-4 md:space-y-12">
       <Heading headingLevel="h1" size="s1">

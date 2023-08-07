@@ -10,6 +10,7 @@ import useIsLoggedIn from "@/hooks/useIsLoggedIn";
 
 import Button from "@/components/Button";
 import CustomLink from "@/components/CustomLink";
+import { AppUrl } from "@/config/router";
 
 const Navbar = () => {
   const intl = useIntl();
@@ -19,7 +20,7 @@ const Navbar = () => {
     <nav className="hidden md:block h-14 bg-light-gray">
       <div className="h-full flex w-full justify-between items-center max-w-6xl px-4 xl:px-0 mx-auto">
         <div className="flex gap-10 items-center">
-          <CustomLink href="/">
+          <CustomLink href={AppUrl.home}>
             <Image
               src="/logo.png"
               alt="Logo - cat"
@@ -35,7 +36,7 @@ const Navbar = () => {
               defaultMessage: "Recent articles",
             })}
           </CustomLink>
-          <CustomLink href="/about">
+          <CustomLink href={AppUrl.about}>
             {intl.formatMessage({
               id: "containers.navbar.about",
               defaultMessage: "About",
@@ -43,7 +44,7 @@ const Navbar = () => {
           </CustomLink>
         </div>
         {!isLoggedIn && (
-          <CustomLink href="/login" style="secondary">
+          <CustomLink href={AppUrl.login} style="secondary">
             <div className="flex gap-2 items-center">
               {intl.formatMessage({
                 id: "containers.navbar.login",
@@ -58,7 +59,8 @@ const Navbar = () => {
             style="primary"
             onClick={() => {
               localStorage.setItem("accessToken", "");
-              router.push("/");
+              router.push(AppUrl.home);
+              // refresh();
             }}
           >
             {intl.formatMessage({

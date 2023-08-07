@@ -15,13 +15,10 @@ export const getMessagesByLocale = (
 ): Record<string, string> => {
   switch (locale) {
     case Locale.CS:
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return require(`@/content/locales-compiled/cs.json`);
     case Locale.EN:
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return require(`@/content/locales-compiled/en.json`);
     default:
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return require(`@/content/locales-compiled/cs.json`);
   }
 };

@@ -1,5 +1,3 @@
-"use client";
-
 import "../styles/globals.css";
 
 import type { Metadata } from "next";
@@ -40,17 +38,15 @@ export default function RootLayout({ children }: Props) {
   }, [shortLocaleVerified]);
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <IntlProvider locale={shortLocaleVerified} messages={messages}>
-          <main className="">
-            <Navbar />
-            <MobileNavbar />
-            <div className="py-6 sm:py-12 px-4 xl:px-0 max-w-6xl mx-auto">
-              {children}
-            </div>
+      <IntlProvider locale={shortLocaleVerified} messages={messages}>
+        <body className={inter.className}>
+          <Navbar />
+          <MobileNavbar />
+          <main className="py-6 sm:py-12 px-4 xl:px-0 max-w-6xl mx-auto">
+            {children}
           </main>
-        </IntlProvider>
-      </body>
+        </body>
+      </IntlProvider>
     </html>
   );
 }
