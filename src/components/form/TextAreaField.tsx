@@ -1,3 +1,5 @@
+"use client";
+
 import type { ClassValue } from "clsx";
 import type { FieldValues, UseFormRegister } from "react-hook-form";
 

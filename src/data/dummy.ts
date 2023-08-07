@@ -58,3 +58,12 @@ export const currentUser: TenantT = {
   createdAt: "2023-07-31T17:40:43.9882855Z",
   lastUsedAt: "2023-07-31T17:40:43.9882855Z",
 };
+
+export const testUser: TenantT = {
+  tenantId: "",
+  apiKey: "b21611a3-d995-499c-80d5-4e0f72db5ae1",
+  name: "novak",
+  password: "novak123",
+  createdAt: "",
+  lastUsedAt: "",
+};

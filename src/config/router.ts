@@ -7,11 +7,12 @@ export enum AppUrl {
   home = "/",
   about = "/about",
   login = "/login",
+  images = "/images",
   article = "/articles/[id]",
 }
 
 export enum AdminUrl {
-  index = "/admin",
+  home = "/admin",
   createArticle = "/admin/create-article",
   editArticle = "/admin/edit-article",
 }

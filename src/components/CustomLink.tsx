@@ -1,3 +1,5 @@
+"use client";
+
 import type { ClassValue } from "clsx";
 
 import Link from "next/link";
@@ -18,7 +20,7 @@ const CustomLink = forwardRef<HTMLAnchorElement, Props>((props, ref) => {
       ref={ref}
       href={href}
       className={clsxm(className, {
-        "": style === "default",
+        "hover:opacity-80": style === "default",
         "bg-primary rounded-md px-4 py-2 text-white hover:bg-opacity-80":
           style === "primary",
         "text-primary hover:opacity-70": style === "secondary",

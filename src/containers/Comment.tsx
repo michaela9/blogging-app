@@ -1,3 +1,5 @@
+"use client";
+
 import type { CommentT } from "@/types/types";
 
 import Image from "next/image";

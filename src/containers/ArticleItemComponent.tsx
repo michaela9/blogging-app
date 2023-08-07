@@ -1,14 +1,15 @@
 "use client";
 
 import type { ArticleT } from "@/types/types";
+
 import Image from "next/image";
 import React from "react";
+import { useIntl } from "react-intl";
 
+import CustomLink from "@/components/CustomLink";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
 import { IntlDate } from "@/components/IntlDate";
-import CustomLink from "@/components/CustomLink";
-import { useIntl } from "react-intl";
 
 type Props = {
   article: ArticleT;

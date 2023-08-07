@@ -29,8 +29,8 @@ export default function DeleteArticle({ articleId, closeModal }: Props) {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": process.env.APP_API_KEY,
-            Authorization: process.env.APP_TOKEN,
+            "X-API-KEY": " b21611a3-d995-499c-80d5-4e0f72db5ae1",
+            Authorization: "1bfa77bc-50b1-4bfa-9463-3028dbac9400",
           },
         },
       );

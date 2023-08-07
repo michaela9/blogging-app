@@ -1,3 +1,5 @@
+"use client";
+
 import type { ArticleT } from "@/types/types";
 
 import React from "react";

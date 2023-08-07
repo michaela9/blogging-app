@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import type { ArticleDetailT } from "@/types/types";
 
 import { articlesUrl } from "@/config/router";
 
 import ArticleDetail from "@/containers/ArticleDetail";
 
 import { articles } from "@/data/dummy";
-import type { ArticleDetailT } from "@/types/types";
 
 export const metadata: Metadata = {
   title: "Homepage",
@@ -17,17 +17,18 @@ type Props = {
   };
 };
 
-const apiKey = "b21611a3-d995-499c-80d5-4e0f72db5ae1";
-
 const getArticleDetailData = async (id: string): Promise<ArticleDetailT> => {
   const data = await fetch(`${articlesUrl}/${id}`, {
     method: "GET",
     headers: {
-      "X-API-KEY": apiKey,
+      "Content-Type": "application/json",
+      "X-API-KEY": "b21611a3-d995-499c-80d5-4e0f72db5ae1",
     },
   });
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const article = await data.json();
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return article;
 };
 
@@ -35,10 +36,10 @@ const getArticleDetailData = async (id: string): Promise<ArticleDetailT> => {
 //   try {
 //     const response = await fetch(`${articlesUrl}/images/${imageId}`, {
 //       method: "GET",
-//       headers: {
-//         "X-API-KEY": apiKey,
-//         Authorization: "1bfa77bc-50b1-4bfa-9463-3028dbac9400",
-//       },
+// headers: {
+//   "X-API-KEY": process.env.APP_API_KEY,
+//   Authorization: process.env.APP_TOKEN,
+// },
 //     });
 
 //     if (response.ok) {

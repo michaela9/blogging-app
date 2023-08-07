@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import React, { Fragment } from "react";
 import { useIntl } from "react-intl";
 
-import { AppUrl } from "@/config/router";
+import { AdminUrl, AppUrl } from "@/config/router";
 
 import useIsLoggedIn from "@/hooks/useIsLoggedIn";
 import clsxm from "@/utils/clsxm";
@@ -65,39 +65,69 @@ const MobileNavbar = () => {
             <div className="px-4 py-8 flex flex-col items-start gap-5">
               <>
                 {isLoggedIn ? (
-                  <Button
-                    onClick={() => {
-                      localStorage.setItem("accessToken", "");
-                      router.push(AppUrl.home);
-                    }}
+                  <>
+                    <Popover.Button
+                      as={Button}
+                      onClick={() => {
+                        localStorage.setItem("accessToken", "");
+                        router.push(AppUrl.home);
+                      }}
+                      style="primary"
+                    >
+                      {intl.formatMessage({
+                        id: "containers.navbar.logout",
+                        defaultMessage: "Log Out",
+                      })}
+                    </Popover.Button>
+                    <Popover.Button as={CustomLink} href={AdminUrl.home}>
+                      {intl.formatMessage({
+                        id: "containers.navbar.myArticles",
+                        defaultMessage: "My Articles",
+                      })}
+                    </Popover.Button>
+                    <Popover.Button
+                      as={CustomLink}
+                      href={AdminUrl.createArticle}
+                    >
+                      {intl.formatMessage({
+                        id: "containers.navbar.createArticle",
+                        defaultMessage: "Create Article",
+                      })}
+                    </Popover.Button>
+                  </>
+                ) : (
+                  <Popover.Button
+                    as={CustomLink}
+                    href={AppUrl.login}
                     style="primary"
                   >
-                    {intl.formatMessage({
-                      id: "containers.navbar.logout",
-                      defaultMessage: "Log Out",
-                    })}
-                  </Button>
-                ) : (
-                  <CustomLink href={AppUrl.login} style="primary">
                     {intl.formatMessage({
                       id: "containers.navbar.login",
                       defaultMessage: "Log In",
                     })}
-                  </CustomLink>
+                  </Popover.Button>
                 )}
               </>
-              <CustomLink href={AppUrl.home} style="secondary">
+              <Popover.Button
+                as={CustomLink}
+                href={AppUrl.home}
+                style="secondary"
+              >
                 {intl.formatMessage({
                   id: "containers.navbar.recentArticles",
                   defaultMessage: "Recent articles",
                 })}
-              </CustomLink>
-              <CustomLink href={AppUrl.about} style="secondary">
+              </Popover.Button>
+              <Popover.Button
+                as={CustomLink}
+                href={AppUrl.about}
+                style="secondary"
+              >
                 {intl.formatMessage({
                   id: "containers.navbar.about",
                   defaultMessage: "About",
                 })}
-              </CustomLink>
+              </Popover.Button>
             </div>
           </Popover.Panel>
         </>

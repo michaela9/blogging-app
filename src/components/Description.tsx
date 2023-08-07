@@ -1,3 +1,5 @@
+"use client";
+
 import clsxm from "@/utils/clsxm";
 
 type Props = {

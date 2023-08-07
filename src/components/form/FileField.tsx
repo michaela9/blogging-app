@@ -1,3 +1,5 @@
+"use client";
+
 import type { FieldValues, UseFormRegister } from "react-hook-form";
 
 type Props = Omit<JSX.IntrinsicElements["input"], "className"> & {

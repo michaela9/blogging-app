@@ -10,7 +10,21 @@ const useIsLoggedIn = () => {
     setIsLoggedIn(!!accessToken);
   }, []);
 
-  return isLoggedIn;
+  // const checkLoginStatus = () => {
+  //   const accessToken = localStorage.getItem("accessToken");
+  //   const condition = accessToken && accessToken !== "";
+  //   setIsLoggedIn(condition);
+  // };
+
+  // const logout = () => {
+  //   localStorage.removeItem("accessToken");
+  // };
+
+  // useEffect(() => {
+  //   checkLoginStatus();
+  // }, []);
+
+  return { isLoggedIn, setIsLoggedIn };
 };
 
 export default useIsLoggedIn;

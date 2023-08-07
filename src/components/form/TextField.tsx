@@ -1,3 +1,5 @@
+"use client";
+
 import type { FieldValues, UseFormRegister } from "react-hook-form";
 
 import FormErrorMessage from "./FormErrorMessage";

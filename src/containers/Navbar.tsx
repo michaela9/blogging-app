@@ -3,19 +3,20 @@
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import useIsLoggedIn from "@/hooks/useIsLoggedIn";
+import { AdminUrl, AppUrl } from "@/config/router";
 
 import Button from "@/components/Button";
 import CustomLink from "@/components/CustomLink";
-import { AppUrl } from "@/config/router";
+import { AuthContext } from "@/provider/AuthContext";
 
 const Navbar = () => {
   const intl = useIntl();
-  const isLoggedIn = useIsLoggedIn();
   const router = useRouter();
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
   return (
     <nav className="hidden md:block h-14 bg-light-gray">
       <div className="h-full flex w-full justify-between items-center max-w-6xl px-4 xl:px-0 mx-auto">
@@ -54,20 +55,35 @@ const Navbar = () => {
             </div>
           </CustomLink>
         )}
-        {!isLoggedIn && (
-          <Button
-            style="primary"
-            onClick={() => {
-              localStorage.setItem("accessToken", "");
-              router.push(AppUrl.home);
-              // refresh();
-            }}
-          >
-            {intl.formatMessage({
-              id: "containers.navbar.logout",
-              defaultMessage: "Log Out",
-            })}
-          </Button>
+        {isLoggedIn && (
+          <div className="flex gap-10 items-center">
+            <CustomLink href={AdminUrl.home} style="secondary">
+              {intl.formatMessage({
+                id: "containers.navbar.myArticles",
+                defaultMessage: "My Articles",
+              })}
+            </CustomLink>
+            <CustomLink href={AdminUrl.createArticle} style="secondary">
+              {intl.formatMessage({
+                id: "containers.navbar.createArticle",
+                defaultMessage: "Create Article",
+              })}
+            </CustomLink>
+            <Button
+              style="primary"
+              onClick={() => {
+                localStorage.setItem("accessToken", "");
+                setIsLoggedIn(false);
+                router.push(AppUrl.home);
+                // router.reload();
+              }}
+            >
+              {intl.formatMessage({
+                id: "containers.navbar.logout",
+                defaultMessage: "Log Out",
+              })}
+            </Button>
+          </div>
         )}
       </div>
     </nav>
