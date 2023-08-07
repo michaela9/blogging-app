@@ -15,9 +15,11 @@ import Comments from "./Comments";
 type Props = {
   article: ArticleDetailT;
   relatedArticles: ArticleT[];
+  fileData: string;
 };
 
-const ArticleDetail = ({ article, relatedArticles }: Props) => {
+const ArticleDetail = ({ article, relatedArticles, fileData }: Props) => {
+  console.log(fileData);
   const intl = useIntl();
   return (
     <div className="grid grid-cols-[2fr,1fr]">
@@ -32,7 +34,7 @@ const ArticleDetail = ({ article, relatedArticles }: Props) => {
           </div>
           <div className="">
             <Image
-              src={article.imageId}
+              src={fileData}
               alt={article.title}
               className="shrink-0 object-cover overflow-hidden"
               width={760}

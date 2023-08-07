@@ -1,66 +1,116 @@
 "use client";
 
-import type { SubmitHandler } from "react-hook-form";
-import type { ArticleDetailT } from "@/types/types";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { Controller,useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { z } from "zod";
 
-import { baseUrl } from "@/config/router";
+import { articlesUrl, baseUrl } from "@/config/router";
 
-import Button from "@/components/Button";
-import FileField from "@/components/form/FileField";
-import FormFieldWrapper from "@/components/form/FormFieldWrapper";
-import Label from "@/components/form/Label";
-import TextAreaField from "@/components/form/TextAreaField";
-import TextField from "@/components/form/TextField";
-import Heading from "@/components/Heading";
 
 const createArticleSchema = z.object({
   title: z.string(),
   perex: z.string(),
   content: z.string().min(1, { message: "Username is required" }),
+  image: z.array(
+    z.object({
+      type: z.string().regex(/image\/.+/, "Invalid image type"),
+    }),
+  ),
 });
 
 export type CreateArticleSchemaT = z.infer<typeof createArticleSchema>;
 
+const apiKey = "b21611a3-d995-499c-80d5-4e0f72db5ae1";
+
 const CreateArticle = () => {
+  const [imageFile, setImageFile] = useState(null);
   const {
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateArticleSchemaT>({
-    resolver: zodResolver(createArticleSchema),
-  });
+    register,
+    control,
+  } = useForm();
 
-  const onSubmit: SubmitHandler<CreateArticleSchemaT> = async (formData) => {
+  // const onSubmit = (data) => {
+  //   const formData = new FormData();
+  //   formData.append("image", data.picture[0]);
+  //   data = { ...data, picture: data.picture[0].name };
+  //   formData.append("recipe", JSON.stringify(data));
+
+  //   return fetch("/api/recipes/create", {
+  //     method: "POST",
+  //     body: formData,
+  //   }).then((response) => {
+  //     if (response.ok) {
+  //       // Handle successful upload
+  //     } else {
+  //       // Handle error
+  //     }
+  //   });
+  // };
+
+  const onSubmit = async (data) => {
     try {
-      const response = await axios.post<ArticleDetailT>(
-        `${baseUrl}/articles`,
+      console.log("first data", data);
+      const myImage = data.picture;
+      console.log(myImage);
+      // data = { ...data, picture: data.picture[0].name };
+
+      // console.log("formData", formData);
+      // console.log("data", data);
+      // formData.append("article", JSON.stringify(data));
+      // console.log("article", formData);
+
+      const imageUploadResponse = await axios.post(
+        `${baseUrl}/images`,
         {
-          title: formData.title,
-          content: formData.content,
-          perex: formData.perex,
+          image: myImage,
         },
         {
           headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": process.env.APP_API_KEY,
-            Authorization: process.env.APP_TOKEN,
+            "Content-Type": "multipart/form-data",
+            "X-API-KEY": apiKey,
+            Authorization: "1bfa77bc-50b1-4bfa-9463-3028dbac9400",
           },
         },
       );
 
-      if (!response.data) {
+      console.log(imageUploadResponse);
+
+      const imageId = imageUploadResponse.data[0].imageId;
+
+      console.log(imageId);
+
+      const articleCreateResponse = await axios.post(
+        `${articlesUrl}`,
+        {
+          title: data.title,
+          content: data.content,
+          perex: data.perex,
+          imageId: imageId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": apiKey,
+            Authorization: "1bfa77bc-50b1-4bfa-9463-3028dbac9400",
+          },
+        },
+      );
+
+      if (!articleCreateResponse.data) {
         throw new Error("Network response was not ok.");
       }
 
-      return response.data;
+      if (articleCreateResponse.data) {
+        const myData = articleCreateResponse.data;
+        console.log(myData);
+      }
     } catch (error) {
-      throw new Error("Error editing article. Please try again later.");
+      throw new Error("Error creating article. Please try again later.");
     }
   };
 
@@ -68,9 +118,10 @@ const CreateArticle = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
+      // onSubmit={handleSubmit(onSubmit)}
       className="space-y-8 flex flex-col justify-end items-end"
     >
-      <div className="flex gap-4 items-center">
+      {/* <div className="flex gap-4 items-center">
         <Heading headingLevel="h1" size="s1">
           {intl.formatMessage({
             id: "containers.forms.createArticle.title",
@@ -83,37 +134,63 @@ const CreateArticle = () => {
             defaultMessage: "Publish Article",
           })}
         </Button>
-      </div>
+      </div> */}
 
       <div className="w-full space-y-4">
-        <FormFieldWrapper>
+        <Controller
+          control={control}
+          name="picture"
+          rules={{ required: "Recipe picture is required" }}
+          render={({ field: { value, onChange, ...field } }) => {
+            return (
+              <input
+                {...field}
+                value={value?.fileName}
+                onChange={(event) => {
+                  onChange(event.target.files[0]);
+                }}
+                type="file"
+                id="picture"
+              />
+            );
+          }}
+        />
+        <input
+          {...register("content", {
+            required: "Content is required",
+          })}
+          type="text"
+          id="content"
+        />
+        <input
+          {...register("title", {
+            required: "title is required",
+          })}
+          type="text"
+          id="title"
+        />
+        <input
+          {...register("perex", {
+            required: "perex is required",
+          })}
+          type="text"
+          id="perex"
+        />
+        <button>Submit</button>
+
+        {/* <FormFieldWrapper>
           <Label name="title">
             {intl.formatMessage({
               id: "containers.forms.createArticle.articleTitle",
               defaultMessage: "Article Title",
             })}
           </Label>
-          <TextField placeholder="My first article" name="title" />
+          <TextField
+            placeholder="My first article"
+            name="title"
+            register={register}
+          />
           {errors.title && <span>{errors.title.message}</span>}
-        </FormFieldWrapper>
-        <FormFieldWrapper>
-          <Label name="title">
-            {intl.formatMessage({
-              id: "containers.forms.createArticle.image",
-              defaultMessage: "Featured Image",
-            })}
-          </Label>
-          <FileField name="image" />
-        </FormFieldWrapper>
-
-        <FormFieldWrapper>
-          <Label name="content">
-            {intl.formatMessage({
-              id: "containers.forms.createArticle.content",
-              defaultMessage: "Content",
-            })}
-          </Label>
-          <TextAreaField placeholder="Content" name="content" />
         </FormFieldWrapper>
         <FormFieldWrapper>
           <Label name="perex">
@@ -122,8 +199,45 @@ const CreateArticle = () => {
               defaultMessage: "Perex",
             })}
           </Label>
-          <TextAreaField placeholder="Perex" name="perex" />
+          <TextAreaField placeholder="Perex" name="perex" register={register} />
+        </FormFieldWrapper> */}
+        {/* <FormFieldWrapper>
+          <Label name="imageId">
+            {intl.formatMessage({
+              id: "containers.forms.createArticle.imageId",
+              defaultMessage: "Image Path",
+            })}
+          </Label>
+          <TextField
+            placeholder="screenshot.png"
+            name="imageId"
+            register={register}
+          />
+          {errors.imageId && <span>{errors.imageId.message}</span>}
+        </FormFieldWrapper> */}
+        {/* <FormFieldWrapper>
+          <Label name="image">
+            {intl.formatMessage({
+              id: "containers.forms.createArticle.image",
+              defaultMessage: "Featured Image",
+            })}
+          </Label>
+          <FileField name="image" register={register} />
         </FormFieldWrapper>
+        <FormFieldWrapper>
+          <Label name="content">
+            {intl.formatMessage({
+              id: "containers.forms.createArticle.content",
+              defaultMessage: "Content",
+            })}
+          </Label>
+          <TextAreaField
+            placeholder="Content"
+            name="content"
+            className="h-[300px]"
+            register={register}
+          />
+        </FormFieldWrapper> */}
       </div>
     </form>
   );
