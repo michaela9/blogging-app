@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import EditArticle from "@/containers/forms/EditArticle";
+import EditArticle from "@/containers/EditArticle";
 
 export const metadata: Metadata = {
   title: "Admin - Edit Article",

@@ -49,8 +49,11 @@ export default function useCreateArticle() {
     console.log(formData);
 
     const formDataT = new FormData();
+
     formDataT.append("image", formData.image[0]);
     const imageData = (await fetchImage(formDataT)) as { imageId: string }[];
+
+    console.log(imageData);
 
     if (!imageData || imageError) {
       setError(error as AxiosError);
@@ -60,6 +63,7 @@ export default function useCreateArticle() {
       Array.isArray(imageData) &&
       imageData.length > 0 &&
       (imageData[0].imageId as string);
+    console.log(imageData);
     const articleData = await fetchArticle({
       title: formData.title,
       content: formData.content,
