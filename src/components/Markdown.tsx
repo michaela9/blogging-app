@@ -1,8 +1,6 @@
 import type { ClassValue } from "clsx";
 
 import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm";
 
 import clsxm from "@/utils/clsxm";
 
@@ -18,8 +16,6 @@ export default function Markdown({
 }: Props) {
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw]}
       className={clsxm(
         { printable: printable, markdown: !printable },
         "markdown",

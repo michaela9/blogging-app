@@ -8,23 +8,23 @@ export type GetValues<TFieldValues extends FieldValues = FieldValues> =
 
 const useMarkdownHandlers = (setValue: SetValue, getValues: GetValues) => {
   const handleBold = () => {
-    setValue("content", `${getValues().content}**bold text**`);
+    setValue("content", `${getValues().content || ""}**bold text**`);
   };
 
   const handleItalic = () => {
-    setValue("content", `${getValues().content}*italic text*`);
+    setValue("content", `${getValues().content || ""}*italic text*`);
   };
 
   const handleHeading1 = () => {
-    setValue("content", `${getValues().content}# Heading\n`);
+    setValue("content", `${getValues().content || ""}# Heading\n`);
   };
 
   const handleHeading2 = () => {
-    setValue("content", `${getValues().content}## Heading\n`);
+    setValue("content", `${getValues().content || ""}## Heading\n`);
   };
 
   const handleHeading3 = () => {
-    setValue("content", `${getValues().content}### Heading\n`);
+    setValue("content", `${getValues().content || ""}### Heading\n`);
   };
 
   return {

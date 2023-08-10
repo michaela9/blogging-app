@@ -1,5 +1,7 @@
 "use client";
 
+import type { ArticleT, PaginationT } from "@/types/types";
+
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -11,12 +13,40 @@ import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
 
 import ArticleItem from "./ArticleItem";
-import useGetArticles from "@/hooks/useGetArticles";
 
 export default function RecentArticles() {
   const intl = useIntl();
 
-  const { loading, error, articles, sortedArticles } = useGetArticles();
+  const { data, loading, error, refetch } = useGet<{
+    pagination: PaginationT;
+    items: ArticleT[];
+  }>(articlesUrl);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return intl.formatMessage(
+      {
+        id: "containers.recentArticles.errorMessage",
+        defaultMessage: "Error loading articles: {error_message}",
+      },
+      { error_message: error.message },
+    );
+  }
+
+  if (!data || data.items.length === 0) {
+    return intl.formatMessage({
+      id: "containers.recentArticles.noArticlesFound",
+      defaultMessage: "No articles found.",
+    });
+  }
+
+  const articles = data.items;
+  const sortedArticles = articles.sort((a, b) =>
+    b.createdAt.localeCompare(a.createdAt),
+  );
 
   return (
     <div className="space-y-4 md:space-y-12">

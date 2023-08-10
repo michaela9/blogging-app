@@ -13,7 +13,12 @@ export const createArticleSchema = z.object({
   title: z.string(),
   perex: z.string(),
   content: z.string().min(1, { message: "Content is required" }),
-  image: z.any(),
+  image: z
+    .string()
+    .min(1, { message: "Content is required" })
+    .refine((filename) => /\.(jpg|jpeg|png)$/i.test(filename), {
+      message: "Invalid file format. Only JPEG and PNG are allowed.",
+    }),
 });
 
 export type CreateArticleSchemaT = z.infer<typeof createArticleSchema>;

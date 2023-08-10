@@ -10,13 +10,14 @@ type Props = Omit<JSX.IntrinsicElements["button"], "className"> & {
   disabled?: boolean;
   className?: ClassValue;
   children: ReactNode;
+  type: "button" | "submit";
 };
 
 export default function Button({
   style = "primary",
   children,
   className,
-  type,
+  type = "button",
   ...rest
 }: Props) {
   return (

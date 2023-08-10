@@ -8,23 +8,15 @@ import { useForm } from "react-hook-form";
 
 import { AdminUrl, articlesUrl, imagesUrl } from "@/config/router";
 
-import type * as zodSchema from "@/schema/zodSchema";
+import type { CreateArticleSchemaT } from "@/schema/zodSchema";
 import { createArticleSchema } from "@/schema/zodSchema";
 
 import { usePost } from "./api";
 
-type ImageResponseT = {
-  imageId: string;
-}[];
-
-type ArticleResponseT = {
-  articleId?: string;
-  message?: string;
-};
-
 export default function useCreateArticle() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>();
+
   const router = useRouter();
 
   const {
@@ -34,7 +26,7 @@ export default function useCreateArticle() {
     getValues,
     formState: { errors },
     register,
-  } = useForm<zodSchema.CreateArticleSchemaT>({
+  } = useForm<CreateArticleSchemaT>({
     resolver: zodResolver(createArticleSchema),
   });
 
@@ -42,29 +34,32 @@ export default function useCreateArticle() {
     loading: imageLoading,
     error: imageError,
     fetchPost: fetchImage,
-  } = usePost<ImageResponseT, any>(imagesUrl, "multipart/form-data");
+  } = usePost(imagesUrl, "multipart/form-data");
 
   const {
     loading: articleLoading,
     error: articleError,
     fetchPost: fetchArticle,
-  } = usePost<ArticleResponseT, zodSchema.CreateArticleSchemaT>(articlesUrl);
+  } = usePost(articlesUrl);
 
-  const onSubmit: SubmitHandler<zodSchema.CreateArticleSchemaT> = async (
-    formData,
+  const onSubmit: SubmitHandler<CreateArticleSchemaT> = async (
+    formData: CreateArticleSchemaT,
   ) => {
     setIsLoading(true);
-    let formDataT = new FormData();
-    formDataT.append("image", formData.image[0]);
-    formDataT = { ...formDataT, image: formData.image[0] };
+    console.log(formData);
 
-    const imageData = await fetchImage(formDataT);
+    const formDataT = new FormData();
+    formDataT.append("image", formData.image[0]);
+    const imageData = (await fetchImage(formDataT)) as { imageId: string }[];
 
     if (!imageData || imageError) {
       setError(error as AxiosError);
     }
-    const imageId = imageData[0].imageId as string;
-
+    const imageId =
+      imageData &&
+      Array.isArray(imageData) &&
+      imageData.length > 0 &&
+      (imageData[0].imageId as string);
     const articleData = await fetchArticle({
       title: formData.title,
       content: formData.content,

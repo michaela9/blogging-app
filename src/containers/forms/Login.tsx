@@ -43,18 +43,21 @@ export default function Login() {
   const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
     const fetchedData = await fetchPost(formData);
 
-    if (error || !fetchedData) {
-      return intl.formatMessage(
-        {
-          id: "containers.recentArticles.errorMessage",
-          defaultMessage: "Login failed",
-        },
-        { error_message: error.message },
-      );
+    if (error) {
+      return intl.formatMessage({
+        id: "containers.recentArticles.errorMessage",
+        defaultMessage: "Login failed",
+      });
     }
 
     if (loading || isSubmitting) {
       return <Loader />;
+    }
+    if (!fetchedData) {
+      return intl.formatMessage({
+        id: "containers.recentArticles.missingData",
+        defaultMessage: "Missing data",
+      });
     }
 
     login(fetchedData.access_token);
