@@ -5,24 +5,13 @@ import type { ClassValue } from "clsx";
 import clsxm from "@/utils/clsxm";
 
 type Props = {
-  errorMessage: string;
+  errorMessage: string | undefined;
   className?: ClassValue;
-  style?: "login";
 };
 
-export default function FormErrorMessage({
-  errorMessage,
-  className,
-  style,
-}: Props) {
+export default function FormErrorMessage({ errorMessage, className }: Props) {
   return (
-    <span
-      className={clsxm(
-        "z-10 px-2 py-0.5 text-xs text-red-500",
-        { "absolute left-0 top-12": style === "login" },
-        className,
-      )}
-    >
+    <span className={clsxm("z-10 px-2 py-0.5 text-xs text-red-500", className)}>
       {errorMessage}
     </span>
   );

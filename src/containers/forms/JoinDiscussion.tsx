@@ -5,7 +5,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 const profilePhoto = "/img.png";
-const JoinDiscussion = () => {
+export default function JoinDiscussion() {
   const intl = useIntl();
   return (
     <div className="flex gap-6">
@@ -31,6 +31,4 @@ const JoinDiscussion = () => {
       </form>
     </div>
   );
-};
-
-export default JoinDiscussion;
+}

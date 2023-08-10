@@ -11,7 +11,12 @@ type HeadingProps = {
   size: "s1" | "s2" | "s3" | "s4";
 } & React.HTMLAttributes<HTMLHeadingElement>;
 
-const Heading = ({ headingLevel, children, className, size }: HeadingProps) => {
+export default function Heading({
+  headingLevel,
+  children,
+  className,
+  size,
+}: HeadingProps) {
   const MyHeading = ({ ...props }: HTMLAttributes<HTMLHeadingElement>) =>
     createElement(headingLevel, props, children);
 
@@ -27,6 +32,4 @@ const Heading = ({ headingLevel, children, className, size }: HeadingProps) => {
       {children}
     </MyHeading>
   );
-};
-
-export default Heading;
+}

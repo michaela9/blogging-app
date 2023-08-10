@@ -1,14 +1,20 @@
 "use client";
 
-import type { FieldValues, UseFormRegister } from "react-hook-form";
+import type { UseFormRegister } from "react-hook-form";
 
 type Props = Omit<JSX.IntrinsicElements["input"], "className"> & {
   name: string;
-  register?: UseFormRegister<FieldValues>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register?: UseFormRegister<any>;
   errorMessage?: string;
 };
 
-const FileField = ({ name, register, errorMessage, ...rest }: Props) => {
+export default function FileField({
+  name,
+  register,
+  errorMessage,
+  ...rest
+}: Props) {
   return (
     <>
       <input
@@ -22,6 +28,4 @@ const FileField = ({ name, register, errorMessage, ...rest }: Props) => {
       {errorMessage && "sihsu"}
     </>
   );
-};
-
-export default FileField;
+}

@@ -22,7 +22,7 @@ export default function Markdown({
       rehypePlugins={[rehypeRaw]}
       className={clsxm(
         { printable: printable, markdown: !printable },
-        "markdown-style",
+        "markdown",
         className,
       )}
     >

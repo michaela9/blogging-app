@@ -4,16 +4,14 @@ import type { SubmitHandler } from "react-hook-form";
 import type { LoginResponse } from "@/types/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
-import { z } from "zod";
 
 import { AdminUrl, loginUrl } from "@/config/router";
 
-import useToken from "@/hooks/useToken";
+import { usePost } from "@/hooks/api";
 
 import Button from "@/components/Button";
 import FormFieldWrapper from "@/components/form/FormFieldWrapper";
@@ -21,71 +19,50 @@ import Label from "@/components/form/Label";
 import PasswordField from "@/components/form/PasswordField";
 import TextField from "@/components/form/TextField";
 import Heading from "@/components/Heading";
-import { AuthContext } from "@/provider/AuthContext";
+import Loader from "@/components/Loader";
 
-const userSchema = z.object({
-  username: z.string().min(1, { message: "Username is required" }),
-  password: z
-    .string()
-    .min(3, { message: "Your password should have at least 3 characters" }),
-});
+import { AuthContext } from "@/provider/AuthProvider";
+import type { UserSchemaT } from "@/schema/zodSchema";
+import { userSchema } from "@/schema/zodSchema";
 
-export type UserSchemaT = z.infer<typeof userSchema>;
-
-const Login = () => {
+export default function Login() {
   const intl = useIntl();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
+  const { loading, error, fetchPost } = usePost<LoginResponse, UserSchemaT>(
+    loginUrl,
+  );
 
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     register,
   } = useForm<UserSchemaT>({
     resolver: zodResolver(userSchema),
   });
-
   const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
-    setIsLoading(true);
-    try {
-      const response = await axios.post<LoginResponse>(
-        loginUrl,
+    const fetchedData = await fetchPost(formData);
+
+    if (error || !fetchedData) {
+      return intl.formatMessage(
         {
-          username: formData.username,
-          password: formData.password,
+          id: "containers.recentArticles.errorMessage",
+          defaultMessage: "Login failed",
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": " b21611a3-d995-499c-80d5-4e0f72db5ae1",
-            Authorization: "1bfa77bc-50b1-4bfa-9463-3028dbac9400",
-          },
-        },
+        { error_message: error.message },
       );
-      if (!response.data) {
-        throw new Error("Network response was not ok.");
-      }
-      if (response.data) {
-        const data = response.data;
-        console.log(response.data);
-        const accessToken = data.access_token;
-        // setTokenBase(accessToken);
-        // setToken(accessToken);
-        localStorage.setItem("accessToken", accessToken);
-        setIsLoggedIn(true);
-        router.push(AdminUrl.index);
-        router.reload();
-      }
-      setIsLoading(false);
-    } catch (error) {
-      throw new Error("Error login user. Please try again later.");
     }
+
+    if (loading || isSubmitting) {
+      return <Loader />;
+    }
+
+    login(fetchedData.access_token);
+    router.push(AdminUrl.home);
   };
 
   return (
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-xl border border-gray-100 max-w-sm rounded-md mx-auto">
-      {isLoading ? "Is Loading" : "Not loading"}
       <Heading headingLevel="h1" size="s2">
         {intl.formatMessage({
           id: "containers.login.title",
@@ -133,6 +110,4 @@ const Login = () => {
       </form>
     </div>
   );
-};
-
-export default Login;
+}

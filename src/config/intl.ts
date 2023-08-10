@@ -7,4 +7,4 @@ export const Locale = {
 
 export const locales: LocaleT[] = Object.values(Locale);
 
-export const defaultLocale = Locale.CS;
+export const defaultLocale = Locale.EN;

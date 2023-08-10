@@ -10,12 +10,13 @@ import { AdminUrl, AppUrl } from "@/config/router";
 
 import Button from "@/components/Button";
 import CustomLink from "@/components/CustomLink";
-import { AuthContext } from "@/provider/AuthContext";
 
-const Navbar = () => {
+import { AuthContext } from "@/provider/AuthProvider";
+
+export default function Navbar() {
   const intl = useIntl();
   const router = useRouter();
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { logout, isLoggedIn } = useContext(AuthContext);
 
   return (
     <nav className="hidden md:block h-14 bg-light-gray">
@@ -31,7 +32,7 @@ const Navbar = () => {
               priority
             />
           </CustomLink>
-          <CustomLink href="/">
+          <CustomLink href={AppUrl.home}>
             {intl.formatMessage({
               id: "containers.navbar.recentArticles",
               defaultMessage: "Recent articles",
@@ -72,10 +73,8 @@ const Navbar = () => {
             <Button
               style="primary"
               onClick={() => {
-                localStorage.setItem("accessToken", "");
-                setIsLoggedIn(false);
+                logout();
                 router.push(AppUrl.home);
-                // router.reload();
               }}
             >
               {intl.formatMessage({
@@ -88,6 +87,4 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

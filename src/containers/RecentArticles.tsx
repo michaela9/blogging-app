@@ -1,21 +1,23 @@
 "use client";
 
-import type { ArticleT } from "@/types/types";
-
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { articlesUrl } from "@/config/router";
+
+import { useGet } from "@/hooks/api";
+
 import Heading from "@/components/Heading";
+import Loader from "@/components/Loader";
 
 import ArticleItem from "./ArticleItem";
+import useGetArticles from "@/hooks/useGetArticles";
 
-type Props = {
-  articles: ArticleT[];
-};
-
-const RecentArticles = ({ articles }: Props) => {
+export default function RecentArticles() {
   const intl = useIntl();
-  console.log(articles);
+
+  const { loading, error, articles, sortedArticles } = useGetArticles();
+
   return (
     <div className="space-y-4 md:space-y-12">
       <Heading headingLevel="h1" size="s1">
@@ -25,7 +27,7 @@ const RecentArticles = ({ articles }: Props) => {
         })}
       </Heading>
       <div className="space-y-10 sm:space-y-6">
-        {articles.map((article) => (
+        {sortedArticles.map((article) => (
           <div key={article.articleId}>
             <ArticleItem article={article} />
           </div>
@@ -33,6 +35,4 @@ const RecentArticles = ({ articles }: Props) => {
       </div>
     </div>
   );
-};
-
-export default RecentArticles;
+}

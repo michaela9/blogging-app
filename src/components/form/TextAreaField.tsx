@@ -1,24 +1,25 @@
 "use client";
 
 import type { ClassValue } from "clsx";
-import type { FieldValues, UseFormRegister } from "react-hook-form";
+import type { UseFormRegister } from "react-hook-form";
 
 import clsxm from "@/utils/clsxm";
 
 type Props = Omit<JSX.IntrinsicElements["textarea"], "className"> & {
   name: string;
-  register?: UseFormRegister<FieldValues>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register?: UseFormRegister<any>;
   errorMessage?: string;
   className?: ClassValue;
 };
 
-const TextAreaField = ({
+export default function TextAreaField({
   name,
   register,
   className,
   errorMessage,
   ...rest
-}: Props) => {
+}: Props) {
   return (
     <>
       <textarea
@@ -31,6 +32,4 @@ const TextAreaField = ({
       {errorMessage && "sihsu"}
     </>
   );
-};
-
-export default TextAreaField;
+}

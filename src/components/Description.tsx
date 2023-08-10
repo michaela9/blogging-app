@@ -6,7 +6,11 @@ type Props = {
   size?: "sm" | "base" | "xl";
 } & React.HTMLAttributes<HTMLParagraphElement>;
 
-const Description = ({ children, className, size = "base" }: Props) => {
+export default function Description({
+  children,
+  className,
+  size = "base",
+}: Props) {
   return (
     <p
       className={clsxm(className, {
@@ -18,6 +22,4 @@ const Description = ({ children, className, size = "base" }: Props) => {
       {children}
     </p>
   );
-};
-
-export default Description;
+}

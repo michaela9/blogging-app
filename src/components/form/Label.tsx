@@ -7,7 +7,7 @@ type Props = Omit<JSX.IntrinsicElements["label"], "className"> & {
   children: ReactNode;
 };
 
-const Label = ({ name, children, ...rest }: Props) => {
+export default function Label({ name, children, ...rest }: Props) {
   return (
     <label
       htmlFor={name}
@@ -17,6 +17,4 @@ const Label = ({ name, children, ...rest }: Props) => {
       {children}
     </label>
   );
-};
-
-export default Label;
+}

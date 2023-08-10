@@ -1,71 +1,51 @@
 "use client";
 
-import type { ArticleDetailT, ArticleT } from "@/types/types";
+import type { ArticleDetailT } from "@/types/types";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
-import Description from "@/components/Description";
-import Heading from "@/components/Heading";
+import { articlesUrl } from "@/config/router";
 
-import ArticleShortItem from "./ArticleShortItem";
-import Comments from "./Comments";
-import ArticleDetailComponent from "./ArticleDetailComponent";
+import { useGet } from "@/hooks/api";
+
+import Loader from "@/components/Loader";
+
 import { articles } from "@/data/dummy";
-import axios from "axios";
-import { baseUrl } from "@/config/router";
+
+import ArticleDetailComponent from "./ArticleDetailComponent";
 
 type Props = {
-  article: ArticleDetailT;
-  relatedArticles: ArticleT[];
-  // fileData: string;
+  id: string;
 };
 
-const ArticleDetail = ({ article, relatedArticles }: Props) => {
+export default function ArticleDetail({ id }: Props) {
   const intl = useIntl();
 
-  const [fileData, setFileData] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    fetchImage(article.imageId);
-  }, [article]);
-
-  const fetchImage = async (imageId: string) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`${baseUrl}/images/${imageId}`, {
-        responseType: "blob",
-        headers: {
-          "X-API-KEY": "b21611a3-d995-499c-80d5-4e0f72db5ae1",
-          Authorization: "1bfa77bc-50b1-4bfa-9463-3028dbac9400",
-        },
-      });
-
-      if (response.data) {
-        const blob = new Blob([response.data], {
-          type: response.headers["content-type"],
-        });
-
-        const blobURL = URL.createObjectURL(blob);
-        setFileData(blobURL);
-      }
-    } catch (error) {
-      console.error("Error fetching articles:", error);
-    }
-    setLoading(false);
-  };
+  const { data, loading, error } = useGet<ArticleDetailT>(
+    `${articlesUrl}/${id}`,
+  );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
-  return (
-    <ArticleDetailComponent
-      fileData={fileData}
-      article={article}
-      relatedArticles={articles}
-    />
-  );
-};
 
-export default ArticleDetail;
+  if (error) {
+    return intl.formatMessage(
+      {
+        id: "containers.recentArticles.errorMessage",
+        defaultMessage: "Error loading articles: {error_message}",
+      },
+      { error_message: error.message },
+    );
+  }
+
+  if (!data) {
+    return intl.formatMessage({
+      id: "containers.recentArticles.noArticlesFound",
+      defaultMessage: "Article not found.",
+    });
+  }
+
+  return <ArticleDetailComponent article={data} relatedArticles={articles} />;
+}

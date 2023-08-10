@@ -15,7 +15,7 @@ const numberOfComments = 5;
 type Props = {
   comments: CommentT[];
 };
-const Comments = ({ comments }: Props) => {
+export default function Comments({ comments }: Props) {
   const intl = useIntl();
   return (
     <div className="space-y-4">
@@ -38,6 +38,4 @@ const Comments = ({ comments }: Props) => {
       </div>
     </div>
   );
-};
-
-export default Comments;
+}

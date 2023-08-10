@@ -1,16 +1,22 @@
 "use client";
-import type { FieldValues, UseFormRegister } from "react-hook-form";
+import type { UseFormRegister } from "react-hook-form";
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
 type Props = Omit<JSX.IntrinsicElements["input"], "className"> & {
   name: string;
-  register?: UseFormRegister<FieldValues>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register?: UseFormRegister<any>;
   errorMessage?: string;
 };
 
-const PasswordField = ({ name, register, errorMessage, ...rest }: Props) => {
+export default function PasswordField({
+  name,
+  register,
+  errorMessage,
+  ...rest
+}: Props) {
   const [visiblePassword, setVisiblePassword] = useState(false);
 
   return (
@@ -34,6 +40,4 @@ const PasswordField = ({ name, register, errorMessage, ...rest }: Props) => {
       />
     </div>
   );
-};
-
-export default PasswordField;
+}

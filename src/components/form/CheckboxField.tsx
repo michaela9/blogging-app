@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import type { ReactNode } from "react";
-import type { FieldValues, UseFormRegister } from "react-hook-form";
+import type { UseFormRegister } from "react-hook-form";
 
 import clsxm from "@/utils/clsxm";
 
@@ -9,17 +9,18 @@ type Props = Omit<JSX.IntrinsicElements["input"], "className"> & {
   name: string;
   label: ReactNode;
   required?: boolean;
-  register?: UseFormRegister<FieldValues>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  register?: UseFormRegister<any>;
   errorMessage?: string;
 };
 
-const CheckboxField = ({
+export default function CheckboxField({
   name,
   label,
   register,
   errorMessage,
   ...rest
-}: Props) => {
+}: Props) {
   return (
     <div className="flex items-center">
       <input
@@ -41,6 +42,4 @@ const CheckboxField = ({
       </label>
     </div>
   );
-};
-
-export default CheckboxField;
+}

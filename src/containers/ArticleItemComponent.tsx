@@ -6,6 +6,8 @@ import Image from "next/image";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { AppUrl } from "@/config/router";
+
 import CustomLink from "@/components/CustomLink";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
@@ -13,20 +15,22 @@ import { IntlDate } from "@/components/IntlDate";
 
 type Props = {
   article: ArticleT;
-  fileData: string;
+  blobURL: string;
 };
 
-export default function ArticleItemComponent({ article, fileData }: Props) {
+export default function ArticleItemComponent({ article, blobURL }: Props) {
   const intl = useIntl();
   return (
     <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-      <Image
-        src={fileData}
-        alt={article.title}
-        className="shrink-0"
-        width={272}
-        height={244}
-      />
+      <CustomLink href={`${AppUrl.articles}/${article.articleId}`}>
+        <Image
+          src={blobURL}
+          alt={article.title}
+          className="shrink-0"
+          width={272}
+          height={244}
+        />
+      </CustomLink>
       <div className="space-y-2 md:space-y-4">
         <Heading headingLevel="h2" size="s3">
           {article.title}

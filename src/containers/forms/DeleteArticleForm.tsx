@@ -1,49 +1,52 @@
 "use client";
 
-import type { ArticleDetailT } from "@/types/types";
-
-import axios from "axios";
 import { useIntl } from "react-intl";
 
 import { articlesUrl } from "@/config/router";
 
+import useDelete from "@/hooks/api";
+
 import Button from "@/components/Button";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
+import Loader from "@/components/Loader";
 
 type Props = {
   articleId: string;
   closeModal: () => void;
+  refetch: () => void;
 };
 
-export default function DeleteArticle({ articleId, closeModal }: Props) {
+export default function DeleteArticleForm({
+  articleId,
+  closeModal,
+  refetch,
+}: Props) {
   const intl = useIntl();
 
-  const handleDeleteArticle = async () => {
-    try {
-      const response = await axios.post<ArticleDetailT>(
-        `${articlesUrl}/${articleId}`,
-        {
-          articleId: articleId,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": " b21611a3-d995-499c-80d5-4e0f72db5ae1",
-            Authorization: "1bfa77bc-50b1-4bfa-9463-3028dbac9400",
-          },
-        },
-      );
+  const { loading, error, fetchDelete } = useDelete<{
+    articleId: string;
+  }>();
 
-      if (!response.data) {
-        throw new Error("Network response was not ok.");
-      }
-
-      return response.data;
-    } catch (error) {
-      throw new Error("Error editing article. Please try again later.");
-    }
+  const handleDeleteClick = async () => {
+    await fetchDelete(`${articlesUrl}/${articleId}`);
+    closeModal();
+    refetch();
   };
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return intl.formatMessage(
+      {
+        id: "containers.recentArticles.errorMessage",
+        defaultMessage: "Error deleting articles: {error_message}",
+      },
+      { error_message: error.message },
+    );
+  }
 
   return (
     <div className="space-y-10">
@@ -62,7 +65,7 @@ export default function DeleteArticle({ articleId, closeModal }: Props) {
         </Description>
       </div>
       <div className="flex gap-4 items-center">
-        <Button style="primary" onClick={handleDeleteArticle}>
+        <Button style="primary" onClick={handleDeleteClick}>
           {intl.formatMessage({
             id: "containers.forms.deleteArticle.submit",
             defaultMessage: " Yes, please!",

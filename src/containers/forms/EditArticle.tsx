@@ -9,7 +9,6 @@ import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
-import { z } from "zod";
 
 import { articlesUrl } from "@/config/router";
 
@@ -22,21 +21,14 @@ import TextField from "@/components/form/TextField";
 import Heading from "@/components/Heading";
 
 import { articleDetail } from "@/data/dummy";
+import type { EditArticleSchemaT } from "@/schema/zodSchema";
+import { editArticleSchema } from "@/schema/zodSchema";
 
 type Props = {
   id: string;
 };
 
-const editArticleSchema = z.object({
-  title: z.string(),
-  perex: z.string(),
-  content: z.string().min(1, { message: "Username is required" }),
-  image: z.string(),
-});
-
-export type EditArticleSchemaT = z.infer<typeof editArticleSchema>;
-
-const EditArticle = ({ id }: Props) => {
+export default function EditArticle({ id }: Props) {
   const intl = useIntl();
   const article = articleDetail;
 
@@ -152,6 +144,4 @@ const EditArticle = ({ id }: Props) => {
       </div>
     </form>
   );
-};
-
-export default EditArticle;
+}

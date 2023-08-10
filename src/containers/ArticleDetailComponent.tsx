@@ -2,28 +2,58 @@
 
 import type { ArticleDetailT, ArticleT } from "@/types/types";
 
+import Image from "next/image";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { imagesUrl } from "@/config/router";
+
+import { useGet } from "@/hooks/api";
+
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
+import { IntlDate } from "@/components/IntlDate";
+import Loader from "@/components/Loader";
+import Markdown from "@/components/Markdown";
 
 import ArticleShortItem from "./ArticleShortItem";
 import Comments from "./Comments";
-import Image from "next/image";
 
 type Props = {
   article: ArticleDetailT;
   relatedArticles: ArticleT[];
-  fileData: string;
 };
 
-const ArticleDetailComponent = ({
+export default function ArticleDetailComponent({
   article,
   relatedArticles,
-  fileData,
-}: Props) => {
+}: Props) {
   const intl = useIntl();
+  const { response, data, loading, error } = useGet<Blob>(
+    `${imagesUrl}/${article.imageId}`,
+    { responseType: "blob" },
+  );
+
+  let blobURL;
+
+  if (data && response) {
+    const blob = new Blob([response.data], {
+      type: response.headers["content-type"] as string,
+    });
+
+    blobURL = URL.createObjectURL(blob);
+  }
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error || !blobURL) {
+    return intl.formatMessage({
+      id: "containers.articleItem.blobNotFound",
+      defaultMessage: "Blob not found",
+    });
+  }
 
   return (
     <div className="grid grid-cols-[2fr,1fr]">
@@ -34,18 +64,21 @@ const ArticleDetailComponent = ({
         <div className="space-y-6 border-b border-b-gray-300 pb-10">
           <div className="text-secondary-text text-xs flex gap-4">
             {/* <Description>{article.author}</Description> */}
-            <Description>{article.createdAt}</Description>
+            <Description>
+              <IntlDate value={article.createdAt} />
+              {article.createdAt}
+            </Description>
           </div>
           <div className="">
             <Image
-              src={fileData}
+              src={blobURL}
               alt={article.title}
               className="shrink-0 object-cover overflow-hidden"
               width={760}
               height={500}
             />
           </div>
-          <Description>{article.content}</Description>
+          <Markdown>{article.content}</Markdown>
         </div>
         <Comments comments={article.comments} />
       </div>
@@ -64,6 +97,4 @@ const ArticleDetailComponent = ({
       </div>
     </div>
   );
-};
-
-export default ArticleDetailComponent;
+}

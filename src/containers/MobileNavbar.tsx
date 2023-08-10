@@ -4,21 +4,23 @@ import { Popover } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { useIntl } from "react-intl";
 
 import { AdminUrl, AppUrl } from "@/config/router";
 
-import useIsLoggedIn from "@/hooks/useIsLoggedIn";
 import clsxm from "@/utils/clsxm";
 
 import Button from "@/components/Button";
 import CustomLink from "@/components/CustomLink";
 
-const MobileNavbar = () => {
+import { AuthContext } from "@/provider/AuthProvider";
+
+export default function MobileNavbar() {
   const intl = useIntl();
-  const isLoggedIn = useIsLoggedIn();
   const router = useRouter();
+
+  const { logout, isLoggedIn } = useContext(AuthContext);
 
   return (
     <Popover
@@ -69,7 +71,7 @@ const MobileNavbar = () => {
                     <Popover.Button
                       as={Button}
                       onClick={() => {
-                        localStorage.setItem("accessToken", "");
+                        logout();
                         router.push(AppUrl.home);
                       }}
                       style="primary"
@@ -134,6 +136,4 @@ const MobileNavbar = () => {
       )}
     </Popover>
   );
-};
-
-export default MobileNavbar;
+}

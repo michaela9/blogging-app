@@ -22,7 +22,6 @@ module.exports = {
     "next",
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:chai-friendly/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
@@ -33,6 +32,7 @@ module.exports = {
     node: true,
   },
   rules: {
+    "no-empty-function": "off",
     "no-console": "warn",
     "@typescript-eslint/explicit-module-boundary-types": "off",
 
@@ -49,12 +49,7 @@ module.exports = {
       { "ts-expect-error": "allow-with-description" },
     ],
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-    "@typescript-eslint/no-base-to-string": [
-      "error",
-      {
-        ignoredTypeNames: ["YearMonth"],
-      },
-    ],
+    "@typescript-eslint/no-base-to-string": ["error"],
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
     "@typescript-eslint/no-misused-promises": [
@@ -154,7 +149,7 @@ module.exports = {
           ["^\\u0000"],
           ["^.+\\.s?css$"],
           // types
-          ["\\u0000$", "^@/type"],
+          ["\\u0000$", "^@/types"],
           // packages
           ["^@?\\w"],
           ["^@/config", "^@/content"],

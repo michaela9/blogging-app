@@ -2,52 +2,49 @@
 
 import type { ArticleT } from "@/types/types";
 
-import { baseUrl } from "@/config/router";
+import React from "react";
+import { useIntl } from "react-intl";
+
+import { imagesUrl } from "@/config/router";
+
+import { useGet } from "@/hooks/api";
+
+import Loader from "@/components/Loader";
 
 import ArticleItemComponent from "./ArticleItemComponent";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 type Props = {
   article: ArticleT;
 };
 
 export default function ArticleItem({ article }: Props) {
-  const [fileData, setFileData] = useState("");
-  const [loading, setLoading] = useState(false);
+  const intl = useIntl();
 
-  useEffect(() => {
-    fetchImage(article.imageId);
-  }, [article]);
+  const { response, data, loading, error } = useGet<Blob>(
+    `${imagesUrl}/${article.imageId}`,
+    { responseType: "blob" },
+  );
 
-  const fetchImage = async (imageId: string) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`${baseUrl}/images/${imageId}`, {
-        responseType: "blob",
-        headers: {
-          "X-API-KEY": "b21611a3-d995-499c-80d5-4e0f72db5ae1",
-          Authorization: "1bfa77bc-50b1-4bfa-9463-3028dbac9400",
-        },
-      });
+  let blobURL;
 
-      if (response.data) {
-        const blob = new Blob([response.data], {
-          type: response.headers["content-type"],
-        });
+  if (data && response) {
+    const blob = new Blob([response.data], {
+      type: response.headers["content-type"] as string,
+    });
 
-        const blobURL = URL.createObjectURL(blob);
-        setFileData(blobURL);
-      }
-    } catch (error) {
-      console.error("Error fetching articles:", error);
-    }
-    setLoading(false);
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
+    blobURL = URL.createObjectURL(blob);
   }
 
-  return <ArticleItemComponent article={article} fileData={fileData} />;
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error || !blobURL) {
+    return intl.formatMessage({
+      id: "containers.articleItem.blobNotFound",
+      defaultMessage: "Blob not found",
+    });
+  }
+
+  return <ArticleItemComponent article={article} blobURL={blobURL} />;
 }

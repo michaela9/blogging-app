@@ -9,8 +9,8 @@ import { IntlProvider } from "react-intl";
 import MobileNavbar from "@/containers/MobileNavbar";
 import Navbar from "@/containers/Navbar";
 
+import { AuthProvider } from "@/provider/AuthProvider";
 import { getMessagesByLocale, verifyLocale } from "@/service/intl";
-import AuthProvider from "@/provider/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

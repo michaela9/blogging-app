@@ -10,7 +10,7 @@ type Props = {
   article: ArticleT;
 };
 
-const ArticleShortItem = ({ article }: Props) => {
+export default function ArticleShortItem({ article }: Props) {
   return (
     <div className="space-y-2">
       <Heading headingLevel="h3" size="s4">
@@ -19,6 +19,4 @@ const ArticleShortItem = ({ article }: Props) => {
       <p className="line-clamp-3 text-sm">{article.perex}</p>
     </div>
   );
-};
-
-export default ArticleShortItem;
+}

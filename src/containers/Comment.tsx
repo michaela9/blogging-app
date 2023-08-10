@@ -12,7 +12,7 @@ type Props = {
   comment: CommentT;
 };
 
-const Comment = ({ comment }: Props) => {
+export default function Comment({ comment }: Props) {
   return (
     <div className="flex gap-6">
       <Image
@@ -36,6 +36,4 @@ const Comment = ({ comment }: Props) => {
       </div>
     </div>
   );
-};
-
-export default Comment;
+}

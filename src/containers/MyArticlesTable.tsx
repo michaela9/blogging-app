@@ -7,7 +7,9 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AdminUrl } from "@/config/router";
+import { AdminUrl, AppUrl, articlesUrl } from "@/config/router";
+
+import useDelete from "@/hooks/api";
 
 import BaseModal from "@/components/BaseModal";
 import CustomLink from "@/components/CustomLink";
@@ -18,21 +20,57 @@ import Th from "@/components/table/Th";
 import THead from "@/components/table/THead";
 import TRow from "@/components/table/TRow";
 
-import DeleteArticleForm from "./forms/DeleteArticle";
+import DeleteArticleForm from "./forms/DeleteArticleForm";
 
 type Props = {
   articles: ArticleT[];
   selectedArticlesIds: string[];
   setSelectedArticlesIds: Dispatch<React.SetStateAction<string[]>>;
+  refetch: () => void;
 };
 
-const MyArticlesTable = ({
+export default function MyArticlesTable({
   articles,
   selectedArticlesIds,
   setSelectedArticlesIds,
-}: Props) => {
+  refetch,
+}: Props) {
   const intl = useIntl();
-  const [showModal, setShowModal] = useState(false);
+  const [selectedArticleIdForDeletion, setSelectedArticleIdForDeletion] =
+    useState<string | null>(null);
+
+  // const deleteArticle =
+
+  // const deleteArticle = (artId: string) => {
+  //   axios
+  //     .delete(`${articlesUrl}/${artId}`, {
+  //       headers: {
+  //         "X-API-KEY": apiKey,
+  //         Authorization: token,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       refetch();
+  //     })
+  //     .catch((error) => {
+  //       setError(error as AxiosError);
+  //     });
+  // };
+
+  // const { loading, error, fetchDelete } = useDelete<{
+  //   articleId: string;
+  // }>(`${articlesUrl}/${articleId}`);
+
+  const { loading, error, fetchDelete } = useDelete<{
+    articleId: string;
+  }>();
+
+  const handleDeleteSelectedClick = () => {
+    selectedArticlesIds.forEach(
+      (articleId) => void fetchDelete(`${articlesUrl}/${articleId}`),
+    );
+    refetch();
+  };
 
   const toggleSelectAll = () => {
     setSelectedArticlesIds((prevSelectedArticlesIds) =>
@@ -97,50 +135,64 @@ const MyArticlesTable = ({
         </TRow>
       </THead>
       <TBody>
-        {articles.map((article) => (
-          <TRow key={article.articleId}>
-            <Td>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isArticleSelected(article.articleId)}
-                  onChange={() => toggleSelectArticle(article.articleId)}
-                />
-              </label>
-            </Td>
-            <Td>{article.title}</Td>
-            <Td>{article.perex}</Td>
-            <Td>TODO author</Td>
-            <Td>TODO number of comments</Td>
-            <Td className="text-center">
-              <div className="flex gap-4 items-center">
+        {articles.map((article) => {
+          return (
+            <TRow key={article.articleId}>
+              <Td>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={isArticleSelected(article.articleId)}
+                    onChange={() => toggleSelectArticle(article.articleId)}
+                  />
+                </label>
+              </Td>
+              <Td>
                 <CustomLink
-                  href={`${AdminUrl.editArticle}/${article.articleId}`}
+                  href={`${AppUrl.articles}/${article.articleId}`}
+                  style="secondary"
                 >
-                  <PencilIcon className="w-5" />
+                  {article.title}
                 </CustomLink>
-
-                <button onClick={() => setShowModal(true)}>
-                  <TrashIcon className="w-5" />
-                </button>
-                {showModal && (
-                  <BaseModal
-                    closeModal={() => setShowModal(false)}
-                    isOpen={showModal}
+              </Td>
+              <Td>{article.perex}</Td>
+              <Td>TODO author</Td>
+              <Td>TODO number of comments</Td>
+              <Td className="text-center">
+                <div className="flex gap-4 items-center">
+                  <CustomLink
+                    href={`${AdminUrl.editArticle}/${article.articleId}`}
                   >
-                    <DeleteArticleForm
-                      articleId={article.articleId}
-                      closeModal={() => setShowModal(false)}
-                    />
-                  </BaseModal>
-                )}
-              </div>
-            </Td>
-          </TRow>
-        ))}
+                    <PencilIcon className="w-5" />
+                  </CustomLink>
+
+                  <button
+                    onClick={() =>
+                      setSelectedArticleIdForDeletion(article.articleId)
+                    }
+                  >
+                    <TrashIcon className="w-5" />
+                  </button>
+                  {selectedArticleIdForDeletion === article.articleId && (
+                    <BaseModal
+                      closeModal={() => setSelectedArticleIdForDeletion(null)}
+                      isOpen={
+                        selectedArticleIdForDeletion === article.articleId
+                      }
+                    >
+                      <DeleteArticleForm
+                        articleId={selectedArticleIdForDeletion}
+                        closeModal={() => setSelectedArticleIdForDeletion(null)}
+                        refetch={refetch}
+                      />
+                    </BaseModal>
+                  )}
+                </div>
+              </Td>
+            </TRow>
+          );
+        })}
       </TBody>
     </TableComponent>
   );
-};
-
-export default MyArticlesTable;
+}

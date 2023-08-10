@@ -6,25 +6,28 @@ import type { ReactNode } from "react";
 import clsxm from "@/utils/clsxm";
 
 type Props = Omit<JSX.IntrinsicElements["button"], "className"> & {
-  style?: "default" | "primary" | "secondary";
+  style?: "default" | "primary" | "secondary" | "markdown";
   disabled?: boolean;
   className?: ClassValue;
   children: ReactNode;
 };
 
-const Button = ({
+export default function Button({
   style = "primary",
   children,
   className,
   type,
   ...rest
-}: Props) => {
+}: Props) {
   return (
     <button
-      className={clsxm(className, "px-4 py-2 rounded-md", {
-        "bg-primary text-white hover:bg-opacity-80": style === "primary",
-        "text-primary border border-primary hover:opacity-70":
+      className={clsxm(className, "rounded-md", {
+        "bg-primary text-white hover:bg-opacity-80 px-4 py-2 ":
+          style === "primary",
+        "text-primary border border-primary hover:opacity-70 px-4 py-2 ":
           style === "secondary",
+        "bg-gray-100 border border-gray-500 rounded-md px-2 hover:bg-opacity-80":
+          style === "markdown",
       })}
       type={type}
       {...rest}
@@ -32,6 +35,4 @@ const Button = ({
       {children}
     </button>
   );
-};
-
-export default Button;
+}
