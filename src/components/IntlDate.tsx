@@ -16,7 +16,6 @@ type EmptyT = {
 type OptionsT = Intl.DateTimeFormatOptions & CustomFormatConfig;
 
 type DateT = Pick<OptionsT, "year" | "month" | "day" | "weekday">;
-type TimeT = Pick<OptionsT, "hour" | "minute" | "second">;
 
 export function IntlDateTimeFormat({
   value,

@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import Heading from "@/components/Heading";
 
 import Comment from "./Comment";
-import JoinDiscussion from "./forms/JoinDiscussion";
+import JoinDiscussionForm from "../forms/JoinDiscussionForm";
 
 const numberOfComments = 5;
 
@@ -30,7 +30,7 @@ export default function Comments({ comments }: Props) {
           },
         )}
       </Heading>
-      <JoinDiscussion />
+      <JoinDiscussionForm />
       <div className="space-y-6">
         {comments.map((comment) => (
           <Comment key={comment.commentId} comment={comment} />

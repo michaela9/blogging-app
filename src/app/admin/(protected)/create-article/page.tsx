@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
-import CreateArticle from "@/containers/forms/CreateArticle";
+import CreateArticleForm from "@/containers/forms/CreateArticleForm";
 
 export const metadata: Metadata = {
   title: "Admin - Create Article",
 };
 
 export default function Page() {
-  return <CreateArticle />;
+  return <CreateArticleForm />;
 }

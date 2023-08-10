@@ -31,6 +31,7 @@ export default function Signup() {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
+    control,
   } = useForm<CreateUserSchemaT>({
     resolver: zodResolver(createUserSchema),
   });
@@ -52,6 +53,7 @@ export default function Signup() {
       onSubmit={() => handleSubmit(onSubmit)}
       register={register}
       errors={errors}
+      control={control}
     />
   );
 }

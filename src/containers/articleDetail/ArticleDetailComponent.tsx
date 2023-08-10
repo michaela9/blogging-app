@@ -17,7 +17,7 @@ import Loader from "@/components/Loader";
 import Markdown from "@/components/Markdown";
 
 import ArticleShortItem from "./ArticleShortItem";
-import Comments from "./Comments";
+import Comments from "../comments/Comments";
 
 type Props = {
   article: ArticleDetailT;

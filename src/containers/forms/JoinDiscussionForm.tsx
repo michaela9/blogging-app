@@ -5,7 +5,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 const profilePhoto = "/img.png";
-export default function JoinDiscussion() {
+export default function JoinDiscussionForm() {
   const intl = useIntl();
   return (
     <div className="flex gap-6">

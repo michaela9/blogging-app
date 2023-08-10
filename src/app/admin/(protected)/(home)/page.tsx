@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import MyArticles from "@/containers/MyArticles";
+import MyArticles from "@/containers/myArticles/MyArticles";
 
 export const metadata: Metadata = {
   title: "Admin - My Articles",

@@ -2,17 +2,18 @@
 
 import { Popover } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { Fragment, useContext } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { AdminUrl, AppUrl } from "@/config/router";
+import { AppUrl } from "@/config/router";
 
+import useNavbarLinks from "@/hooks/useNavbarLinks";
 import clsxm from "@/utils/clsxm";
 
 import Button from "@/components/Button";
 import CustomLink from "@/components/CustomLink";
+import Logo from "@/components/Logo";
 
 import { AuthContext } from "@/provider/AuthProvider";
 
@@ -21,6 +22,7 @@ export default function MobileNavbar() {
   const router = useRouter();
 
   const { logout, isLoggedIn } = useContext(AuthContext);
+  const { baseLinks, loggedInLinks } = useNavbarLinks();
 
   return (
     <Popover
@@ -35,16 +37,7 @@ export default function MobileNavbar() {
       {({ open }) => (
         <>
           <div>
-            <CustomLink href={AppUrl.home} className="absolute top-2 left-4">
-              <Image
-                src="/logo.png"
-                alt="Logo - cat"
-                className=""
-                width={32}
-                height={32}
-                priority
-              />
-            </CustomLink>
+            <Logo width={32} height={32} className="absolute top-2 left-4" />
             <Popover.Button className={clsxm("absolute top-4 right-4")}>
               {!open ? (
                 <>
@@ -59,7 +52,6 @@ export default function MobileNavbar() {
               )}
             </Popover.Button>
           </div>
-
           <Popover.Panel
             as="div"
             className="relative top-14 w-full bg-white shadow-xl mb-6"
@@ -81,21 +73,15 @@ export default function MobileNavbar() {
                         defaultMessage: "Log Out",
                       })}
                     </Popover.Button>
-                    <Popover.Button as={CustomLink} href={AdminUrl.home}>
-                      {intl.formatMessage({
-                        id: "containers.navbar.myArticles",
-                        defaultMessage: "My Articles",
-                      })}
-                    </Popover.Button>
-                    <Popover.Button
-                      as={CustomLink}
-                      href={AdminUrl.createArticle}
-                    >
-                      {intl.formatMessage({
-                        id: "containers.navbar.createArticle",
-                        defaultMessage: "Create Article",
-                      })}
-                    </Popover.Button>
+                    {loggedInLinks.map((link) => (
+                      <Popover.Button
+                        key={link.id}
+                        as={CustomLink}
+                        href={link.href}
+                      >
+                        {link.label}
+                      </Popover.Button>
+                    ))}
                   </>
                 ) : (
                   <Popover.Button
@@ -110,26 +96,16 @@ export default function MobileNavbar() {
                   </Popover.Button>
                 )}
               </>
-              <Popover.Button
-                as={CustomLink}
-                href={AppUrl.home}
-                style="secondary"
-              >
-                {intl.formatMessage({
-                  id: "containers.navbar.recentArticles",
-                  defaultMessage: "Recent articles",
-                })}
-              </Popover.Button>
-              <Popover.Button
-                as={CustomLink}
-                href={AppUrl.about}
-                style="secondary"
-              >
-                {intl.formatMessage({
-                  id: "containers.navbar.about",
-                  defaultMessage: "About",
-                })}
-              </Popover.Button>
+              {baseLinks.map((link) => (
+                <Popover.Button
+                  key={link.id}
+                  as={CustomLink}
+                  href={link.href}
+                  style="secondary"
+                >
+                  {link.label}
+                </Popover.Button>
+              ))}
             </div>
           </Popover.Panel>
         </>

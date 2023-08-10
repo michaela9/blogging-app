@@ -4,15 +4,14 @@ import type {
   FieldError,
   FieldValues,
   Path,
+  PathValue,
   UseFormRegister,
 } from "react-hook-form";
 
 import React from "react";
 import { Controller } from "react-hook-form";
 
-import FormErrorMessage from "./FormErrorMessage";
-import FormFieldWrapper from "./FormFieldWrapper";
-import Label from "./Label";
+import clsxm from "@/utils/clsxm";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
@@ -20,8 +19,10 @@ type Props<T extends FieldValues> = {
   control: Control<T>;
   register: UseFormRegister<T>;
   error: FieldError | undefined;
+  defaultValue?: PathValue<T, Path<T>>;
+  placeholder?: string;
 };
-export default function FormFileField<T extends FieldValues>({
+export default function FormCheckboxField<T extends FieldValues>({
   name,
   label,
   control,
@@ -29,22 +30,30 @@ export default function FormFileField<T extends FieldValues>({
   error,
 }: Props<T>) {
   return (
-    <FormFieldWrapper>
-      <Label name={name}>{label}</Label>
+    <div className="flex items-center">
       <Controller
         name={name}
         control={control}
         render={({ field }) => (
           <input
             id={name}
-            type="file"
-            accept="image/png, image/jpeg"
+            type="checkbox"
+            className={clsxm(
+              "border-gray text-green focus:ring-green rounded-md border bg-white",
+            )}
             {...field}
             {...register}
           />
         )}
       />
-      {error && <FormErrorMessage errorMessage={error.message} />}
-    </FormFieldWrapper>
+      <label
+        htmlFor={name}
+        className={clsxm("cursor-pointer pl-2 text-nb-gray-text", {
+          "text-red-500": error && error.message,
+        })}
+      >
+        {label}
+      </label>
+    </div>
   );
 }

@@ -17,7 +17,7 @@ type Props = {
   refetch: () => void;
 };
 
-export default function DeleteArticleForm({
+export default function DeleteArticleModal({
   articleId,
   closeModal,
   refetch,

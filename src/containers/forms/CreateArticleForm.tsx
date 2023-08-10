@@ -13,7 +13,7 @@ import Loader from "@/components/Loader";
 
 import CreateArticleFormHeader from "./CreateArticleFormHeader";
 
-export default function CreateArticle() {
+export default function CreateArticleForm() {
   const intl = useIntl();
 
   const {

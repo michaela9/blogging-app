@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import ArticleDetail from "@/containers/ArticleDetail";
+import ArticleDetail from "@/containers/articleDetail/ArticleDetail";
 
 export const metadata: Metadata = {
   title: "Homepage articArticle Detail",

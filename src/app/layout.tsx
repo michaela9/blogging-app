@@ -7,7 +7,7 @@ import RootLayoutComponent from "@/components/RootLayoutComponent";
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/favicon.png",
+    icon: "/logo.ico",
   },
   viewport: {
     width: "device-width",

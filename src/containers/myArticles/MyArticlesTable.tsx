@@ -7,9 +7,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AdminUrl, AppUrl, articlesUrl } from "@/config/router";
-
-import useDelete from "@/hooks/api";
+import { AdminUrl, AppUrl } from "@/config/router";
 
 import BaseModal from "@/components/BaseModal";
 import CustomLink from "@/components/CustomLink";
@@ -20,7 +18,7 @@ import Th from "@/components/table/Th";
 import THead from "@/components/table/THead";
 import TRow from "@/components/table/TRow";
 
-import DeleteArticleForm from "./forms/DeleteArticleForm";
+import DeleteArticleForm from "../modals/DeleteArticleModal";
 
 type Props = {
   articles: ArticleT[];
@@ -38,39 +36,6 @@ export default function MyArticlesTable({
   const intl = useIntl();
   const [selectedArticleIdForDeletion, setSelectedArticleIdForDeletion] =
     useState<string | null>(null);
-
-  // const deleteArticle =
-
-  // const deleteArticle = (artId: string) => {
-  //   axios
-  //     .delete(`${articlesUrl}/${artId}`, {
-  //       headers: {
-  //         "X-API-KEY": apiKey,
-  //         Authorization: token,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       refetch();
-  //     })
-  //     .catch((error) => {
-  //       setError(error as AxiosError);
-  //     });
-  // };
-
-  // const { loading, error, fetchDelete } = useDelete<{
-  //   articleId: string;
-  // }>(`${articlesUrl}/${articleId}`);
-
-  const { loading, error, fetchDelete } = useDelete<{
-    articleId: string;
-  }>();
-
-  const handleDeleteSelectedClick = () => {
-    selectedArticlesIds.forEach(
-      (articleId) => void fetchDelete(`${articlesUrl}/${articleId}`),
-    );
-    refetch();
-  };
 
   const toggleSelectAll = () => {
     setSelectedArticlesIds((prevSelectedArticlesIds) =>
