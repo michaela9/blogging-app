@@ -6,7 +6,7 @@ import type { ArticleDetailT } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { articlesUrl } from "@/config/router";
+import { articlesUrl, imagesUrl } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
@@ -16,70 +16,38 @@ import type { EditArticleSchemaT } from "@/schema/zodSchema";
 import { editArticleSchema } from "@/schema/zodSchema";
 
 import EditArticleForm from "./forms/EditArticleForm";
+import { useIntl } from "react-intl";
+import useGetBlobFromImageId from "../hooks/useGetBlobFromImageId";
 
 type Props = {
   id: string;
 };
 export default function EditArticle({ id }: Props) {
+  const intl = useIntl();
+
   const { data, loading, error, refetch } = useGet<ArticleDetailT>(
     `${articlesUrl}/${id}`,
   );
 
-  const {
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    register,
-    control,
-    setValue,
-    getValues,
-    watch,
-  } = useForm<EditArticleSchemaT>({
-    resolver: zodResolver(editArticleSchema),
-  });
-
-  const onSubmit: SubmitHandler<EditArticleSchemaT> = async (formData) => {
-    // const fetchedData = await fetchPost(formData);
-    // console.log(fetchedData);
-    // if (error) {
-    //   return intl.formatMessage({
-    //     id: "containers.recentArticles.errorMessage",
-    //     defaultMessage: "Login failed",
-    //   });
-    // }
-    // if (loading || isSubmitting) {
-    //   return <Loader />;
-    // }
-    // if (!fetchedData) {
-    //   return intl.formatMessage({
-    //     id: "containers.recentArticles.missingData",
-    //     defaultMessage: "Missing data",
-    //   });
-    // }
-    // router.push(AdminUrl.home);
-  };
-  if (!data) {
-    return <p>There is no data</p>;
-  }
-
-  if (error) {
-    return error.message;
-  }
-
-  if (loading || isSubmitting) {
+  if (loading) {
     return <Loader />;
   }
+  if (error) {
+    return intl.formatMessage(
+      {
+        id: "containers.recentArticles.errorMessage",
+        defaultMessage: "Error loading articles: {error_message}",
+      },
+      { error_message: error.message },
+    );
+  }
 
-  return (
-    <EditArticleForm
-      onSubmit={onSubmit}
-      handleSubmit={handleSubmit}
-      register={register}
-      errors={errors}
-      control={control}
-      article={data}
-      setValue={setValue}
-      getValues={getValues}
-      watch={watch}
-    />
-  );
+  if (!data) {
+    return intl.formatMessage({
+      id: "containers.recentArticles.noArticlesFound",
+      defaultMessage: "No articles found.",
+    });
+  }
+
+  return <EditArticleForm article={data} />;
 }

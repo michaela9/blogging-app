@@ -6,27 +6,27 @@ import { useGet } from "./api";
 
 export default function useGetBlobFromImageId(imageId: string) {
   const intl = useIntl();
-  const { response, data, loading, error } = useGet<Blob>(
-    `${imagesUrl}/${imageId}`,
-    { responseType: "blob" },
-  );
+  const {
+    response,
+    data,
+    loading,
+    error: fetchError,
+  } = useGet<Blob>(`${imagesUrl}/${imageId}`, { responseType: "blob" });
 
   let blobURL;
+  let message;
 
-  if (error || !data || !response) {
-    return {
-      message: intl.formatMessage({
-        id: "containers.articleItem.blobNotFound",
-        defaultMessage: "Blob not found",
-      }),
-    };
+  if (fetchError || !data || !response) {
+    message = intl.formatMessage({
+      id: "containers.articleItem.blobNotFound",
+      defaultMessage: "Blob not found",
+    });
+  } else {
+    const blob = new Blob([response.data], {
+      type: response.headers["content-type"] as string,
+    });
+    blobURL = URL.createObjectURL(blob);
   }
 
-  const blob = new Blob([response.data], {
-    type: response.headers["content-type"] as string,
-  });
-
-  blobURL = URL.createObjectURL(blob);
-
-  return { blobURL, loading, error, data };
+  return { blobURL: blobURL || "", loading, error: fetchError, data, message };
 }

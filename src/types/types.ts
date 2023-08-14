@@ -18,6 +18,18 @@ export type ArticleT = {
   lastUpdatedAt: string;
 };
 
+export type CreateArticleT = {
+  title: string;
+  perex: string;
+  imageId: string;
+  content: string;
+};
+
+export type ImageResponseT = {
+  imageId: string;
+  name: string;
+};
+
 export type ArticleDetailT = {
   articleId: string;
   title: string;

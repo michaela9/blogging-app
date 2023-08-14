@@ -34,7 +34,6 @@ export default function ArticleItem({ article }: Props) {
 
     blobURL = URL.createObjectURL(blob);
   }
-
   if (loading) {
     return <Loader />;
   }

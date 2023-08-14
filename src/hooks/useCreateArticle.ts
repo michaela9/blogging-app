@@ -12,15 +12,7 @@ import type { CreateArticleSchemaT } from "@/schema/zodSchema";
 import { createArticleSchema } from "@/schema/zodSchema";
 
 import { usePost } from "./api";
-
-type ImageResponseT = {
-  imageId: string;
-}[];
-
-type ArticleResponseT = {
-  articleId?: string;
-  message?: string;
-};
+import { ArticleDetailT, CreateArticleT, ImageResponseT } from "@/types/types";
 
 export default function useCreateArticle() {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,23 +34,21 @@ export default function useCreateArticle() {
     loading: imageLoading,
     error: imageError,
     fetchPost: fetchImage,
-  } = usePost<ImageResponseT, any>(imagesUrl, "multipart/form-data");
+  } = usePost<ImageResponseT, FormData>(imagesUrl, "multipart/form-data");
 
   const {
     loading: articleLoading,
     error: articleError,
     fetchPost: fetchArticle,
-  } = usePost<ArticleResponseT, CreateArticleSchemaT>(articlesUrl);
+  } = usePost<ArticleDetailT, CreateArticleT>(articlesUrl);
 
   const onSubmit: SubmitHandler<CreateArticleSchemaT> = async (formData) => {
     setIsLoading(true);
+
     console.log(formData);
 
     let formDataT = new FormData();
-
     formDataT.append("image", formData.image[0]);
-    formDataT = { ...formDataT, image: formData.image[0] };
-    console.log(formDataT);
 
     const imageData = await fetchImage(formDataT);
 
@@ -71,6 +61,10 @@ export default function useCreateArticle() {
       imageData.length > 0 &&
       (imageData[0].imageId as string);
 
+    if (!imageId) {
+      return null;
+    }
+
     const articleData = await fetchArticle({
       title: formData.title,
       content: formData.content,
@@ -81,8 +75,6 @@ export default function useCreateArticle() {
     if (!articleData || articleError) {
       setError(error as AxiosError);
     }
-
-    console.log(articleData);
 
     router.push(AdminUrl.home);
   };

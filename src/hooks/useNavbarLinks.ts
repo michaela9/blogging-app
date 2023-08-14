@@ -9,8 +9,8 @@ export default function useNavbarLinks() {
     {
       id: 1,
       label: intl.formatMessage({
-        id: "containers.navbar.myArticles",
-        defaultMessage: "My Articles",
+        id: "containers.navbar.recentArticles",
+        defaultMessage: "Recent Articles",
       }),
       href: AppUrl.home,
     },

@@ -113,3 +113,32 @@ export default function useDelete<D>() {
 
   return { response, loading, error, fetchDelete };
 }
+
+export function usePatch<ResponseData, InputData>(url: string) {
+  const [response, setResponse] = useState<AxiosResponse | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<AxiosError | null>();
+  const { token, apiKey } = useContext(AuthContext);
+
+  const fetchPatch = async (formData?: InputData) => {
+    setLoading(true);
+    try {
+      const response = await axios.patch(url, formData, {
+        method: "PATCH",
+        headers: {
+          "X-API-KEY": apiKey,
+          Authorization: token,
+        },
+      });
+
+      if (response) {
+        setResponse(response);
+      }
+    } catch (error) {
+      setError(error as AxiosError);
+    }
+    setLoading(false);
+  };
+
+  return { response, loading, error, fetchPatch };
+}

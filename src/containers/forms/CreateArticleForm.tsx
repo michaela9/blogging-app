@@ -12,8 +12,6 @@ import MarkdownEditorField from "@/components/form/MarkdownEditorField";
 import Loader from "@/components/Loader";
 
 import CreateArticleFormHeader from "./CreateArticleFormHeader";
-import Heading from "@/components/Heading";
-import Button from "@/components/Button";
 
 export default function CreateArticleForm() {
   const intl = useIntl();
@@ -39,20 +37,7 @@ export default function CreateArticleForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-8 flex flex-col"
       >
-        <div className="flex gap-4 items-center">
-          <Heading headingLevel="h1" size="s1">
-            {intl.formatMessage({
-              id: "containers.forms.createArticle.title",
-              defaultMessage: "Create Article",
-            })}
-          </Heading>
-          <Button style="primary" type="submit">
-            {intl.formatMessage({
-              id: "containers.forms.createArticle.articlePublish",
-              defaultMessage: "Publish Article",
-            })}
-          </Button>
-        </div>
+        <CreateArticleFormHeader />
         <FormTextField
           name="title"
           label={intl.formatMessage({
@@ -84,7 +69,6 @@ export default function CreateArticleForm() {
           register={register}
           error={errors.image}
         />
-        {/* <input {...register("image")} type="file" /> */}
         <MarkdownEditorField
           name="content"
           label={intl.formatMessage({
