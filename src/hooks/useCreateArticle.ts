@@ -13,10 +13,18 @@ import { createArticleSchema } from "@/schema/zodSchema";
 
 import { usePost } from "./api";
 
+type ImageResponseT = {
+  imageId: string;
+}[];
+
+type ArticleResponseT = {
+  articleId?: string;
+  message?: string;
+};
+
 export default function useCreateArticle() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>();
-
   const router = useRouter();
 
   const {
@@ -34,26 +42,25 @@ export default function useCreateArticle() {
     loading: imageLoading,
     error: imageError,
     fetchPost: fetchImage,
-  } = usePost(imagesUrl, "multipart/form-data");
+  } = usePost<ImageResponseT, any>(imagesUrl, "multipart/form-data");
 
   const {
     loading: articleLoading,
     error: articleError,
     fetchPost: fetchArticle,
-  } = usePost(articlesUrl);
+  } = usePost<ArticleResponseT, CreateArticleSchemaT>(articlesUrl);
 
-  const onSubmit: SubmitHandler<CreateArticleSchemaT> = async (
-    formData: CreateArticleSchemaT,
-  ) => {
+  const onSubmit: SubmitHandler<CreateArticleSchemaT> = async (formData) => {
     setIsLoading(true);
     console.log(formData);
 
-    const formDataT = new FormData();
+    let formDataT = new FormData();
 
     formDataT.append("image", formData.image[0]);
-    const imageData = (await fetchImage(formDataT)) as { imageId: string }[];
+    formDataT = { ...formDataT, image: formData.image[0] };
+    console.log(formDataT);
 
-    console.log(imageData);
+    const imageData = await fetchImage(formDataT);
 
     if (!imageData || imageError) {
       setError(error as AxiosError);
@@ -63,7 +70,7 @@ export default function useCreateArticle() {
       Array.isArray(imageData) &&
       imageData.length > 0 &&
       (imageData[0].imageId as string);
-    console.log(imageData);
+
     const articleData = await fetchArticle({
       title: formData.title,
       content: formData.content,
@@ -74,6 +81,8 @@ export default function useCreateArticle() {
     if (!articleData || articleError) {
       setError(error as AxiosError);
     }
+
+    console.log(articleData);
 
     router.push(AdminUrl.home);
   };

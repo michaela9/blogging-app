@@ -13,6 +13,15 @@ export const createArticleSchema = z.object({
   title: z.string(),
   perex: z.string(),
   content: z.string().min(1, { message: "Content is required" }),
+  image: z.any(),
+});
+
+export type CreateArticleSchemaT = z.infer<typeof createArticleSchema>;
+
+export const createArticleWithFileSchema = z.object({
+  title: z.string(),
+  perex: z.string(),
+  content: z.string().min(1, { message: "Content is required" }),
   image: z
     .string()
     .min(1, { message: "Content is required" })
@@ -21,7 +30,9 @@ export const createArticleSchema = z.object({
     }),
 });
 
-export type CreateArticleSchemaT = z.infer<typeof createArticleSchema>;
+export type CreateArticleWithFileSchemaT = z.infer<
+  typeof createArticleWithFileSchema
+>;
 
 export const createUserSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
