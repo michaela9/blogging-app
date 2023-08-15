@@ -5,7 +5,7 @@ import type { ArticleT, PaginationT } from "@/types/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { articlesUrl } from "@/config/router";
+import { articlesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
@@ -20,7 +20,7 @@ export default function RecentArticles() {
   const { data, loading, error } = useGet<{
     pagination: PaginationT;
     items: ArticleT[];
-  }>(articlesUrl);
+  }>(articlesEndpoint);
 
   if (loading) {
     return <Loader />;
@@ -56,7 +56,7 @@ export default function RecentArticles() {
           defaultMessage: "Recent Articles",
         })}
       </Heading>
-      <div className="space-y-10 sm:space-y-6">
+      <div className="space-y-10 sm:space-y-8">
         {sortedArticles.map((article) => (
           <div key={article.articleId}>
             <ArticleItem article={article} />

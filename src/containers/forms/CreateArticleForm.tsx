@@ -59,6 +59,7 @@ export default function CreateArticleForm() {
           placeholder="Perex"
           register={register}
           error={errors.perex}
+          rows={5}
         />
         <FormFileField
           name="image"

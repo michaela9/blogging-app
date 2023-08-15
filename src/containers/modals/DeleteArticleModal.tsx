@@ -2,9 +2,9 @@
 
 import { useIntl } from "react-intl";
 
-import { articlesUrl } from "@/config/router";
+import { articlesEndpoint } from "@/config/router";
 
-import useDelete from "@/hooks/api";
+import { useDelete } from "@/hooks/api";
 
 import Button from "@/components/Button";
 import Description from "@/components/Description";
@@ -29,7 +29,7 @@ export default function DeleteArticleModal({
   }>();
 
   const handleDeleteClick = async () => {
-    await fetchDelete(`${articlesUrl}/${articleId}`);
+    await fetchDelete(`${articlesEndpoint}/${articleId}`);
     closeModal();
     refetch();
   };

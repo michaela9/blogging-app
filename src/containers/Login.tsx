@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { AppUrl, loginUrl } from "@/config/router";
+import { AppUrl, loginEndpoint } from "@/config/router";
 
 import { usePost } from "@/hooks/api";
 
@@ -26,7 +26,7 @@ export default function Login() {
   const router = useRouter();
   const { login } = useContext(AuthContext);
   const { loading, error, fetchPost } = usePost<LoginResponse, UserSchemaT>(
-    loginUrl,
+    loginEndpoint,
   );
 
   const {

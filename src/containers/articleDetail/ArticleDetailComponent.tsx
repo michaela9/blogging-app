@@ -6,7 +6,7 @@ import Image from "next/image";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { imagesUrl } from "@/config/router";
+import { imagesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
@@ -30,7 +30,7 @@ export default function ArticleDetailComponent({
 }: Props) {
   const intl = useIntl();
   const { response, data, loading, error } = useGet<Blob>(
-    `${imagesUrl}/${article.imageId}`,
+    `${imagesEndpoint}/${article.imageId}`,
     { responseType: "blob" },
   );
 
@@ -56,12 +56,12 @@ export default function ArticleDetailComponent({
   }
 
   return (
-    <div className="grid grid-cols-[2fr,1fr]">
-      <div className="space-y-6 pr-6">
+    <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr]">
+      <div className="space-y-2 md:space-y-6 pr-6 border-b border-b-gray-300 pb-6 mb-6 md:mb-0 md:pb-0 md:border-none">
         <Heading headingLevel="h1" size="s1">
           {article.title}
         </Heading>
-        <div className="space-y-6 border-b border-b-gray-300 pb-10">
+        <div className="space-y-2 md:space-y-6 border-b border-l-gray-300 mb-6 md:mb-0 border-b-gray-300 pb-6">
           <div className="text-secondary-text text-xs flex gap-4">
             <Description>
               <IntlDate value={article.createdAt} />
@@ -80,7 +80,7 @@ export default function ArticleDetailComponent({
         </div>
         <Comments comments={article.comments} />
       </div>
-      <div className="pl-6 border-l border-l-gray-300 space-y-8">
+      <div className="md:pl-6 md:border-l md:border-l-gray-300 space-y-4 md:space-y-8">
         <Heading headingLevel="h2" size="s3">
           {intl.formatMessage({
             id: "containers.articleDetailComponent.title",

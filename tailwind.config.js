@@ -14,6 +14,9 @@ module.exports = {
         "3xl": "1.75rem",
         "4xl": "2.5rem",
       },
+      boxShadow: {
+        "my-shadow": "0 16px 48px 0 rgba(0, 0, 0, 0.3)",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],

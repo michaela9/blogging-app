@@ -18,7 +18,7 @@ export default function Comment({ comment }: Props) {
       <Image
         src=""
         alt="Profile photo"
-        className="shrink-0 w-10 h-10 object-cover overflow-hidden rounded-full bg-red-400"
+        className="shrink-0 w-[272px] h-[244px] object-cover overflow-hidden rounded-full bg-red-400"
         width={100}
         height={100}
       />

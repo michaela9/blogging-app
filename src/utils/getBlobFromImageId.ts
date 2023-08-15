@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { imagesUrl } from "@/config/router";
+import { imagesEndpoint } from "@/config/router";
 
 export default async function getBlobFromImageId(
   imageId: string,
@@ -8,7 +8,7 @@ export default async function getBlobFromImageId(
   token: string | null,
 ) {
   try {
-    const response = await axios.get(`${imagesUrl}/${imageId}`, {
+    const response = await axios.get(`${imagesEndpoint}/${imageId}`, {
       method: "GET",
       headers: {
         "X-API-KEY": apiKey,

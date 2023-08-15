@@ -32,7 +32,7 @@ export default function SignupForm({
   const intl = useIntl();
 
   return (
-    <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-xl border border-gray-100 max-w-sm rounded-md mx-auto">
+    <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-my-shadow border border-gray-100 max-w-sm rounded-md mx-auto">
       <Heading headingLevel="h1" size="s2">
         {intl.formatMessage({
           id: "containers.signupForm.title",

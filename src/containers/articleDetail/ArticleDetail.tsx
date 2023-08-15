@@ -5,7 +5,7 @@ import type { ArticleDetailT, ArticleT, PaginationT } from "@/types/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { articlesUrl } from "@/config/router";
+import { articlesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
@@ -21,7 +21,7 @@ export default function ArticleDetail({ id }: Props) {
   const intl = useIntl();
 
   const { data, loading, error } = useGet<ArticleDetailT>(
-    `${articlesUrl}/${id}`,
+    `${articlesEndpoint}/${id}`,
   );
 
   const {
@@ -31,7 +31,7 @@ export default function ArticleDetail({ id }: Props) {
   } = useGet<{
     pagination: PaginationT;
     items: ArticleT[];
-  }>(articlesUrl);
+  }>(articlesEndpoint);
 
   if (loading || relatedArticlesLoading) {
     return <Loader />;

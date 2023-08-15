@@ -24,11 +24,14 @@ export default function ArticleItemComponent({ article, blobURL }: Props) {
   const intl = useIntl();
   return (
     <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-      <CustomLink href={`${AppUrl.articles}/${article.articleId}`}>
+      <CustomLink
+        href={`${AppUrl.articles}/${article.articleId}`}
+        className="shrink-0 w-[272px] h-[244px]"
+      >
         <Image
           src={blobURL}
           alt={article.title}
-          className="shrink-0"
+          className="shrink-0 w-full h-full object-cover overflow-hidden"
           width={272}
           height={244}
         />
@@ -37,8 +40,9 @@ export default function ArticleItemComponent({ article, blobURL }: Props) {
         <Heading headingLevel="h2" size="s3">
           {article.title}
         </Heading>
-        <div className="text-secondary-text text-xs flex gap-4">
+        <div className="text-secondary-text text-xs flex gap-2 md:gap-4 items-center">
           <Description>{articleDetail.comments[0].author}</Description>
+          <div className="w-1 h-1 rounded-full bg-middle-gray" />
           <Description>
             <IntlDate value={article.createdAt} />
           </Description>
@@ -51,7 +55,7 @@ export default function ArticleItemComponent({ article, blobURL }: Props) {
               defaultMessage: "Read the whole article",
             })}
           </CustomLink>
-          <Description className="text-secondary-text">
+          <Description className="text-secondary-text" size="sm">
             {intl.formatMessage(
               {
                 id: "containers.articleItemComponent.numberOfComments",

@@ -2,7 +2,7 @@
 
 import { Popover } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
@@ -23,6 +23,7 @@ export default function MobileNavbar() {
 
   const { logout, isLoggedIn } = useContext(AuthContext);
   const { baseLinks, loggedInLinks } = useNavbarLinks();
+  const pathname = usePathname();
 
   return (
     <Popover
@@ -78,6 +79,7 @@ export default function MobileNavbar() {
                         key={link.id}
                         as={CustomLink}
                         href={link.href}
+                        active={pathname === link.href}
                       >
                         {link.label}
                       </Popover.Button>
@@ -101,7 +103,7 @@ export default function MobileNavbar() {
                   key={link.id}
                   as={CustomLink}
                   href={link.href}
-                  style="secondary"
+                  active={pathname === link.href}
                 >
                   {link.label}
                 </Popover.Button>

@@ -42,7 +42,6 @@ export default function FormTextField<T extends FieldValues>({
         defaultValue={defaultValue}
         render={({ field }) => (
           <input
-            id={name}
             type="text"
             placeholder={placeholder}
             className="rounded-md border-gray-300 w-full"

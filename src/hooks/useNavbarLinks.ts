@@ -12,7 +12,7 @@ export default function useNavbarLinks() {
         id: "containers.navbar.recentArticles",
         defaultMessage: "Recent Articles",
       }),
-      href: AppUrl.home,
+      href: "/",
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ export default function useNavbarLinks() {
         id: "containers.navbar.about",
         defaultMessage: "About",
       }),
-      href: AppUrl.about,
+      href: "/about",
     },
   ];
 
@@ -31,7 +31,7 @@ export default function useNavbarLinks() {
         id: "containers.navbar.myArticles",
         defaultMessage: "My Articles",
       }),
-      href: AppUrl.myArticles,
+      href: "/my-articles",
     },
     {
       id: 4,
@@ -39,7 +39,7 @@ export default function useNavbarLinks() {
         id: "containers.navbar.createArticle",
         defaultMessage: "Create Article",
       }),
-      href: AppUrl.createArticle,
+      href: "/create-article",
     },
   ];
 

@@ -23,7 +23,7 @@ export default function Heading({
   return (
     <MyHeading
       className={clsxm(className, "font-semibold", {
-        "text-2xl md:text-4xl": size === "s1",
+        "text-2xl md:text-4xl leading-6 md:leading-10": size === "s1",
         "text-xl md:text-3xl": size === "s2",
         "text-xl md:text-2xl": size === "s3",
         "text-sm md:text-base": size === "s4",

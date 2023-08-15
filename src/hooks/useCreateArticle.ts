@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AppUrl, articlesUrl, imagesUrl } from "@/config/router";
+import { AppUrl, articlesEndpoint, imagesEndpoint } from "@/config/router";
 
 import type { CreateArticleSchemaT } from "@/schema/zodSchema";
 import { createArticleSchema } from "@/schema/zodSchema";
@@ -37,13 +37,13 @@ export default function useCreateArticle() {
     loading: imageLoading,
     error: imageError,
     fetchPost: fetchImage,
-  } = usePost<ImageResponseT, FormData>(imagesUrl, "multipart/form-data");
+  } = usePost<ImageResponseT, FormData>(imagesEndpoint, "multipart/form-data");
 
   const {
     loading: articleLoading,
     error: articleError,
     fetchPost: fetchArticle,
-  } = usePost<ArticleDetailT, CreateArticleT>(articlesUrl);
+  } = usePost<ArticleDetailT, CreateArticleT>(articlesEndpoint);
 
   const onSubmit: SubmitHandler<CreateArticleSchemaT> = async (formData) => {
     const formDataT = new FormData();

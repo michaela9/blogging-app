@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
-import { AppUrl, tenantsUrl } from "@/config/router";
+import { AppUrl, tenantsEndpoint } from "@/config/router";
 
 import { usePost } from "@/hooks/api";
 
@@ -24,7 +24,7 @@ export default function Signup() {
   const { signup } = useContext(AuthContext);
 
   const { loading, error, fetchPost } = usePost<TenantT, CreateUserSchemaT>(
-    tenantsUrl,
+    tenantsEndpoint,
   );
 
   const {

@@ -31,7 +31,13 @@ export default function FormFileField<T extends FieldValues>({
     <FormFieldWrapper>
       <Label name={name}>{label}</Label>
 
-      <input id={name} type="file" {...register(name)} onChange={onChange} />
+      <input
+        id={name}
+        type="file"
+        {...register(name)}
+        onChange={onChange}
+        className=" file:bg-middle-gray file:text-white file:mr-4 file:border-0 file:px-4 file:py-2 file:rounded-md"
+      />
       {error && <FormErrorMessage errorMessage={error.message as string} />}
     </FormFieldWrapper>
   );

@@ -34,7 +34,7 @@ export const articleDetail: ArticleDetailT = {
     {
       commentId: "123",
       articleId: "123",
-      author: "jan novak",
+      author: "Jan Novák",
       content: "comment 1",
       postedAt: "2023-07-31T17:40:43.9882855Z",
       score: 2,
@@ -42,7 +42,7 @@ export const articleDetail: ArticleDetailT = {
     {
       commentId: "1253",
       articleId: "1253",
-      author: "jan novak",
+      author: "Jan Novák",
       content: "comment 2",
       postedAt: "2023-07-31T17:40:43.9882855Z",
       score: 3,

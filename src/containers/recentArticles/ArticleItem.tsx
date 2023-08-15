@@ -5,7 +5,7 @@ import type { ArticleT } from "@/types/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { imagesUrl } from "@/config/router";
+import { imagesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
@@ -21,7 +21,7 @@ export default function ArticleItem({ article }: Props) {
   const intl = useIntl();
 
   const { response, data, loading, error } = useGet<Blob>(
-    `${imagesUrl}/${article.imageId}`,
+    `${imagesEndpoint}/${article.imageId}`,
     { responseType: "blob" },
   );
 

@@ -21,7 +21,7 @@ const MarkdownEditorButtons: React.FC<MarkdownButtonsProps> = ({
   const intl = useIntl();
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 flex-wrap">
       <Button style="markdown" onClick={onBold}>
         {intl.formatMessage({
           id: "components.markdownEditorButtons.bold",

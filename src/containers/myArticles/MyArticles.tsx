@@ -6,15 +6,16 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AppUrl, articlesUrl } from "@/config/router";
+import { AppUrl, articlesEndpoint } from "@/config/router";
 
-import useDelete, { useGet } from "@/hooks/api";
+import { useDelete, useGet } from "@/hooks/api";
 
 import CustomLink from "@/components/CustomLink";
 import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
 
 import MyArticlesTable from "./MyArticlesTable";
+import HeaderWrapper from "@/components/HeaderWrapper";
 
 export default function MyArticles() {
   const intl = useIntl();
@@ -23,7 +24,7 @@ export default function MyArticles() {
   const { data, loading, error, refetch } = useGet<{
     pagination: PaginationT;
     items: ArticleT[];
-  }>(articlesUrl);
+  }>(articlesEndpoint);
 
   const {
     loading: deleteLoading,
@@ -35,7 +36,7 @@ export default function MyArticles() {
 
   const deleteSelectedArticles = async () => {
     const deletePromises = selectedArticlesIds.map((articleId) =>
-      fetchDelete(`${articlesUrl}/${articleId}`),
+      fetchDelete(`${articlesEndpoint}/${articleId}`),
     );
 
     await Promise.all(deletePromises);
@@ -85,7 +86,7 @@ export default function MyArticles() {
 
   return (
     <div className="space-y-6 sm:space-y-14">
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 items-start sm:items-center">
+      <HeaderWrapper>
         <Heading headingLevel="h1" size="s1">
           {intl.formatMessage({
             id: "containers.myArticles.title",
@@ -110,7 +111,7 @@ export default function MyArticles() {
             })}
           </button>
         ) : null}
-      </div>
+      </HeaderWrapper>
       <MyArticlesTable
         articles={sortedArticles}
         selectedArticlesIds={selectedArticlesIds}

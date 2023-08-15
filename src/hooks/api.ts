@@ -85,7 +85,7 @@ export function usePost<ResponseData, InputData>(
   return { data: response?.data, response, loading, error, fetchPost };
 }
 
-export default function useDelete<D>() {
+export function useDelete<D>() {
   const [response, setResponse] = useState<AxiosResponse<D> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>();

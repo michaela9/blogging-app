@@ -44,10 +44,10 @@ export default function FormTextAreaField<T extends FieldValues>({
         defaultValue={defaultValue}
         render={({ field }) => (
           <textarea
-            rows={rows}
-            cols={50}
             placeholder={placeholder}
             className="w-full border-gray-300 rounded-md"
+            cols={50}
+            rows={rows}
             {...field}
             {...register}
           />

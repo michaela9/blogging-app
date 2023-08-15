@@ -4,7 +4,7 @@ import type { ArticleDetailT } from "@/types/types";
 
 import { useIntl } from "react-intl";
 
-import { articlesUrl } from "@/config/router";
+import { articlesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
@@ -19,7 +19,7 @@ export default function EditArticle({ id }: Props) {
   const intl = useIntl();
 
   const { data, loading, error } = useGet<ArticleDetailT>(
-    `${articlesUrl}/${id}`,
+    `${articlesEndpoint}/${id}`,
   );
 
   if (loading) {

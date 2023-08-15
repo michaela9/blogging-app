@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl";
 
-import { imagesUrl } from "@/config/router";
+import { imagesEndpoint } from "@/config/router";
 
 import { useGet } from "./api";
 
@@ -11,7 +11,7 @@ export default function useGetBlobFromImageId(imageId: string) {
     data,
     loading,
     error: fetchError,
-  } = useGet<Blob>(`${imagesUrl}/${imageId}`, { responseType: "blob" });
+  } = useGet<Blob>(`${imagesEndpoint}/${imageId}`, { responseType: "blob" });
 
   let blobURL;
   let message;
