@@ -6,6 +6,8 @@ import { Inter } from "next/font/google";
 import React, { useMemo } from "react";
 import { IntlProvider } from "react-intl";
 
+import { Locale } from "@/config/intl";
+
 import MobileNavbar from "@/containers/MobileNavbar";
 import Navbar from "@/containers/Navbar";
 
@@ -19,7 +21,7 @@ type Props = {
 };
 
 export default function RootLayoutComponent({ children }: Props) {
-  const locale = "en";
+  const locale = Locale.EN;
   const shortLocaleVerified = verifyLocale(locale);
 
   const messages = useMemo(() => {

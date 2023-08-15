@@ -47,7 +47,7 @@ export const editArticleSchema = z.object({
   title: z.string(),
   perex: z.string(),
   content: z.string().min(1, { message: "Username is required" }),
-  imageId: z.any(),
+  image: z.any(),
 });
 
 export type EditArticleSchemaT = z.infer<typeof editArticleSchema>;

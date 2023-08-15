@@ -1,4 +1,4 @@
-import type { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
+import type { ChangeEvent, ReactNode } from "react";
 import type {
   FieldError,
   FieldErrorsImpl,
@@ -18,9 +18,7 @@ type Props<T extends FieldValues> = {
   label: ReactNode;
   register: UseFormRegister<T>;
   error?: FieldError | FieldErrorsImpl<T>;
-  onChange?: (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => Promise<null | undefined>;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => Promise<null | undefined>;
 };
 export default function FormFileField<T extends FieldValues>({
   name,

@@ -1,11 +1,63 @@
 {
-  "containers.articleDetail.title": [
+  "components.markdownEditorButtons.bold": [
+    {
+      "type": 0,
+      "value": "Bold"
+    }
+  ],
+  "components.markdownEditorButtons.heading1": [
+    {
+      "type": 0,
+      "value": "Heading1"
+    }
+  ],
+  "components.markdownEditorButtons.heading2": [
+    {
+      "type": 0,
+      "value": "Heading2"
+    }
+  ],
+  "components.markdownEditorButtons.heading3": [
+    {
+      "type": 0,
+      "value": "Heading3"
+    }
+  ],
+  "components.markdownEditorButtons.italic": [
+    {
+      "type": 0,
+      "value": "Italic"
+    }
+  ],
+  "containers.articleDetail.errorMessage": [
+    {
+      "type": 0,
+      "value": "Error loading article detail: "
+    },
+    {
+      "type": 1,
+      "value": "error_message"
+    }
+  ],
+  "containers.articleDetail.noArticleFound": [
+    {
+      "type": 0,
+      "value": "Article detail not found."
+    }
+  ],
+  "containers.articleDetailComponent.blobNotFound": [
+    {
+      "type": 0,
+      "value": "Blob not found"
+    }
+  ],
+  "containers.articleDetailComponent.title": [
     {
       "type": 0,
       "value": "Related articles"
     }
   ],
-  "containers.articleItem.numberOfComments": [
+  "containers.articleItemComponent.numberOfComments": [
     {
       "type": 1,
       "value": "number_of_comments"
@@ -15,7 +67,7 @@
       "value": " comments"
     }
   ],
-  "containers.articleItem.title": [
+  "containers.articleItemComponent.title": [
     {
       "type": 0,
       "value": "Read the whole article"
@@ -31,64 +83,92 @@
       "value": "number_of_comments"
     }
   ],
-  "containers.forms.createArticle.articlePublish": [
+  "containers.editArticle.errorMessage": [
     {
       "type": 0,
-      "value": "Publish Article"
+      "value": "Error loading article: "
+    },
+    {
+      "type": 1,
+      "value": "error_message"
     }
   ],
-  "containers.forms.createArticle.articleTitle": [
+  "containers.editArticle.noArticleFound": [
+    {
+      "type": 0,
+      "value": "No article found."
+    }
+  ],
+  "containers.forms.createArticleForm.articleTitle": [
     {
       "type": 0,
       "value": "Article Title"
     }
   ],
-  "containers.forms.createArticle.content": [
+  "containers.forms.createArticleForm.content": [
     {
       "type": 0,
       "value": "Content"
     }
   ],
-  "containers.forms.createArticle.featuredImage": [
+  "containers.forms.createArticleForm.image": [
     {
       "type": 0,
       "value": "Featured Image"
     }
   ],
-  "containers.forms.createArticle.perex": [
+  "containers.forms.createArticleForm.perex": [
     {
       "type": 0,
       "value": "Perex"
     }
   ],
-  "containers.forms.createArticle.title": [
+  "containers.forms.createArticleFormHeader.articlePublish": [
+    {
+      "type": 0,
+      "value": "Publish Article"
+    }
+  ],
+  "containers.forms.createArticleFormHeader.title": [
     {
       "type": 0,
       "value": "Create Article"
     }
   ],
-  "containers.forms.deleteArticle.closeButton": [
+  "containers.forms.editArticleFormHeader.articleSave": [
     {
       "type": 0,
-      "value": "No, thanks!"
+      "value": "Save Article"
     }
   ],
-  "containers.forms.deleteArticle.description": [
+  "containers.forms.editArticleFormHeader.title": [
     {
       "type": 0,
-      "value": "Do you really want to delete the article?"
+      "value": "Edit Article"
     }
   ],
-  "containers.forms.deleteArticle.submit": [
+  "containers.forms.editArticleFormInside.articleTitle": [
     {
       "type": 0,
-      "value": "Yes, please!"
+      "value": "Article Title"
     }
   ],
-  "containers.forms.deleteArticle.title": [
+  "containers.forms.editArticleFormInside.content": [
     {
       "type": 0,
-      "value": "Delete the article?"
+      "value": "Content"
+    }
+  ],
+  "containers.forms.editArticleFormInside.image": [
+    {
+      "type": 0,
+      "value": "Featured Image"
+    }
+  ],
+  "containers.forms.editArticleFormInside.perex": [
+    {
+      "type": 0,
+      "value": "Perex"
     }
   ],
   "containers.forms.joinDiscussion.label": [
@@ -97,64 +177,102 @@
       "value": "Join the disccussion"
     }
   ],
+  "containers.login.errorMessage": [
+    {
+      "type": 0,
+      "value": "Login failed, please try again later!"
+    }
+  ],
   "containers.login.password": [
     {
       "type": 0,
       "value": "Password"
     }
   ],
-  "containers.login.submitButton": [
+  "containers.loginForm.password": [
+    {
+      "type": 0,
+      "value": "Password"
+    }
+  ],
+  "containers.loginForm.submitButton": [
     {
       "type": 0,
       "value": "Log In"
     }
   ],
-  "containers.login.title": [
+  "containers.loginForm.title": [
     {
       "type": 0,
       "value": "Log In"
     }
   ],
-  "containers.login.username": [
+  "containers.loginForm.username": [
     {
       "type": 0,
       "value": "Username"
     }
   ],
+  "containers.modals.deleteArticleModal.closeButton": [
+    {
+      "type": 0,
+      "value": "No, thanks!"
+    }
+  ],
+  "containers.modals.deleteArticleModal.description": [
+    {
+      "type": 0,
+      "value": "Do you really want to delete the article?"
+    }
+  ],
+  "containers.modals.deleteArticleModal.errorMessage": [
+    {
+      "type": 0,
+      "value": "Error deleting article: "
+    },
+    {
+      "type": 1,
+      "value": "error_message"
+    }
+  ],
+  "containers.modals.deleteArticleModal.submit": [
+    {
+      "type": 0,
+      "value": "Yes, please!"
+    }
+  ],
+  "containers.modals.deleteArticleModal.title": [
+    {
+      "type": 0,
+      "value": "Delete the article"
+    }
+  ],
   "containers.myArticles.button.createNewArticle": [
+    {
+      "type": 0,
+      "value": "Create New Article"
+    }
+  ],
+  "containers.myArticles.button.delete": [
     {
       "type": 0,
       "value": "Delete Selected Articles"
     }
   ],
-  "containers.myArticles.table.th.actions": [
+  "containers.myArticles.errorMessage": [
     {
       "type": 0,
-      "value": "Actions"
+      "value": "Error loading articles: "
+    },
+    {
+      "type": 1,
+      "value": "error_message"
     }
   ],
-  "containers.myArticles.table.th.author": [
+  "containers.myArticles.noArticlesFound": [
     {
       "type": 0,
-      "value": "Author"
-    }
-  ],
-  "containers.myArticles.table.th.numberOfComments": [
-    {
-      "type": 0,
-      "value": "# of comments"
-    }
-  ],
-  "containers.myArticles.table.th.perex": [
-    {
-      "type": 0,
-      "value": "Perex"
-    }
-  ],
-  "containers.myArticles.table.th.title": [
-    {
-      "type": 0,
-      "value": "Article title"
+      "value": "No articles found."
     }
   ],
   "containers.myArticles.title": [
@@ -163,10 +281,34 @@
       "value": "My articles"
     }
   ],
-  "containers.navbar.about": [
+  "containers.myArticlesTable.th.actions": [
     {
       "type": 0,
-      "value": "About"
+      "value": "Actions"
+    }
+  ],
+  "containers.myArticlesTable.th.author": [
+    {
+      "type": 0,
+      "value": "Author"
+    }
+  ],
+  "containers.myArticlesTable.th.numberOfComments": [
+    {
+      "type": 0,
+      "value": "# of comments"
+    }
+  ],
+  "containers.myArticlesTable.th.perex": [
+    {
+      "type": 0,
+      "value": "Perex"
+    }
+  ],
+  "containers.myArticlesTable.th.title": [
+    {
+      "type": 0,
+      "value": "Article title"
     }
   ],
   "containers.navbar.login": [
@@ -181,16 +323,50 @@
       "value": "Log Out"
     }
   ],
-  "containers.navbar.recentArticles": [
+  "containers.recentArticles.articleItem.blobNotFound": [
     {
       "type": 0,
-      "value": "Recent articles"
+      "value": "Blob not found"
+    }
+  ],
+  "containers.recentArticles.errorMessage": [
+    {
+      "type": 0,
+      "value": "Error loading articles: "
+    },
+    {
+      "type": 1,
+      "value": "error_message"
+    }
+  ],
+  "containers.recentArticles.noArticlesFound": [
+    {
+      "type": 0,
+      "value": "No articles found."
     }
   ],
   "containers.recentArticles.title": [
     {
       "type": 0,
       "value": "Recent Articles"
+    }
+  ],
+  "containers.signupForm.name": [
+    {
+      "type": 0,
+      "value": "Name"
+    }
+  ],
+  "containers.signupForm.submitButton": [
+    {
+      "type": 0,
+      "value": "Sign Up"
+    }
+  ],
+  "containers.signupForm.title": [
+    {
+      "type": 0,
+      "value": "Sign Up"
     }
   ]
 }

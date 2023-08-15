@@ -40,21 +40,14 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
     const fetchedData = await fetchPost(formData);
-    console.log(fetchedData);
-    if (error) {
+    if (error || !fetchedData) {
       return intl.formatMessage({
-        id: "containers.recentArticles.errorMessage",
-        defaultMessage: "Login failed",
+        id: "containers.login.errorMessage",
+        defaultMessage: "Login failed, please try again later!",
       });
     }
     if (loading || isSubmitting) {
       return <Loader />;
-    }
-    if (!fetchedData) {
-      return intl.formatMessage({
-        id: "containers.recentArticles.missingData",
-        defaultMessage: "Missing data",
-      });
     }
     login(fetchedData.access_token);
     router.push(AdminUrl.home);

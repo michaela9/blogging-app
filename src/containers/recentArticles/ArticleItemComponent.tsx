@@ -12,6 +12,7 @@ import CustomLink from "@/components/CustomLink";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
 import { IntlDate } from "@/components/IntlDate";
+import { articleDetail } from "@/data/dummy";
 
 type Props = {
   article: ArticleT;
@@ -36,7 +37,7 @@ export default function ArticleItemComponent({ article, blobURL }: Props) {
           {article.title}
         </Heading>
         <div className="text-secondary-text text-xs flex gap-4">
-          {/* <Description>{article.author}</Description> */}
+          <Description>{articleDetail.comments[0].author}</Description>
           <Description>
             <IntlDate value={article.createdAt} />
           </Description>
@@ -45,20 +46,20 @@ export default function ArticleItemComponent({ article, blobURL }: Props) {
         <div className="text-sm flex gap-4 items-center">
           <CustomLink href={`/articles/${article.articleId}`} style="secondary">
             {intl.formatMessage({
-              id: "containers.articleItem.title",
+              id: "containers.articleItemComponent.title",
               defaultMessage: "Read the whole article",
             })}
           </CustomLink>
           <Description className="text-secondary-text">
-            {/* {intl.formatMessage(
+            {intl.formatMessage(
               {
-                id: "containers.articleItem.numberOfComments",
+                id: "containers.articleItemComponent.numberOfComments",
                 defaultMessage: "{number_of_comments} comments",
               },
               {
-                number_of_comments: article.comments.length,
+                number_of_comments: articleDetail.comments.length,
               },
-            )} */}
+            )}
           </Description>
         </div>
       </div>

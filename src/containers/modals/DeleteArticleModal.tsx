@@ -41,8 +41,8 @@ export default function DeleteArticleModal({
   if (error) {
     return intl.formatMessage(
       {
-        id: "containers.recentArticles.errorMessage",
-        defaultMessage: "Error deleting articles: {error_message}",
+        id: "containers.modals.deleteArticleModal.errorMessage",
+        defaultMessage: "Error deleting article: {error_message}",
       },
       { error_message: error.message },
     );
@@ -53,13 +53,13 @@ export default function DeleteArticleModal({
       <div className="space-y-6">
         <Heading headingLevel="h1" size="s1">
           {intl.formatMessage({
-            id: "containers.forms.deleteArticle.title",
+            id: "containers.modals.deleteArticleModal.title",
             defaultMessage: "Delete the article",
           })}
         </Heading>
         <Description className="text-gray-500">
           {intl.formatMessage({
-            id: "containers.forms.deleteArticle.description",
+            id: "containers.modals.deleteArticleModal.description",
             defaultMessage: "Do you really want to delete the article?",
           })}
         </Description>
@@ -67,14 +67,14 @@ export default function DeleteArticleModal({
       <div className="flex gap-4 items-center">
         <Button style="primary" onClick={handleDeleteClick}>
           {intl.formatMessage({
-            id: "containers.forms.deleteArticle.submit",
-            defaultMessage: " Yes, please!",
+            id: "containers.modals.deleteArticleModal.submit",
+            defaultMessage: "Yes, please!",
           })}
         </Button>
         <Button style="secondary" onClick={closeModal}>
           {intl.formatMessage({
-            id: "containers.forms.deleteArticle.closeButton",
-            defaultMessage: "No, thanks! ",
+            id: "containers.modals.deleteArticleModal.closeButton",
+            defaultMessage: "No, thanks!",
           })}
         </Button>
       </div>

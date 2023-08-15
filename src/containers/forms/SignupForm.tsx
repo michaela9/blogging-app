@@ -35,7 +35,7 @@ export default function SignupForm({
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-xl border border-gray-100 max-w-sm rounded-md mx-auto">
       <Heading headingLevel="h1" size="s2">
         {intl.formatMessage({
-          id: "containers.signup.title",
+          id: "containers.signupForm.title",
           defaultMessage: "Sign Up",
         })}
       </Heading>
@@ -47,7 +47,7 @@ export default function SignupForm({
           <FormTextField
             name="name"
             label={intl.formatMessage({
-              id: "containers.signup.name",
+              id: "containers.signupForm.name",
               defaultMessage: "Name",
             })}
             control={control}
@@ -68,7 +68,7 @@ export default function SignupForm({
         </div>
         <Button style="primary" type="submit">
           {intl.formatMessage({
-            id: "containers.signup.submitButton",
+            id: "containers.signupForm.submitButton",
             defaultMessage: "Sign Up",
           })}
         </Button>

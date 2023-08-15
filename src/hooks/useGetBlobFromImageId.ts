@@ -18,7 +18,7 @@ export default function useGetBlobFromImageId(imageId: string) {
 
   if (fetchError || !data || !response) {
     message = intl.formatMessage({
-      id: "containers.articleItem.blobNotFound",
+      id: "hooks.useGetBlobFromImageId.blobNotFound",
       defaultMessage: "Blob not found",
     });
   } else {

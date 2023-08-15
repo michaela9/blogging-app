@@ -1,6 +1,6 @@
 "use client";
 
-import type { CommentT } from "@/types/types";
+import type { ArticleDetailT, CommentT } from "@/types/types";
 
 import React from "react";
 import { useIntl } from "react-intl";
@@ -10,11 +10,10 @@ import Heading from "@/components/Heading";
 import Comment from "./Comment";
 import JoinDiscussionForm from "../forms/JoinDiscussionForm";
 
-const numberOfComments = 5;
-
 type Props = {
   comments: CommentT[];
 };
+
 export default function Comments({ comments }: Props) {
   const intl = useIntl();
   return (
@@ -26,7 +25,7 @@ export default function Comments({ comments }: Props) {
             defaultMessage: "Comments {number_of_comments}",
           },
           {
-            number_of_comments: numberOfComments,
+            number_of_comments: comments.length,
           },
         )}
       </Heading>

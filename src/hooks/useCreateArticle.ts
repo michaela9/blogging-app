@@ -1,5 +1,10 @@
 import type { AxiosError } from "axios";
 import type { SubmitHandler } from "react-hook-form";
+import type {
+  ArticleDetailT,
+  CreateArticleT,
+  ImageResponseT,
+} from "@/types/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -12,10 +17,8 @@ import type { CreateArticleSchemaT } from "@/schema/zodSchema";
 import { createArticleSchema } from "@/schema/zodSchema";
 
 import { usePost } from "./api";
-import { ArticleDetailT, CreateArticleT, ImageResponseT } from "@/types/types";
 
 export default function useCreateArticle() {
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>();
   const router = useRouter();
 
@@ -24,7 +27,7 @@ export default function useCreateArticle() {
     handleSubmit,
     setValue,
     getValues,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     register,
   } = useForm<CreateArticleSchemaT>({
     resolver: zodResolver(createArticleSchema),
@@ -43,15 +46,11 @@ export default function useCreateArticle() {
   } = usePost<ArticleDetailT, CreateArticleT>(articlesUrl);
 
   const onSubmit: SubmitHandler<CreateArticleSchemaT> = async (formData) => {
-    setIsLoading(true);
-
-    console.log(formData);
-
-    let formDataT = new FormData();
+    const formDataT = new FormData();
+    // eslint-disable-next-line
     formDataT.append("image", formData.image[0]);
 
     const imageData = await fetchImage(formDataT);
-
     if (!imageData || imageError) {
       setError(error as AxiosError);
     }
@@ -59,6 +58,7 @@ export default function useCreateArticle() {
       imageData &&
       Array.isArray(imageData) &&
       imageData.length > 0 &&
+      // eslint-disable-next-line
       (imageData[0].imageId as string);
 
     if (!imageId) {
@@ -89,6 +89,6 @@ export default function useCreateArticle() {
     setValue,
     getValues,
     onSubmit,
-    isLoading,
+    isSubmitting,
   };
 }

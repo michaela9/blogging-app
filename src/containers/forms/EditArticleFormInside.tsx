@@ -1,22 +1,30 @@
-import { EditArticleSchemaT, editArticleSchema } from "@/schema/zodSchema";
+import type { AxiosError } from "axios";
+import type { SubmitHandler } from "react-hook-form";
+import type { ArticleDetailT, ImageResponseT } from "@/types/types";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useContext, useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import EditArticleFormHeader from "./EditArticleFormHeader";
-import FormTextField from "@/components/form/FormTextField";
-import FormTextAreaField from "@/components/form/FormTextAreaField";
-import { useIntl } from "react-intl";
-import FormFileField from "@/components/form/FormFileField";
-import MarkdownEditorField from "@/components/form/MarkdownEditorField";
 import Image from "next/image";
-import { ArticleDetailT, ImageResponseT } from "@/types/types";
-import { AxiosError } from "axios";
-import { AdminUrl, articlesUrl, imagesUrl } from "@/config/router";
-import { AuthContext } from "@/provider/AuthProvider";
-import { usePatch, usePost } from "@/hooks/api";
-import getBlobFromImageId from "@/utils/getBlobFromImageId";
 import { useRouter } from "next/navigation";
-import { File } from "buffer";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useIntl } from "react-intl";
+
+import { AdminUrl, articlesUrl, imagesUrl } from "@/config/router";
+
+import { usePatch, usePost } from "@/hooks/api";
+
+import FormFileField from "@/components/form/FormFileField";
+import FormTextAreaField from "@/components/form/FormTextAreaField";
+import FormTextField from "@/components/form/FormTextField";
+import MarkdownEditorField from "@/components/form/MarkdownEditorField";
+
+import type { EditArticleSchemaT } from "@/schema/zodSchema";
+import { editArticleSchema } from "@/schema/zodSchema";
+
+import EditArticleFormHeader from "./EditArticleFormHeader";
+import Loader from "@/components/Loader";
+
+const currentDate = new Date().toISOString();
 
 type Props = {
   blobURL: string;
@@ -25,18 +33,16 @@ type Props = {
 
 export default function EditArticleFormInside({ blobURL, article }: Props) {
   const intl = useIntl();
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<AxiosError | null>();
   const router = useRouter();
   const [currentImage, setCurrentImage] = useState(blobURL);
-  const [currentFile, setCurrentFile] = useState();
+  const [currentFiles, setCurrentFiles] = useState<FileList | null>(null);
+  const [error, setError] = useState<AxiosError | null>();
 
   const {
     loading: imageLoading,
     error: imageError,
     fetchPost: fetchImage,
-  } = usePost<ImageResponseT, any>(imagesUrl, "multipart/form-data");
+  } = usePost<ImageResponseT, FormData>(imagesUrl, "multipart/form-data");
 
   const {
     loading: articleLoading,
@@ -63,22 +69,54 @@ export default function EditArticleFormInside({ blobURL, article }: Props) {
   }, [blobURL]);
 
   const onSubmit: SubmitHandler<EditArticleSchemaT> = async (formData) => {
-    setIsLoading(true);
+    const formDataT = new FormData();
+    if (currentFiles && currentFiles.length) {
+      formDataT.append("image", currentFiles[0]);
+    }
+    const imageData = await fetchImage(formDataT);
 
-    // const formDataT = new FormData();
+    if (isSubmitting) {
+      return <Loader />;
+    }
+    if (!imageData || imageError) {
+      setError(error as AxiosError);
+    }
+    const imageId =
+      imageData &&
+      Array.isArray(imageData) &&
+      imageData.length > 0 &&
+      // eslint-disable-next-line
+      (imageData[0].imageId as string);
 
-    // if (currentFile) {
-    //   formDataT.append("image", currentFile);
-    // }
-    // const imageData = await fetchImage(formDataT);
+    if (!imageId) {
+      return null;
+    }
+    const articleData = await patchArticle({
+      articleId: article.articleId,
+      createdAt: article.createdAt,
+      comments: article.comments,
+      lastUpdatedAt: currentDate,
+      title: formData.title,
+      content: formData.content,
+      perex: formData.perex,
+      imageId: imageId,
+    });
+
+    if (!imageLoading || articleLoading) {
+      return <Loader />;
+    }
+    if (!articleData || articleError) {
+      setError(error as AxiosError);
+    }
+
     router.push(AdminUrl.home);
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
-    const file = e.target.files[0];
-    setCurrentFile(file);
-    const newBlobURL = URL.createObjectURL(file);
+    const files = e.target.files;
+    setCurrentFiles(files);
+    const newBlobURL = URL.createObjectURL(files[0]);
     setCurrentImage(newBlobURL);
   };
 
@@ -88,7 +126,7 @@ export default function EditArticleFormInside({ blobURL, article }: Props) {
       <FormTextField
         name="title"
         label={intl.formatMessage({
-          id: "containers.forms.createArticle.articleTitle",
+          id: "containers.forms.editArticleFormInside.articleTitle",
           defaultMessage: "Article Title",
         })}
         control={control}
@@ -100,7 +138,7 @@ export default function EditArticleFormInside({ blobURL, article }: Props) {
       <FormTextAreaField
         name="perex"
         label={intl.formatMessage({
-          id: "containers.forms.createArticle.perex",
+          id: "containers.forms.editArticleFormInside.perex",
           defaultMessage: "Perex",
         })}
         control={control}
@@ -122,7 +160,7 @@ export default function EditArticleFormInside({ blobURL, article }: Props) {
         <FormFileField
           name="image"
           label={intl.formatMessage({
-            id: "containers.forms.createArticle.image",
+            id: "containers.forms.editArticleFormInside.image",
             defaultMessage: "Featured Image",
           })}
           register={register}
@@ -133,7 +171,7 @@ export default function EditArticleFormInside({ blobURL, article }: Props) {
       <MarkdownEditorField
         name="content"
         label={intl.formatMessage({
-          id: "containers.forms.createArticle.content",
+          id: "containers.forms.editArticleFormInside.content",
           defaultMessage: "Content",
         })}
         control={control}

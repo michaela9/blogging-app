@@ -1,6 +1,6 @@
 "use client";
 
-import type { CommentT } from "@/types/types";
+import type { ArticleDetailT, CommentT } from "@/types/types";
 
 import Image from "next/image";
 import React from "react";
@@ -32,7 +32,7 @@ export default function Comment({ comment }: Props) {
           </Description>
         </div>
         <div>{comment.content}</div>
-        <div>+6 </div>
+        <div>{comment.score}</div>
       </div>
     </div>
   );

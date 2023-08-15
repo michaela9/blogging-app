@@ -38,7 +38,7 @@ export default function LoginForm({
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-xl border border-gray-100 max-w-sm rounded-md mx-auto">
       <Heading headingLevel="h1" size="s2">
         {intl.formatMessage({
-          id: "containers.login.title",
+          id: "containers.loginForm.title",
           defaultMessage: "Log In",
         })}
       </Heading>
@@ -50,7 +50,7 @@ export default function LoginForm({
           <FormTextField
             name="username"
             label={intl.formatMessage({
-              id: "containers.login.username",
+              id: "containers.loginForm.username",
               defaultMessage: "Username",
             })}
             control={control}
@@ -61,7 +61,7 @@ export default function LoginForm({
           <FormPasswordField
             name="password"
             label={intl.formatMessage({
-              id: "containers.login.password",
+              id: "containers.loginForm.password",
               defaultMessage: "Password",
             })}
             control={control}
@@ -71,7 +71,7 @@ export default function LoginForm({
         </div>
         <Button style="primary" type="submit">
           {intl.formatMessage({
-            id: "containers.login.submitButton",
+            id: "containers.loginForm.submitButton",
             defaultMessage: "Log In",
           })}
         </Button>

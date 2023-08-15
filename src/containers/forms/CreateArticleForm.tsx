@@ -17,9 +17,9 @@ export default function CreateArticleForm() {
   const intl = useIntl();
 
   const {
-    isLoading,
     control,
     handleSubmit,
+    isSubmitting,
     setValue,
     getValues,
     errors,
@@ -27,7 +27,7 @@ export default function CreateArticleForm() {
     onSubmit,
   } = useCreateArticle();
 
-  if (isLoading) {
+  if (isSubmitting) {
     return <Loader />;
   }
 
@@ -41,7 +41,7 @@ export default function CreateArticleForm() {
         <FormTextField
           name="title"
           label={intl.formatMessage({
-            id: "containers.forms.createArticle.articleTitle",
+            id: "containers.forms.createArticleForm.articleTitle",
             defaultMessage: "Article Title",
           })}
           control={control}
@@ -52,7 +52,7 @@ export default function CreateArticleForm() {
         <FormTextAreaField
           name="perex"
           label={intl.formatMessage({
-            id: "containers.forms.createArticle.perex",
+            id: "containers.forms.createArticleForm.perex",
             defaultMessage: "Perex",
           })}
           control={control}
@@ -63,7 +63,7 @@ export default function CreateArticleForm() {
         <FormFileField
           name="image"
           label={intl.formatMessage({
-            id: "containers.forms.createArticle.image",
+            id: "containers.forms.createArticleForm.image",
             defaultMessage: "Featured Image",
           })}
           register={register}
@@ -72,7 +72,7 @@ export default function CreateArticleForm() {
         <MarkdownEditorField
           name="content"
           label={intl.formatMessage({
-            id: "containers.forms.createArticle.content",
+            id: "containers.forms.createArticleForm.content",
             defaultMessage: "Content",
           })}
           control={control}

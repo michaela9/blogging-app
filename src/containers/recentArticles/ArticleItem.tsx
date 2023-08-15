@@ -40,7 +40,7 @@ export default function ArticleItem({ article }: Props) {
 
   if (error || !blobURL) {
     return intl.formatMessage({
-      id: "containers.articleItem.blobNotFound",
+      id: "containers.recentArticles.articleItem.blobNotFound",
       defaultMessage: "Blob not found",
     });
   }

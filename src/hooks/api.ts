@@ -115,16 +115,19 @@ export default function useDelete<D>() {
 }
 
 export function usePatch<ResponseData, InputData>(url: string) {
-  const [response, setResponse] = useState<AxiosResponse | null>(null);
+  const [response, setResponse] = useState<AxiosResponse<ResponseData> | null>(
+    null,
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>();
   const { token, apiKey } = useContext(AuthContext);
 
-  const fetchPatch = async (formData?: InputData) => {
+  const fetchPatch = async (
+    formData?: InputData,
+  ): Promise<ResponseData | null> => {
     setLoading(true);
     try {
-      const response = await axios.patch(url, formData, {
-        method: "PATCH",
+      const response = await axios.patch<ResponseData>(url, formData, {
         headers: {
           "X-API-KEY": apiKey,
           Authorization: token,
@@ -133,11 +136,15 @@ export function usePatch<ResponseData, InputData>(url: string) {
 
       if (response) {
         setResponse(response);
+        return response.data; // <- This ensures a successful response returns the data.
       }
     } catch (error) {
       setError(error as AxiosError);
+      return null; // <- This ensures that an error path returns null as well.
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
+    return null; // <- This ensures that if for some reason the conditionals miss, it still returns null.
   };
 
   return { response, loading, error, fetchPatch };

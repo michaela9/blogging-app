@@ -16,8 +16,8 @@ import { IntlDate } from "@/components/IntlDate";
 import Loader from "@/components/Loader";
 import Markdown from "@/components/Markdown";
 
-import ArticleShortItem from "./ArticleShortItem";
 import Comments from "../comments/Comments";
+import RelatedArticles from "./RelatedArticles";
 
 type Props = {
   article: ArticleDetailT;
@@ -50,7 +50,7 @@ export default function ArticleDetailComponent({
 
   if (error || !blobURL) {
     return intl.formatMessage({
-      id: "containers.articleItem.blobNotFound",
+      id: "containers.articleDetailComponent.blobNotFound",
       defaultMessage: "Blob not found",
     });
   }
@@ -63,13 +63,11 @@ export default function ArticleDetailComponent({
         </Heading>
         <div className="space-y-6 border-b border-b-gray-300 pb-10">
           <div className="text-secondary-text text-xs flex gap-4">
-            {/* <Description>{article.author}</Description> */}
             <Description>
               <IntlDate value={article.createdAt} />
-              {article.createdAt}
             </Description>
           </div>
-          <div className="">
+          <div>
             <Image
               src={blobURL}
               alt={article.title}
@@ -85,15 +83,11 @@ export default function ArticleDetailComponent({
       <div className="pl-6 border-l border-l-gray-300 space-y-8">
         <Heading headingLevel="h2" size="s3">
           {intl.formatMessage({
-            id: "containers.articleDetail.title",
+            id: "containers.articleDetailComponent.title",
             defaultMessage: "Related articles",
           })}
         </Heading>
-        <div className="space-y-6">
-          {relatedArticles.map((article) => (
-            <ArticleShortItem key={article.articleId} article={article} />
-          ))}
-        </div>
+        <RelatedArticles relatedArticles={relatedArticles} />
       </div>
     </div>
   );

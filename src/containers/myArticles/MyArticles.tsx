@@ -47,14 +47,24 @@ export default function MyArticles() {
     refetch();
   };
 
-  if (loading) {
+  if (loading || deleteLoading) {
     return <Loader />;
+  }
+
+  if (deleteError) {
+    return intl.formatMessage(
+      {
+        id: "containers.myArticles.errorMessage",
+        defaultMessage: "Error deleting articles: {error_message}",
+      },
+      { error_message: deleteError.message },
+    );
   }
 
   if (error) {
     return intl.formatMessage(
       {
-        id: "containers.recentArticles.errorMessage",
+        id: "containers.myArticles.errorMessage",
         defaultMessage: "Error loading articles: {error_message}",
       },
       { error_message: error.message },
@@ -63,7 +73,7 @@ export default function MyArticles() {
 
   if (!data || data.items.length === 0) {
     return intl.formatMessage({
-      id: "containers.recentArticles.noArticlesFound",
+      id: "containers.myArticles.noArticlesFound",
       defaultMessage: "No articles found.",
     });
   }

@@ -69,31 +69,31 @@ export default function MyArticlesTable({
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.table.th.title",
+              id: "containers.myArticlesTable.th.title",
               defaultMessage: "Article title",
             })}
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.table.th.perex",
+              id: "containers.myArticlesTable.th.perex",
               defaultMessage: "Perex",
             })}
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.table.th.author",
+              id: "containers.myArticlesTable.th.author",
               defaultMessage: "Author",
             })}
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.table.th.numberOfComments",
+              id: "containers.myArticlesTable.th.numberOfComments",
               defaultMessage: "# of comments",
             })}
           </Th>
           <Th>
             {intl.formatMessage({
-              id: "containers.myArticles.table.th.actions",
+              id: "containers.myArticlesTable.th.actions",
               defaultMessage: "Actions",
             })}
           </Th>
@@ -130,7 +130,6 @@ export default function MyArticlesTable({
                   >
                     <PencilIcon className="w-5" />
                   </CustomLink>
-
                   <button
                     onClick={() =>
                       setSelectedArticleIdForDeletion(article.articleId)

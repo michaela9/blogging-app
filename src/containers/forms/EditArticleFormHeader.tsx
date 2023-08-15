@@ -11,13 +11,13 @@ export default function EditArticleFormHeader() {
     <div className="flex gap-4 items-center">
       <Heading headingLevel="h1" size="s1">
         {intl.formatMessage({
-          id: "containers.forms.editArticle.title",
+          id: "containers.forms.editArticleFormHeader.title",
           defaultMessage: "Edit Article",
         })}
       </Heading>
       <Button style="primary" type="submit">
         {intl.formatMessage({
-          id: "containers.forms.editArticle.articlePublish",
+          id: "containers.forms.editArticleFormHeader.articleSave",
           defaultMessage: "Save Article",
         })}
       </Button>
