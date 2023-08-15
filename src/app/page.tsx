@@ -1,13 +1,11 @@
-import "../styles/globals.css";
+import "@/styles/globals.css";
 
-// import type { Metadata } from "next";
+import type { Metadata } from "next";
 
-import RecentArticles from "@/containers/recentArticles/RecentArticles";
-
-// export const metadata: Metadata = {
-//   title: "Homepage - Recent Articles",
-// };
+export const metadata: Metadata = {
+  title: "Homepage - Recent Articles",
+};
 
 export default function Page() {
-  return <RecentArticles />;
+  return <h1>My first page</h1>;
 }

@@ -156,6 +156,7 @@ module.exports = {
           ["^@/hooks", "^@/utils"],
           ["^@/components"],
           ["^@/containers"],
+          ["^@/styles"],
           ["^@/"],
           // relative paths up until 3 level
           [
