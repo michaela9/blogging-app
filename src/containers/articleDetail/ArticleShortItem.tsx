@@ -4,9 +4,10 @@ import type { ArticleT } from "@/types/types";
 
 import React from "react";
 
-import Heading from "@/components/Heading";
-import CustomLink from "@/components/CustomLink";
 import { AppUrl } from "@/config/router";
+
+import CustomLink from "@/components/CustomLink";
+import Heading from "@/components/Heading";
 
 type Props = {
   article: ArticleT;

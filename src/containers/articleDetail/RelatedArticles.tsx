@@ -1,9 +1,7 @@
-import Loader from "@/components/Loader";
-import { articlesUrl } from "@/config/router";
-import { useGet } from "@/hooks/api";
-import type { ArticleT, PaginationT } from "@/types/types";
+import type { ArticleT } from "@/types/types";
+
 import React from "react";
-import { useIntl } from "react-intl";
+
 import ArticleShortItem from "./ArticleShortItem";
 
 type Props = {

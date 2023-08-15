@@ -1,6 +1,6 @@
 "use client";
 
-import type { ArticleDetailT, CommentT } from "@/types/types";
+import type { CommentT } from "@/types/types";
 
 import Image from "next/image";
 import React from "react";

@@ -17,7 +17,7 @@ import ArticleItem from "./ArticleItem";
 export default function RecentArticles() {
   const intl = useIntl();
 
-  const { data, loading, error, refetch } = useGet<{
+  const { data, loading, error } = useGet<{
     pagination: PaginationT;
     items: ArticleT[];
   }>(articlesUrl);

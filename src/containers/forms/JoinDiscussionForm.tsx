@@ -1,10 +1,10 @@
 "use client";
 
+import { profilePhoto } from "@/data/dummy";
 import Image from "next/image";
 import React from "react";
 import { useIntl } from "react-intl";
 
-const profilePhoto = "/img.png";
 export default function JoinDiscussionForm() {
   const intl = useIntl();
   return (

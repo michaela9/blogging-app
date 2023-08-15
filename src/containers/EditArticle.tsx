@@ -18,7 +18,7 @@ type Props = {
 export default function EditArticle({ id }: Props) {
   const intl = useIntl();
 
-  const { data, loading, error, refetch } = useGet<ArticleDetailT>(
+  const { data, loading, error } = useGet<ArticleDetailT>(
     `${articlesUrl}/${id}`,
   );
 

@@ -67,3 +67,5 @@ export const testUser: TenantT = {
   createdAt: "",
   lastUsedAt: "",
 };
+
+export const profilePhoto = "/img.png";

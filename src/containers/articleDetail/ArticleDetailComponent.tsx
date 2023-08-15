@@ -16,8 +16,8 @@ import { IntlDate } from "@/components/IntlDate";
 import Loader from "@/components/Loader";
 import Markdown from "@/components/Markdown";
 
-import Comments from "../comments/Comments";
 import RelatedArticles from "./RelatedArticles";
+import Comments from "../comments/Comments";
 
 type Props = {
   article: ArticleDetailT;

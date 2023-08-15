@@ -53,6 +53,8 @@
   "containers.recentArticles.errorMessage": "Error loading articles: {error_message}",
   "containers.recentArticles.noArticlesFound": "No articles found.",
   "containers.recentArticles.title": "Recent Articles",
+  "containers.relatedArticles.errorMessage": "Error loading related articles: {error_message}",
+  "containers.relatedArticles.noArticlesFound": "No articles found.",
   "containers.signupForm.name": "Name",
   "containers.signupForm.submitButton": "Sign Up",
   "containers.signupForm.title": "Sign Up"

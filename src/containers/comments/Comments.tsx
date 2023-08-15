@@ -1,6 +1,6 @@
 "use client";
 
-import type { ArticleDetailT, CommentT } from "@/types/types";
+import type { CommentT } from "@/types/types";
 
 import React from "react";
 import { useIntl } from "react-intl";

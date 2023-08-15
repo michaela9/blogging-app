@@ -12,6 +12,7 @@ import CustomLink from "@/components/CustomLink";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
 import { IntlDate } from "@/components/IntlDate";
+
 import { articleDetail } from "@/data/dummy";
 
 type Props = {

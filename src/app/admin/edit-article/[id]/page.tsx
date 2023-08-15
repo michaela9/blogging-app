@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+"use client";
+
+// import type { Metadata } from "next";
 
 import EditArticle from "@/containers/EditArticle";
 
-export const metadata: Metadata = {
-  title: "Admin - Edit Article",
-};
+// export const metadata: Metadata = {
+//   title: "Admin - Edit Article",
+// };
 
 type Props = {
   params: {

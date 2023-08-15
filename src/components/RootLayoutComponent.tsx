@@ -30,17 +30,19 @@ export default function RootLayoutComponent({ children }: Props) {
 
   return (
     <html lang="en">
-      <AuthProvider>
-        <IntlProvider locale={shortLocaleVerified} messages={messages}>
-          <body className={inter.className}>
-            <Navbar />
-            <MobileNavbar />
-            <main className="py-6 sm:py-12 px-4 xl:px-0 max-w-6xl mx-auto">
-              {children}
-            </main>
-          </body>
-        </IntlProvider>
-      </AuthProvider>
+      <body className={inter.className}>
+        <AuthProvider>
+          <IntlProvider locale={shortLocaleVerified} messages={messages}>
+            <div>
+              <Navbar />
+              <MobileNavbar />
+              <main className="py-6 sm:py-12 px-4 xl:px-0 max-w-6xl mx-auto">
+                {children}
+              </main>
+            </div>
+          </IntlProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }

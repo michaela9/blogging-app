@@ -351,6 +351,22 @@
       "value": "Recent Articles"
     }
   ],
+  "containers.relatedArticles.errorMessage": [
+    {
+      "type": 0,
+      "value": "Error loading related articles: "
+    },
+    {
+      "type": 1,
+      "value": "error_message"
+    }
+  ],
+  "containers.relatedArticles.noArticlesFound": [
+    {
+      "type": 0,
+      "value": "No articles found."
+    }
+  ],
   "containers.signupForm.name": [
     {
       "type": 0,

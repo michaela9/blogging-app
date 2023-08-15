@@ -2,9 +2,9 @@
 
 import type {
   Control,
-  type FieldErrors,
-  type UseFormHandleSubmit,
-  type UseFormRegister,
+  FieldErrors,
+  UseFormHandleSubmit,
+  UseFormRegister,
 } from "react-hook-form";
 
 import { useIntl } from "react-intl";

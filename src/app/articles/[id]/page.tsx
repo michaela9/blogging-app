@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+// "use client";
+
+// import type { Metadata } from "next";
 
 import ArticleDetail from "@/containers/articleDetail/ArticleDetail";
 
-export const metadata: Metadata = {
-  title: "Homepage articArticle Detail",
-};
+// export const metadata: Metadata = {
+//   title: "Homepage articArticle Detail",
+// };
 
 type Props = {
   params: {
