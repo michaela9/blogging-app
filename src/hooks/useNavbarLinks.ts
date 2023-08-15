@@ -1,6 +1,5 @@
 import { useIntl } from "react-intl";
 
-import { AppUrl } from "@/config/router";
 
 export default function useNavbarLinks() {
   const intl = useIntl();

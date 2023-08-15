@@ -13,6 +13,7 @@ import { AppUrl, loginEndpoint } from "@/config/router";
 
 import { usePost } from "@/hooks/api";
 
+import ErrorMessage from "@/components/ErrorMessage";
 import Loader from "@/components/Loader";
 
 import { AuthContext } from "@/context/auth.context";
@@ -41,10 +42,14 @@ export default function Login() {
   const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
     const fetchedData = await fetchPost(formData);
     if (error || !fetchedData) {
-      return intl.formatMessage({
-        id: "containers.login.errorMessage",
-        defaultMessage: "Login failed, please try again later!",
-      });
+      return (
+        <ErrorMessage
+          message={intl.formatMessage({
+            id: "containers.login.errorMessage",
+            defaultMessage: "Login failed, please try again later!",
+          })}
+        />
+      );
     }
     if (loading || isSubmitting) {
       return <Loader />;

@@ -9,6 +9,7 @@ import { imagesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
+import ErrorMessage from "@/components/ErrorMessage";
 import Loader from "@/components/Loader";
 
 import ArticleItemComponent from "./ArticleItemComponent";
@@ -39,10 +40,14 @@ export default function ArticleItem({ article }: Props) {
   }
 
   if (error || !blobURL) {
-    return intl.formatMessage({
-      id: "containers.recentArticles.articleItem.blobNotFound",
-      defaultMessage: "Blob not found",
-    });
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.recentArticles.articleItem.blobNotFound",
+          defaultMessage: "Blob not found",
+        })}
+      />
+    );
   }
 
   return <ArticleItemComponent article={article} blobURL={blobURL} />;

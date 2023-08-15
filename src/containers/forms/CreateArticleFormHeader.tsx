@@ -2,8 +2,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import Button from "@/components/Button";
-import Heading from "@/components/Heading";
 import HeaderWrapper from "@/components/HeaderWrapper";
+import Heading from "@/components/Heading";
 
 export default function CreateArticleFormHeader() {
   const intl = useIntl();

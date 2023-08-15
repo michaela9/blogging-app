@@ -26,10 +26,7 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-const defaultApiKey =
-  process.env.NEXT_PUBLIC_API_KEY || "fallback_api_key_here";
-
-// const defaultApiKey = "b21611a3-d995-499c-80d5-4e0f72db5ae1";
+const defaultApiKey = `${process.env.NEXT_PUBLIC_API_KEY}`;
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(() => {

@@ -9,13 +9,15 @@ import { useIntl } from "react-intl";
 import { AppUrl, articlesEndpoint } from "@/config/router";
 
 import { useDelete, useGet } from "@/hooks/api";
+import { sortArticles } from "@/utils/sortArticles";
 
 import CustomLink from "@/components/CustomLink";
+import ErrorMessage from "@/components/ErrorMessage";
+import HeaderWrapper from "@/components/HeaderWrapper";
 import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
 
 import MyArticlesTable from "./MyArticlesTable";
-import HeaderWrapper from "@/components/HeaderWrapper";
 
 export default function MyArticles() {
   const intl = useIntl();
@@ -53,36 +55,46 @@ export default function MyArticles() {
   }
 
   if (deleteError) {
-    return intl.formatMessage(
-      {
-        id: "containers.myArticles.errorMessage",
-        defaultMessage: "Error deleting articles: {error_message}",
-      },
-      { error_message: deleteError.message },
+    return (
+      <ErrorMessage
+        message={intl.formatMessage(
+          {
+            id: "containers.myArticles.errorMessage",
+            defaultMessage: "Error deleting articles: {error_message}",
+          },
+          { error_message: deleteError.message },
+        )}
+      />
     );
   }
 
   if (error) {
-    return intl.formatMessage(
-      {
-        id: "containers.myArticles.errorMessage",
-        defaultMessage: "Error loading articles: {error_message}",
-      },
-      { error_message: error.message },
+    return (
+      <ErrorMessage
+        message={intl.formatMessage(
+          {
+            id: "containers.myArticles.errorMessage",
+            defaultMessage: "Error loading articles: {error_message}",
+          },
+          { error_message: error.message },
+        )}
+      />
     );
   }
 
   if (!data || data.items.length === 0) {
-    return intl.formatMessage({
-      id: "containers.myArticles.noArticlesFound",
-      defaultMessage: "No articles found.",
-    });
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.myArticles.noArticlesFound",
+          defaultMessage: "No articles found.",
+        })}
+      />
+    );
   }
 
   const articles = data.items;
-  const sortedArticles = articles.sort((a, b) =>
-    b.createdAt.localeCompare(a.createdAt),
-  );
+  const sortedArticles = sortArticles(articles);
 
   return (
     <div className="space-y-6 sm:space-y-14">

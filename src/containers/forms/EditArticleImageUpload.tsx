@@ -17,7 +17,7 @@ type Props = {
   errors: FieldErrors<EditArticleSchemaT>;
 };
 
-export default function ImageUploadSection({
+export default function EditArticleImageUpload({
   currentImage,
   handleFileChange,
   article,

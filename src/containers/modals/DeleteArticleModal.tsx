@@ -8,6 +8,7 @@ import { useDelete } from "@/hooks/api";
 
 import Button from "@/components/Button";
 import Description from "@/components/Description";
+import ErrorMessage from "@/components/ErrorMessage";
 import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
 
@@ -39,12 +40,16 @@ export default function DeleteArticleModal({
   }
 
   if (error) {
-    return intl.formatMessage(
-      {
-        id: "containers.modals.deleteArticleModal.errorMessage",
-        defaultMessage: "Error deleting article: {error_message}",
-      },
-      { error_message: error.message },
+    return (
+      <ErrorMessage
+        message={intl.formatMessage(
+          {
+            id: "containers.modals.deleteArticleModal.errorMessage",
+            defaultMessage: "Error deleting article: {error_message}",
+          },
+          { error_message: error.message },
+        )}
+      />
     );
   }
 

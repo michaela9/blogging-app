@@ -16,6 +16,7 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
 
   useEffect(() => {
     void fetchGet();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, refetchIndex]);
 
   const fetchGet = async () => {
@@ -136,15 +137,15 @@ export function usePatch<ResponseData, InputData>(url: string) {
 
       if (response) {
         setResponse(response);
-        return response.data; // <- This ensures a successful response returns the data.
+        return response.data;
       }
     } catch (error) {
       setError(error as AxiosError);
-      return null; // <- This ensures that an error path returns null as well.
+      return null;
     } finally {
       setLoading(false);
     }
-    return null; // <- This ensures that if for some reason the conditionals miss, it still returns null.
+    return null;
   };
 
   return { response, loading, error, fetchPatch };

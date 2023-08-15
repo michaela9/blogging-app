@@ -1,4 +1,4 @@
-import type { ArticleDetailT, ArticleT, TenantT } from "@/types/types";
+import type { ArticleDetailT, ArticleT } from "@/types/types";
 
 export const articles: ArticleT[] = [
   {
@@ -48,24 +48,6 @@ export const articleDetail: ArticleDetailT = {
       score: 3,
     },
   ],
-};
-
-export const currentUser: TenantT = {
-  tenantId: "a8c1f7c6-d282-4137-a157-1d69d42a3221",
-  apiKey: "03f69bd1-0bc1-4760-b5b7-ee66c310e245",
-  name: "Michaela",
-  password: "Cokolada99",
-  createdAt: "2023-07-31T17:40:43.9882855Z",
-  lastUsedAt: "2023-07-31T17:40:43.9882855Z",
-};
-
-export const testUser: TenantT = {
-  tenantId: "",
-  apiKey: "b21611a3-d995-499c-80d5-4e0f72db5ae1",
-  name: "novak",
-  password: "novak123",
-  createdAt: "",
-  lastUsedAt: "",
 };
 
 export const profilePhoto = "/img.png";

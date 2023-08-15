@@ -8,7 +8,9 @@ import { useIntl } from "react-intl";
 import { articlesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
+import { sortArticles } from "@/utils/sortArticles";
 
+import ErrorMessage from "@/components/ErrorMessage";
 import Loader from "@/components/Loader";
 
 import ArticleDetailComponent from "./ArticleDetailComponent";
@@ -37,44 +39,58 @@ export default function ArticleDetail({ id }: Props) {
     return <Loader />;
   }
 
+  if (!relatedArticlesData || relatedArticlesData.items.length === 0) {
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.relatedArticles.noArticlesFound",
+          defaultMessage: "No articles found.",
+        })}
+      />
+    );
+  }
+
   if (error) {
-    return intl.formatMessage(
-      {
-        id: "containers.articleDetail.errorMessage",
-        defaultMessage: "Error loading article detail: {error_message}",
-      },
-      { error_message: error.message },
+    return (
+      <ErrorMessage
+        message={intl.formatMessage(
+          {
+            id: "containers.articleDetail.errorMessage",
+            defaultMessage: "Error loading article detail: {error_message}",
+          },
+          { error_message: error.message },
+        )}
+      />
     );
   }
 
   if (!data) {
-    return intl.formatMessage({
-      id: "containers.articleDetail.noArticleFound",
-      defaultMessage: "Article detail not found.",
-    });
-  }
-
-  if (relatedArticlesError) {
-    return intl.formatMessage(
-      {
-        id: "containers.relatedArticles.errorMessage",
-        defaultMessage: "Error loading related articles: {error_message}",
-      },
-      { error_message: relatedArticlesError.message },
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.articleDetail.noArticleFound",
+          defaultMessage: "Article detail not found.",
+        })}
+      />
     );
   }
 
-  if (!relatedArticlesData || relatedArticlesData.items.length === 0) {
-    return intl.formatMessage({
-      id: "containers.relatedArticles.noArticlesFound",
-      defaultMessage: "No articles found.",
-    });
+  if (relatedArticlesError) {
+    return (
+      <ErrorMessage
+        message={intl.formatMessage(
+          {
+            id: "containers.relatedArticles.errorMessage",
+            defaultMessage: "Error loading related articles: {error_message}",
+          },
+          { error_message: relatedArticlesError.message },
+        )}
+      />
+    );
   }
 
   const articles = relatedArticlesData.items;
-  const sortedArticles = articles.sort((a, b) =>
-    b.createdAt.localeCompare(a.createdAt),
-  );
+  const sortedArticles = sortArticles(articles);
 
   return (
     <ArticleDetailComponent article={data} relatedArticles={sortedArticles} />

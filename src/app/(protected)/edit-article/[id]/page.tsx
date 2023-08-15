@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import EditArticle from "@/containers/EditArticle";
+import EditArticle from "@/containers/editArticle/EditArticle";
 
 export const metadata: Metadata = {
   title: "Admin - Edit Article",

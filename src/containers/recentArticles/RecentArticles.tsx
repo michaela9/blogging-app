@@ -8,7 +8,9 @@ import { useIntl } from "react-intl";
 import { articlesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
+import { sortArticles } from "@/utils/sortArticles";
 
+import ErrorMessage from "@/components/ErrorMessage";
 import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
 
@@ -27,26 +29,32 @@ export default function RecentArticles() {
   }
 
   if (error) {
-    return intl.formatMessage(
-      {
-        id: "containers.recentArticles.errorMessage",
-        defaultMessage: "Error loading articles: {error_message}",
-      },
-      { error_message: error.message },
+    return (
+      <ErrorMessage
+        message={intl.formatMessage(
+          {
+            id: "containers.recentArticles.errorMessage",
+            defaultMessage: "Error loading articles: {error_message}",
+          },
+          { error_message: error.message },
+        )}
+      />
     );
   }
 
   if (!data || data.items.length === 0) {
-    return intl.formatMessage({
-      id: "containers.recentArticles.noArticlesFound",
-      defaultMessage: "No articles found.",
-    });
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.recentArticles.noArticlesFound",
+          defaultMessage: "No articles found.",
+        })}
+      />
+    );
   }
 
   const articles = data.items;
-  const sortedArticles = articles.sort((a, b) =>
-    b.createdAt.localeCompare(a.createdAt),
-  );
+  const sortedArticles = sortArticles(articles);
 
   return (
     <div className="space-y-4 md:space-y-12">
