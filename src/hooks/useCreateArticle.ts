@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AdminUrl, articlesUrl, imagesUrl } from "@/config/router";
+import { AppUrl, articlesUrl, imagesUrl } from "@/config/router";
 
 import type { CreateArticleSchemaT } from "@/schema/zodSchema";
 import { createArticleSchema } from "@/schema/zodSchema";
@@ -76,7 +76,7 @@ export default function useCreateArticle() {
       setError(error as AxiosError);
     }
 
-    router.push(AdminUrl.home);
+    router.push(AppUrl.myArticles);
   };
 
   return {

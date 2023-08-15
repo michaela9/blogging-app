@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { AdminUrl, articlesUrl, imagesUrl } from "@/config/router";
+import { AppUrl, articlesUrl, imagesUrl } from "@/config/router";
 
 import type { EditArticleSchemaT } from "@/schema/zodSchema";
 import { editArticleSchema } from "@/schema/zodSchema";
@@ -86,7 +86,7 @@ export default function useEditArticle(article: ArticleDetailT) {
       setError(error as AxiosError);
     }
 
-    router.push(AdminUrl.home);
+    router.push(AppUrl.myArticles);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>): void => {

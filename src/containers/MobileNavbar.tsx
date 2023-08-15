@@ -15,7 +15,7 @@ import Button from "@/components/Button";
 import CustomLink from "@/components/CustomLink";
 import Logo from "@/components/Logo";
 
-import { AuthContext } from "@/provider/AuthProvider";
+import { AuthContext } from "@/context/auth.context";
 
 export default function MobileNavbar() {
   const intl = useIntl();

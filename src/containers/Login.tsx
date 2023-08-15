@@ -9,13 +9,13 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
-import { AdminUrl, loginUrl } from "@/config/router";
+import { AppUrl, loginUrl } from "@/config/router";
 
 import { usePost } from "@/hooks/api";
 
 import Loader from "@/components/Loader";
 
-import { AuthContext } from "@/provider/AuthProvider";
+import { AuthContext } from "@/context/auth.context";
 import type { UserSchemaT } from "@/schema/zodSchema";
 import { userSchema } from "@/schema/zodSchema";
 
@@ -50,7 +50,7 @@ export default function Login() {
       return <Loader />;
     }
     login(fetchedData.access_token);
-    router.push(AdminUrl.home);
+    router.push(AppUrl.myArticles);
   };
 
   return (

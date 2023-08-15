@@ -5,7 +5,7 @@ import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 
-import { AuthContext } from "@/provider/AuthProvider";
+import { AuthContext } from "@/context/auth.context";
 
 export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
   const [response, setResponse] = useState<AxiosResponse<D> | null>(null);

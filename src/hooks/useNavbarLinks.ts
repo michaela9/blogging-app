@@ -1,6 +1,6 @@
 import { useIntl } from "react-intl";
 
-import { AdminUrl, AppUrl } from "@/config/router";
+import { AppUrl } from "@/config/router";
 
 export default function useNavbarLinks() {
   const intl = useIntl();
@@ -31,7 +31,7 @@ export default function useNavbarLinks() {
         id: "containers.navbar.myArticles",
         defaultMessage: "My Articles",
       }),
-      href: AdminUrl.home,
+      href: AppUrl.myArticles,
     },
     {
       id: 4,
@@ -39,7 +39,7 @@ export default function useNavbarLinks() {
         id: "containers.navbar.createArticle",
         defaultMessage: "Create Article",
       }),
-      href: AdminUrl.createArticle,
+      href: AppUrl.createArticle,
     },
   ];
 

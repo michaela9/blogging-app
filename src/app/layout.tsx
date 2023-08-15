@@ -3,9 +3,12 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
+import { Inter } from "next/font/google";
 import React from "react";
 
-import RootLayoutComponent from "@/components/RootLayoutComponent";
+import { Locale } from "@/config/intl";
+
+import AllProvider from "@/components/AllProvider";
 
 export const metadata: Metadata = {
   icons: {
@@ -18,14 +21,20 @@ export const metadata: Metadata = {
   },
 };
 
+const inter = Inter({ subsets: ["latin"] });
+
 type Props = {
   children: ReactNode;
 };
 
 export default function RootLayout({ children }: Props) {
+  const locale = Locale.EN;
+
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang={locale}>
+      <body className={inter.className}>
+        <AllProvider>{children}</AllProvider>
+      </body>
     </html>
   );
 }

@@ -6,7 +6,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AdminUrl, articlesUrl } from "@/config/router";
+import { AppUrl, articlesUrl } from "@/config/router";
 
 import useDelete, { useGet } from "@/hooks/api";
 
@@ -92,7 +92,7 @@ export default function MyArticles() {
             defaultMessage: "My articles",
           })}
         </Heading>
-        <CustomLink href={AdminUrl.createArticle} style="primary">
+        <CustomLink href={AppUrl.createArticle} style="primary">
           {intl.formatMessage({
             id: "containers.myArticles.button.createNewArticle",
             defaultMessage: "Create New Article",

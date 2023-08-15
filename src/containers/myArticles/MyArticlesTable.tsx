@@ -7,7 +7,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AdminUrl, AppUrl } from "@/config/router";
+import { AppUrl } from "@/config/router";
 
 import BaseModal from "@/components/BaseModal";
 import CustomLink from "@/components/CustomLink";
@@ -126,7 +126,7 @@ export default function MyArticlesTable({
               <Td className="text-center">
                 <div className="flex gap-4 items-center">
                   <CustomLink
-                    href={`${AdminUrl.editArticle}/${article.articleId}`}
+                    href={`${AppUrl.editArticle}/${article.articleId}`}
                   >
                     <PencilIcon className="w-5" />
                   </CustomLink>

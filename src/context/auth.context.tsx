@@ -26,14 +26,18 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-const defaultApiKey = "b21611a3-d995-499c-80d5-4e0f72db5ae1";
+const defaultApiKey =
+  process.env.NEXT_PUBLIC_API_KEY || "fallback_api_key_here";
 
-// const token = "5a9591b8-d94d-4806-b819-50a653d22e10"
+// const defaultApiKey = "b21611a3-d995-499c-80d5-4e0f72db5ae1";
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token") as string | null,
-  );
+  const [token, setToken] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token") as string | null;
+    }
+    return null;
+  });
 
   const [apiKey, setApiKey] = useState<string | null>(defaultApiKey);
 
@@ -52,10 +56,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const isLoggedIn = !!token;
 
   useEffect(() => {
-    if (token) {
-      localStorage.setItem("token", token);
-    } else {
-      localStorage.removeItem("token");
+    if (typeof window !== "undefined") {
+      if (token) {
+        localStorage.setItem("token", token);
+      } else {
+        localStorage.removeItem("token");
+      }
     }
   }, [token]);
 

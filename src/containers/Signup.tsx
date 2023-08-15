@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
-import { AdminUrl, tenantsUrl } from "@/config/router";
+import { AppUrl, tenantsUrl } from "@/config/router";
 
 import { usePost } from "@/hooks/api";
 
 import Loader from "@/components/Loader";
 
-import { AuthContext } from "@/provider/AuthProvider";
+import { AuthContext } from "@/context/auth.context";
 import type { CreateUserSchemaT } from "@/schema/zodSchema";
 import { createUserSchema } from "@/schema/zodSchema";
 
@@ -45,7 +45,7 @@ export default function Signup() {
       return <Loader />;
     }
     signup(fetchedData.apiKey);
-    router.push(AdminUrl.home);
+    router.push(AppUrl.myArticles);
   };
 
   return (

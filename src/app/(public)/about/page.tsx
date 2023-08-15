@@ -1,11 +1,9 @@
-import "@/styles/globals.css";
-
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Homepage - Recent Articles",
+  title: "About",
 };
 
 export default function Page() {
-  return <h1>My first page</h1>;
+  return <div>About Page</div>;
 }
