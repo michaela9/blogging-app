@@ -70,6 +70,7 @@ export default function Login() {
       register={register}
       errors={errors}
       control={control}
+      isSubmitting={isSubmitting}
     />
   );
 }

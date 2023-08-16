@@ -23,12 +23,14 @@ type Props = {
   register: UseFormRegister<UserSchemaT>;
   errors: FieldErrors<UserSchemaT>;
   control: Control<UserSchemaT>;
+  isSubmitting: boolean;
 };
 
 export default function LoginForm({
   onSubmit,
   handleSubmit,
   register,
+  isSubmitting,
   errors,
   control,
 }: Props) {
@@ -66,10 +68,10 @@ export default function LoginForm({
             })}
             control={control}
             register={register}
-            error={errors.username}
+            error={errors.password}
           />
         </div>
-        <Button style="primary" type="submit">
+        <Button style="primary" type="submit" disabled={isSubmitting}>
           {intl.formatMessage({
             id: "containers.loginForm.submitButton",
             defaultMessage: "Log In",

@@ -4,7 +4,10 @@ import { useIntl } from "react-intl";
 import Button from "@/components/Button";
 import Heading from "@/components/Heading";
 
-export default function EditArticleFormHeader() {
+type Props = {
+  isSubmitting: boolean;
+};
+export default function EditArticleFormHeader({ isSubmitting }: Props) {
   const intl = useIntl();
 
   return (
@@ -15,7 +18,7 @@ export default function EditArticleFormHeader() {
           defaultMessage: "Edit Article",
         })}
       </Heading>
-      <Button style="primary" type="submit">
+      <Button style="primary" type="submit" disabled={isSubmitting}>
         {intl.formatMessage({
           id: "containers.forms.editArticleFormHeader.articleSave",
           defaultMessage: "Save Article",

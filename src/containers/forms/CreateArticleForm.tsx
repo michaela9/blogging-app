@@ -37,7 +37,7 @@ export default function CreateArticleForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-8 flex flex-col"
       >
-        <CreateArticleFormHeader />
+        <CreateArticleFormHeader isSubmitting={isSubmitting} />
         <FormTextField
           name="title"
           label={intl.formatMessage({

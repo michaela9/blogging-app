@@ -21,6 +21,7 @@ type Props = {
   register: UseFormRegister<CreateUserSchemaT>;
   errors: FieldErrors<CreateUserSchemaT>;
   control: Control<CreateUserSchemaT>;
+  isSubmitting: boolean;
 };
 
 export default function SignupForm({
@@ -28,6 +29,7 @@ export default function SignupForm({
   register,
   errors,
   control,
+  isSubmitting,
 }: Props) {
   const intl = useIntl();
 
@@ -66,7 +68,7 @@ export default function SignupForm({
             error={errors.password}
           />
         </div>
-        <Button style="primary" type="submit">
+        <Button style="primary" type="submit" disabled={isSubmitting}>
           {intl.formatMessage({
             id: "containers.signupForm.submitButton",
             defaultMessage: "Sign Up",

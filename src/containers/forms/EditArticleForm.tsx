@@ -48,7 +48,7 @@ export default function EditArticleForm({ blobURL, article }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 flex flex-col">
-      <EditArticleFormHeader />
+      <EditArticleFormHeader isSubmitting={isSubmitting} />
       <FormTextField
         name="title"
         label={intl.formatMessage({

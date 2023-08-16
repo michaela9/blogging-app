@@ -55,6 +55,7 @@ export default function Signup() {
       register={register}
       errors={errors}
       control={control}
+      isSubmitting={isSubmitting}
     />
   );
 }
