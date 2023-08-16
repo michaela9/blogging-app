@@ -36,6 +36,10 @@ export default function MyArticles() {
     articleId: string;
   }>();
 
+  if (loading || deleteLoading) {
+    return <Loader />;
+  }
+
   const deleteSelectedArticles = async () => {
     const deletePromises = selectedArticlesIds.map((articleId) =>
       fetchDelete(`${articlesEndpoint}/${articleId}`),
@@ -49,10 +53,6 @@ export default function MyArticles() {
     setSelectedArticlesIds([]);
     refetch();
   };
-
-  if (loading || deleteLoading) {
-    return <Loader />;
-  }
 
   if (deleteError) {
     return (

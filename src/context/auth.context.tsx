@@ -2,11 +2,14 @@
 
 import type { ReactNode } from "react";
 
+import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState } from "react";
+
+import { AppUrl } from "@/config/router";
 
 type AuthContextType = {
   token: string | null;
-  login: (token: string) => void;
+  login: (token: string, expirationTime: number) => void;
   logout: () => void;
   isLoggedIn: boolean;
   apiKey: string | null;
@@ -29,6 +32,7 @@ type AuthProviderProps = {
 const defaultApiKey = `${process.env.NEXT_PUBLIC_API_KEY}`;
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const router = useRouter();
   const [token, setToken] = useState<string | null>(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("token") as string | null;
@@ -36,10 +40,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return null;
   });
 
+  const [tokenExpirationTime, setTokenExpirationTime] = useState<number | null>(
+    null,
+  );
+
   const [apiKey, setApiKey] = useState<string | null>(defaultApiKey);
 
-  const login = (newToken: string) => {
+  const login = (newToken: string, expirationTime: number) => {
     setToken(newToken);
+    setTokenExpirationTime(expirationTime);
   };
 
   const signup = (newApiKey: string) => {
@@ -48,19 +57,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     setToken(null);
+    setTokenExpirationTime(null);
+    router.push(AppUrl.home);
   };
 
-  const isLoggedIn = !!token;
-
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (token) {
-        localStorage.setItem("token", token);
-      } else {
-        localStorage.removeItem("token");
-      }
+    if (token) {
+      localStorage.setItem("token", token);
+
+      const expirationDate = new Date(
+        new Date().getTime() + (tokenExpirationTime || 0),
+      );
+      localStorage.setItem("tokenExpiration", expirationDate.toISOString());
+
+      const remainingTime = tokenExpirationTime! * 1000;
+      const logoutTimer = setTimeout(logout, remainingTime);
+      return () => clearTimeout(logoutTimer);
+    } else {
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenExpiration");
     }
-  }, [token]);
+  }, [token, tokenExpirationTime]);
+
+  const isLoggedIn = !!token;
 
   return (
     <AuthContext.Provider

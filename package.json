@@ -22,11 +22,6 @@
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.1.1",
     "@tailwindcss/forms": "^0.5.4",
-    "@testing-library/dom": "^9.3.1",
-    "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/react-hooks": "^8.0.1",
-    "@testing-library/user-event": "^14.4.3",
     "@types/node": "20.4.5",
     "@types/react": "18.2.8",
     "@types/react-dom": "18.2.7",
@@ -35,7 +30,6 @@
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "clsx": "^2.0.0",
-    "cypress": "^12.17.3",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "eslint": "8.46.0",
@@ -50,7 +44,6 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "lodash": "^4.17.21",
-    "msw": "^1.2.3",
     "negotiator": "^0.6.3",
     "next": "13.4.12",
     "postcss": "8.4.27",
@@ -65,7 +58,6 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6",
-    "usehooks-ts": "^2.9.1",
     "zod": "^3.21.4"
   }
 }

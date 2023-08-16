@@ -38,11 +38,12 @@ export default function Signup() {
 
   const onSubmit: SubmitHandler<CreateUserSchemaT> = async (formData) => {
     const fetchedData = await fetchPost(formData);
-    if (!fetchedData || error) {
-      return error;
-    }
     if (isSubmitting || loading) {
       return <Loader />;
+    }
+
+    if (!fetchedData || error) {
+      return error;
     }
     signup(fetchedData.apiKey);
     router.push(AppUrl.myArticles);

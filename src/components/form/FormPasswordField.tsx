@@ -40,7 +40,7 @@ export default function FormPasswordField<T extends FieldValues>({
         render={({ field }) => (
           <div className="relative">
             <div
-              onClick={() => setVisiblePassword(!visiblePassword)}
+              onClick={() => setVisiblePassword((prevState) => !prevState)}
               className="absolute inset-y-0 right-0 flex items-center px-2 hover:cursor-pointer"
             >
               {visiblePassword ? (
@@ -50,8 +50,7 @@ export default function FormPasswordField<T extends FieldValues>({
               )}
             </div>
             <input
-              id={name}
-              type="password"
+              type={visiblePassword ? "text" : "password"}
               className="rounded-md border-gray-300 w-full"
               {...field}
               {...register}

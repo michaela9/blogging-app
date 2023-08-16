@@ -28,15 +28,16 @@ export default function ArticleItem({ article }: Props) {
 
   let blobURL;
 
+  if (loading) {
+    return <Loader />;
+  }
+
   if (data && response) {
     const blob = new Blob([response.data], {
       type: response.headers["content-type"] as string,
     });
 
     blobURL = URL.createObjectURL(blob);
-  }
-  if (loading) {
-    return <Loader />;
   }
 
   if (error || !blobURL) {

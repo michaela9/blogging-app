@@ -41,6 +41,11 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
     const fetchedData = await fetchPost(formData);
+
+    if (loading || isSubmitting) {
+      return <Loader />;
+    }
+
     if (error || !fetchedData) {
       return (
         <ErrorMessage
@@ -51,10 +56,8 @@ export default function Login() {
         />
       );
     }
-    if (loading || isSubmitting) {
-      return <Loader />;
-    }
-    login(fetchedData.access_token);
+
+    login(fetchedData.access_token, fetchedData.expires_in);
     router.push(AppUrl.myArticles);
   };
 

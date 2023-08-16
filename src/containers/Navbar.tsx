@@ -41,7 +41,7 @@ export default function Navbar() {
           })}
         </div>
         {!isLoggedIn && (
-          <CustomLink href={AppUrl.login}>
+          <CustomLink href={AppUrl.login} style="secondary">
             <div className="flex gap-2 items-center">
               {intl.formatMessage({
                 id: "containers.navbar.login",

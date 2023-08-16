@@ -26,6 +26,7 @@ export default function EditArticle({ id }: Props) {
   if (loading) {
     return <Loader />;
   }
+
   if (error) {
     return (
       <ErrorMessage
