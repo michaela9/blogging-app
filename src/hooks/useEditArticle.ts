@@ -52,25 +52,24 @@ export default function useEditArticle(article: ArticleDetailT) {
   });
 
   const onSubmit: SubmitHandler<EditArticleSchemaT> = async (formData) => {
-    const formDataT = new FormData();
+    let imageId = article.imageId;
     if (currentFiles && currentFiles.length) {
+      const formDataT = new FormData();
+
       formDataT.append("image", currentFiles[0]);
-    }
-    const imageData = await fetchImage(formDataT);
+      const imageData = await fetchImage(formDataT);
 
-    if (!imageData || imageError) {
-      setError(error as AxiosError);
-    }
-    const imageId =
-      imageData &&
-      Array.isArray(imageData) &&
-      imageData.length > 0 &&
-      // eslint-disable-next-line
-      (imageData[0].imageId as string);
+      if (!imageData || imageError) {
+        setError(error as AxiosError);
+        return;
+      }
 
-    if (!imageId) {
-      return null;
+      if (imageData && Array.isArray(imageData) && imageData.length > 0) {
+        // eslint-disable-next-line
+        imageId = imageData[0].imageId as string;
+      }
     }
+
     const articleData = await patchArticle({
       articleId: article.articleId,
       createdAt: article.createdAt,

@@ -23,7 +23,7 @@ export default function Button({
   return (
     <button
       className={clsxm(className, "rounded-md", {
-        "bg-primary text-white hover:bg-opacity-80 px-4 py-2 ":
+        "bg-primary text-white hover:bg-opacity-80 px-4 py-2 disabled:bg-gray-200 disabled:text-gray-700":
           style === "primary",
         "text-primary border border-primary hover:opacity-70 px-4 py-2 ":
           style === "secondary",
