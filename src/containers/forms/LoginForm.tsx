@@ -56,7 +56,7 @@ export default function LoginForm({
               defaultMessage: "Username",
             })}
             control={control}
-            placeholder="Article Title"
+            placeholder="novak"
             register={register}
             error={errors.username}
           />
