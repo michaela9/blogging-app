@@ -42,24 +42,26 @@ export default function Login() {
   const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
     const fetchedData = await fetchPost(formData);
 
-    if (loading || isSubmitting) {
-      return <Loader />;
+    if (fetchedData && fetchedData.access_token) {
+      login(fetchedData.access_token, fetchedData.expires_in);
+      router.push(AppUrl.myArticles);
     }
-
-    if (error || !fetchedData) {
-      return (
-        <ErrorMessage
-          message={intl.formatMessage({
-            id: "containers.login.errorMessage",
-            defaultMessage: "Login failed, please try again later!",
-          })}
-        />
-      );
-    }
-
-    login(fetchedData.access_token, fetchedData.expires_in);
-    router.push(AppUrl.myArticles);
   };
+
+  if (loading || isSubmitting) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.login.errorMessage",
+          defaultMessage: "Login failed, please try again later!",
+        })}
+      />
+    );
+  }
 
   return (
     <LoginForm
