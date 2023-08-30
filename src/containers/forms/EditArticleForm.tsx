@@ -5,9 +5,9 @@ import { useIntl } from "react-intl";
 
 import useEditArticle from "@/hooks/useEditArticle";
 
-import FormTextAreaField from "@/components/form/FormTextAreaField";
-import FormTextField from "@/components/form/FormTextField";
-import MarkdownEditorField from "@/components/form/MarkdownEditorField";
+import { Input } from "@/components/form/input";
+import MarkdownEditorField from "@/components/form/MarkdownEditor";
+import TextArea from "@/components/form/TextArea";
 import Loader from "@/components/Loader";
 
 import EditArticleFormHeader from "./EditArticleFormHeader";
@@ -24,7 +24,6 @@ export default function EditArticleForm({ blobURL, article }: Props) {
   const {
     imageLoading,
     articleLoading,
-    control,
     handleSubmit,
     register,
     errors,
@@ -49,28 +48,27 @@ export default function EditArticleForm({ blobURL, article }: Props) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 flex flex-col">
       <EditArticleFormHeader isSubmitting={isSubmitting} />
-      <FormTextField
+      <Input
+        type="text"
         name="title"
         label={intl.formatMessage({
           id: "containers.forms.editArticleFormInside.articleTitle",
           defaultMessage: "Article Title",
         })}
-        control={control}
-        defaultValue={article.title}
-        placeholder="Article Title"
         register={register}
+        defaultValue={article.title}
         error={errors.title}
+        placeholder="Article Title"
       />
-      <FormTextAreaField
+      <TextArea
         name="perex"
         label={intl.formatMessage({
           id: "containers.forms.editArticleFormInside.perex",
           defaultMessage: "Perex",
         })}
-        control={control}
+        register={register}
         placeholder="Perex"
         defaultValue={article.perex}
-        register={register}
         error={errors.perex}
       />
       <EditArticleImageUpload
@@ -86,7 +84,6 @@ export default function EditArticleForm({ blobURL, article }: Props) {
           id: "containers.forms.editArticleFormInside.content",
           defaultMessage: "Content",
         })}
-        control={control}
         defaultValue={article.content}
         placeholder="Content"
         register={register}

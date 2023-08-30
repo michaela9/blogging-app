@@ -1,58 +1,51 @@
 import type { ReactNode } from "react";
 import type {
-  Control,
   FieldError,
   FieldValues,
   Path,
-  PathValue,
   UseFormRegister,
 } from "react-hook-form";
-
-import React from "react";
-import { Controller } from "react-hook-form";
 
 import FormErrorMessage from "./FormErrorMessage";
 import FormFieldWrapper from "./FormFieldWrapper";
 import Label from "./Label";
 
+type CustomTimeError = {
+  type: string;
+  message: string;
+} | null;
+
 type Props<T extends FieldValues> = {
   name: Path<T>;
   label: ReactNode;
-  control: Control<T>;
   register: UseFormRegister<T>;
-  error: FieldError | undefined;
-  defaultValue?: PathValue<T, Path<T>>;
+  error: FieldError | undefined | CustomTimeError;
   placeholder?: string;
-  rows?: number;
+  type: "text" | "date" | "time" | "email" | "number" | "password";
+  defaultValue?: string;
 };
-export default function FormTextAreaField<T extends FieldValues>({
+
+export function Input<T extends FieldValues>({
   name,
   label,
-  control,
-  defaultValue,
-  placeholder,
   register,
   error,
-  rows = 10,
+  placeholder,
+  type,
+  defaultValue,
 }: Props<T>) {
   return (
     <FormFieldWrapper>
       <Label name={name}>{label}</Label>
-      <Controller
-        name={name}
-        control={control}
+      <input
+        className="rounded-md border-gray-300 w-full"
+        id={name}
+        placeholder={placeholder}
+        type={type}
         defaultValue={defaultValue}
-        render={({ field }) => (
-          <textarea
-            placeholder={placeholder}
-            className="w-full border-gray-300 rounded-md"
-            cols={50}
-            rows={rows}
-            {...field}
-            {...register}
-          />
-        )}
+        {...register(name)}
       />
+
       {error && <FormErrorMessage errorMessage={error.message} />}
     </FormFieldWrapper>
   );

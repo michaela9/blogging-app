@@ -44,7 +44,6 @@ export default function useEditArticle(article: ArticleDetailT) {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
-    control,
     setValue,
     getValues,
   } = useForm<EditArticleSchemaT>({
@@ -99,7 +98,6 @@ export default function useEditArticle(article: ArticleDetailT) {
   return {
     imageLoading,
     articleLoading,
-    control,
     handleSubmit,
     register,
     errors,

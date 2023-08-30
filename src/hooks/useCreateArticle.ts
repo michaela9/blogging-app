@@ -23,7 +23,6 @@ export default function useCreateArticle() {
   const router = useRouter();
 
   const {
-    control,
     handleSubmit,
     setValue,
     getValues,
@@ -82,7 +81,6 @@ export default function useCreateArticle() {
   return {
     imageLoading,
     articleLoading,
-    control,
     handleSubmit,
     register,
     errors,

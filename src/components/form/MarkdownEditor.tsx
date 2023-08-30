@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import type {
-  Control,
   FieldError,
   FieldValues,
   Path,
@@ -9,7 +8,6 @@ import type {
 } from "react-hook-form";
 
 import React from "react";
-import { Controller } from "react-hook-form";
 
 import type { GetValues, SetValue } from "@/hooks/useMarkdownHandlers";
 import useMarkdownHandlers from "@/hooks/useMarkdownHandlers";
@@ -22,7 +20,6 @@ import MarkdownEditorButtons from "@/components/MarkdownEditorButtons";
 type Props<T extends FieldValues> = {
   name: Path<T>;
   label: ReactNode;
-  control: Control<T>;
   register: UseFormRegister<T>;
   error: FieldError | undefined;
   defaultValue?: PathValue<T, Path<T>>;
@@ -32,10 +29,9 @@ type Props<T extends FieldValues> = {
   setValue: SetValue;
 };
 
-export default function MarkdownEditorField<T extends FieldValues>({
+export default function MarkdownEditor<T extends FieldValues>({
   name,
   label,
-  control,
   defaultValue,
   register,
   setValue,
@@ -60,19 +56,13 @@ export default function MarkdownEditorField<T extends FieldValues>({
           onHeading2={handleHeading2}
           onHeading3={handleHeading3}
         />
-        <Controller
-          name={name}
-          control={control}
+        <textarea
+          className="rounded-md border-gray-300 w-full"
+          id={name}
           defaultValue={defaultValue}
-          render={({ field }) => (
-            <textarea
-              rows={10}
-              cols={50}
-              {...field}
-              {...register}
-              className="w-full border-gray-300 rounded-md"
-            />
-          )}
+          cols={50}
+          rows={10}
+          {...register(name)}
         />
         {error && <FormErrorMessage errorMessage={error.message} />}
       </div>

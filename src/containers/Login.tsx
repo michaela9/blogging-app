@@ -34,9 +34,9 @@ export default function Login() {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
-    control,
   } = useForm<UserSchemaT>({
     resolver: zodResolver(userSchema),
+    mode: "onBlur",
   });
 
   const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
@@ -69,7 +69,6 @@ export default function Login() {
       handleSubmit={handleSubmit}
       register={register}
       errors={errors}
-      control={control}
       isSubmitting={isSubmitting}
     />
   );
