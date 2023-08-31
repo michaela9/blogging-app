@@ -7,12 +7,11 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import Button from "@/components/Button";
 import { Input } from "@/components/form/input";
+import PasswordInput from "@/components/form/PasswordInput";
 import Heading from "@/components/Heading";
 
 import type { UserSchemaT } from "@/schema/zodSchema";
@@ -33,11 +32,6 @@ export default function LoginForm({
   errors,
 }: Props) {
   const intl = useIntl();
-  const [visiblePassword, setVisiblePassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setVisiblePassword(!visiblePassword);
-  };
 
   return (
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-my-shadow border border-gray-100 max-w-sm rounded-md mx-auto">
@@ -60,33 +54,14 @@ export default function LoginForm({
               defaultMessage: "Username",
             })}
             register={register}
-            error={errors.username}
             placeholder="novak"
+            error={errors.username}
           />
-          <div className="relative">
-            <Input
-              type={visiblePassword ? "text" : "password"}
-              name="password"
-              label={intl.formatMessage({
-                id: "containers.loginForm.password",
-                defaultMessage: "Password",
-              })}
-              placeholder="Password"
-              error={errors.password}
-              register={register}
-            />
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute bottom-2 right-0 pr-3 flex items-center"
-            >
-              {visiblePassword ? (
-                <EyeSlashIcon className="h-6 w-6 text-gray-400" />
-              ) : (
-                <EyeIcon className="h-6 w-6 text-gray-400" />
-              )}
-            </button>
-          </div>
+          <PasswordInput
+            name="password"
+            register={register}
+            error={errors.password}
+          />
         </div>
         <Button style="primary" type="submit" disabled={isSubmitting}>
           {intl.formatMessage({
