@@ -1,15 +1,20 @@
-import createMiddleware from "next-intl/middleware";
+import { NextRequest, NextResponse } from "next/server";
+import { AppUrl } from "./config/router";
 
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: ["en", "cs"],
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get("token");
 
-  // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
-  defaultLocale: "en",
-});
+  const isLoggedIn = !!token;
 
-export const config = {
-  // Skip all paths that should not be internationalized. This example skips the
-  // folders "api", "_next" and all files with an extension (e.g. favicon.ico)
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
-};
+  if (!isLoggedIn) {
+    if (
+      request.nextUrl.pathname.startsWith(AppUrl.myArticles) ||
+      request.nextUrl.pathname.startsWith(AppUrl.editArticle) ||
+      request.nextUrl.pathname.startsWith(AppUrl.createArticle)
+    ) {
+      return NextResponse.redirect(new URL(AppUrl.home, request.url));
+    }
+  }
+
+  return NextResponse.next();
+}

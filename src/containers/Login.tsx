@@ -45,6 +45,7 @@ export default function Login() {
 
     if (fetchedData && fetchedData.access_token) {
       login(fetchedData.access_token, fetchedData.expires_in);
+      console.log(fetchedData.access_token);
       router.push(AppUrl.myArticles);
     }
   };

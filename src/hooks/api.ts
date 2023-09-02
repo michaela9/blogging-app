@@ -25,7 +25,7 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
       const response = await axios.get<D>(url, {
         method: "GET",
         headers: {
-          "X-API-KEY": apiKey,
+          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
           Authorization: token,
         },
         ...options,
@@ -67,7 +67,7 @@ export function usePost<ResponseData, InputData>(
         method: "POST",
         headers: {
           "Content-Type": contentType ?? "application/json",
-          "X-API-KEY": apiKey,
+          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
           Authorization: token,
         },
         ...options,
@@ -98,7 +98,7 @@ export function useDelete<D>() {
       const response = await axios.delete(url, {
         method: "DELETE",
         headers: {
-          "X-API-KEY": apiKey,
+          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
           Authorization: token,
         },
       });
@@ -130,7 +130,7 @@ export function usePatch<ResponseData, InputData>(url: string) {
     try {
       const response = await axios.patch<ResponseData>(url, formData, {
         headers: {
-          "X-API-KEY": apiKey,
+          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
           Authorization: token,
         },
       });

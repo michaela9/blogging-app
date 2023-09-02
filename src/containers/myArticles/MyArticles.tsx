@@ -65,14 +65,14 @@ export default function MyArticles({ myArticles }: Props) {
         <CustomLink href={AppUrl.createArticle} style="primary">
           {t("createNewArticle")}
         </CustomLink>
-        {selectedArticlesIds.length && (
+        {selectedArticlesIds.length ? (
           <button
             className="flex gap-2 text-red-500"
             onClick={handleDeleteSelectedClick}
           >
             <TrashIcon className="w-5" /> {t("deleteSelectedArticles")}
           </button>
-        )}
+        ) : null}
       </HeaderWrapper>
       <MyArticlesTable
         myArticles={myArticles}

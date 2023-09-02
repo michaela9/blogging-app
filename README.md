@@ -59,7 +59,7 @@ src/
   `pnpm lint` or `pnpm lint:fix`
 
 - Formatting with Prettier:
-  `pnpm format` or  `pnpm format:fix`
+  `pnpm format` or `pnpm format:fix`
 
 ## Connected to openapi backend server with axios and custom hooks
 
@@ -70,7 +70,7 @@ src/
         method: "POST",
         headers: {
           "Content-Type": contentType,
-          "X-API-KEY": apiKey,
+          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
           Authorization: token,
         },
       });
