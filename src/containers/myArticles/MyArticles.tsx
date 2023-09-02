@@ -16,6 +16,7 @@ import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
 
 import MyArticlesTable from "./MyArticlesTable";
+import { useRouter } from "next/navigation";
 
 type Props = {
   myArticles: ArticleT[];
@@ -24,6 +25,7 @@ type Props = {
 export default function MyArticles({ myArticles }: Props) {
   const t = useTranslations("MyArticles");
   const te = useTranslations("ErrorMessages");
+  const router = useRouter();
 
   const [selectedArticlesIds, setSelectedArticlesIds] = useState<string[]>([]);
 
@@ -50,6 +52,7 @@ export default function MyArticles({ myArticles }: Props) {
   const handleDeleteSelectedClick = async () => {
     await deleteSelectedArticles();
     setSelectedArticlesIds([]);
+    router.refresh();
   };
 
   if (deleteError) {
