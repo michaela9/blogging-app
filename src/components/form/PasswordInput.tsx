@@ -48,11 +48,10 @@ export default function PasswordInput<T extends FieldValues>({
           onClick={togglePasswordVisibility}
           className="absolute bottom-2 right-0 pr-3 flex items-center"
         >
-          {visiblePassword ? (
+          {visiblePassword && (
             <EyeSlashIcon className="h-6 w-6 text-gray-400" />
-          ) : (
-            <EyeIcon className="h-6 w-6 text-gray-400" />
           )}
+          {!visiblePassword && <EyeIcon className="h-6 w-6 text-gray-400" />}
         </button>
       </div>
 

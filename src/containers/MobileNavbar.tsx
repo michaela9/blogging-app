@@ -41,12 +41,13 @@ export default function MobileNavbar() {
           <div>
             <Logo width={32} height={32} className="absolute top-2 left-4" />
             <Popover.Button className={clsxm("absolute top-4 right-4")}>
-              {!open ? (
+              {!open && (
                 <>
                   <span className="sr-only">Open menu</span>
                   <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                 </>
-              ) : (
+              )}
+              {open && (
                 <>
                   <span className="sr-only">Close menu</span>
                   <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -60,7 +61,7 @@ export default function MobileNavbar() {
           >
             <div className="px-4 py-8 flex flex-col items-start gap-5">
               <>
-                {isLoggedIn ? (
+                {isLoggedIn && (
                   <>
                     <Popover.Button
                       as={Button}
@@ -70,7 +71,6 @@ export default function MobileNavbar() {
                       }}
                       style="primary"
                     >
-                      {" "}
                       {t("logout")}
                     </Popover.Button>
                     {loggedInLinks.map((link) => (
@@ -84,13 +84,13 @@ export default function MobileNavbar() {
                       </Popover.Button>
                     ))}
                   </>
-                ) : (
+                )}
+                {!isLoggedIn && (
                   <Popover.Button
                     as={CustomLink}
                     href={AppUrl.login}
                     style="primary"
                   >
-                    {" "}
                     {t("login")}
                   </Popover.Button>
                 )}
