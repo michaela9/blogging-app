@@ -49,7 +49,7 @@
   "MyArticles": {
     "title": "My Articles",
     "createNewArticle": "Create New Article",
-    "deleteSelectedARticles": "Delete Selected Articles"
+    "deleteSelectedArticles": "Delete Selected Articles"
   },
   "ErrorMessages": {
     "blobNotFound": "Blob Not Found",

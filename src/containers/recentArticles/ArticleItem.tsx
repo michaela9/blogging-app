@@ -22,6 +22,7 @@ import Heading from "@/components/Heading";
 import { IntlDate } from "@/components/IntlDate";
 
 import { articleDetail } from "@/data/dummy";
+import { PuffLoader } from "react-spinners";
 
 type Props = {
   article: ArticleT;
@@ -39,7 +40,11 @@ export default function ArticleItem({ article }: Props) {
   let blobURL;
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="h-[244px] w-[272px] bg-gray-100 flex justify-center items-center">
+        <PuffLoader color="#2B7EFB" size={35} />
+      </div>
+    );
   }
 
   if (data && response) {
@@ -50,8 +55,14 @@ export default function ArticleItem({ article }: Props) {
     blobURL = URL.createObjectURL(blob);
   }
 
-  if (error || !blobURL) {
+  if (error) {
     return <ErrorMessage message={te("blobNotFound")} />;
+  }
+
+  if (!blobURL) {
+    return (
+      <div className="h-[244px] w-[272px] bg-gray-100 flex justify-start items-center" />
+    );
   }
 
   return (
