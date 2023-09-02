@@ -2,15 +2,14 @@
 
 import type { ArticleDetailT, ArticleT, PaginationT } from "@/types/types";
 
+import { useTranslations } from "next-intl";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import { articlesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 import { sortArticles } from "@/utils/sortArticles";
 
-import ErrorMessage from "@/components/ErrorMessage";
 import Loader from "@/components/Loader";
 
 import ArticleDetailComponent from "./ArticleDetailComponent";
@@ -20,7 +19,7 @@ type Props = {
 };
 
 export default function ArticleDetail({ id }: Props) {
-  const intl = useIntl();
+  const t = useTranslations("ErrorMessages");
 
   const { data, loading, error } = useGet<ArticleDetailT>(
     `${articlesEndpoint}/${id}`,
@@ -40,53 +39,19 @@ export default function ArticleDetail({ id }: Props) {
   }
 
   if (!relatedArticlesData || relatedArticlesData.items.length === 0) {
-    return (
-      <ErrorMessage
-        message={intl.formatMessage({
-          id: "containers.relatedArticles.noArticlesFound",
-          defaultMessage: "No articles found.",
-        })}
-      />
-    );
+    return t("noArticlesFound");
   }
 
   if (error) {
-    return (
-      <ErrorMessage
-        message={intl.formatMessage(
-          {
-            id: "containers.articleDetail.errorMessage",
-            defaultMessage: "Error loading article detail: {error_message}",
-          },
-          { error_message: error.message },
-        )}
-      />
-    );
+    return t("errorLoadingArticleDetail", { errorMessage: error.message });
   }
 
   if (!data) {
-    return (
-      <ErrorMessage
-        message={intl.formatMessage({
-          id: "containers.articleDetail.noArticleFound",
-          defaultMessage: "Article detail not found.",
-        })}
-      />
-    );
+    return t("noArticleFound");
   }
 
   if (relatedArticlesError) {
-    return (
-      <ErrorMessage
-        message={intl.formatMessage(
-          {
-            id: "containers.relatedArticles.errorMessage",
-            defaultMessage: "Error loading related articles: {error_message}",
-          },
-          { error_message: relatedArticlesError.message },
-        )}
-      />
-    );
+    return t("noArticlesFound");
   }
 
   const articles = relatedArticlesData.items;

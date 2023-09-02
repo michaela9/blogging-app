@@ -1,11 +1,12 @@
-import { useIntl } from "react-intl";
+import { useTranslations } from "next-intl";
 
 import { imagesEndpoint } from "@/config/router";
 
 import { useGet } from "./api";
 
 export default function useGetBlobFromImageId(imageId: string) {
-  const intl = useIntl();
+  const t = useTranslations("ErrorMessages");
+
   const {
     response,
     data,
@@ -17,10 +18,7 @@ export default function useGetBlobFromImageId(imageId: string) {
   let message;
 
   if (fetchError || !data || !response) {
-    message = intl.formatMessage({
-      id: "hooks.useGetBlobFromImageId.blobNotFound",
-      defaultMessage: "Blob not found",
-    });
+    message = t("blobNotFound");
   } else {
     const blob = new Blob([response.data], {
       type: response.headers["content-type"] as string,

@@ -2,8 +2,8 @@
 
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { useContext } from "react";
-import { useIntl } from "react-intl";
 
 import { AppUrl } from "@/config/router";
 
@@ -16,7 +16,8 @@ import Logo from "@/components/Logo";
 import { AuthContext } from "@/context/auth.context";
 
 export default function Navbar() {
-  const intl = useIntl();
+  const t = useTranslations("Navbar");
+
   const router = useRouter();
   const { logout, isLoggedIn } = useContext(AuthContext);
   const { baseLinks, loggedInLinks } = useNavbarLinks();
@@ -43,10 +44,7 @@ export default function Navbar() {
         {!isLoggedIn && (
           <CustomLink href={AppUrl.login} style="secondary">
             <div className="flex gap-2 items-center">
-              {intl.formatMessage({
-                id: "containers.navbar.login",
-                defaultMessage: "Log In",
-              })}
+              {t("login")}
               <ArrowRightIcon className="w-4" />
             </div>
           </CustomLink>
@@ -69,10 +67,7 @@ export default function Navbar() {
                 router.push(AppUrl.home);
               }}
             >
-              {intl.formatMessage({
-                id: "containers.navbar.logout",
-                defaultMessage: "Log Out",
-              })}
+              {t("logout")}
             </Button>
           </div>
         )}

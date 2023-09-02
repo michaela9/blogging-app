@@ -1,5 +1,5 @@
+import { useTranslations } from "next-intl";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import Button from "./Button";
 
@@ -18,39 +18,24 @@ const MarkdownEditorButtons: React.FC<MarkdownButtonsProps> = ({
   onHeading2,
   onHeading3,
 }) => {
-  const intl = useIntl();
+  const t = useTranslations("MarkdownEditorButtons");
 
   return (
     <div className="flex gap-2 flex-wrap">
       <Button style="markdown" onClick={onBold}>
-        {intl.formatMessage({
-          id: "components.markdownEditorButtons.bold",
-          defaultMessage: "Bold",
-        })}
+        {t("bold")}
       </Button>
       <Button style="markdown" onClick={onItalic}>
-        {intl.formatMessage({
-          id: "components.markdownEditorButtons.italic",
-          defaultMessage: "Italic",
-        })}
+        {t("italic")}
       </Button>
       <Button style="markdown" onClick={onHeading1}>
-        {intl.formatMessage({
-          id: "components.markdownEditorButtons.heading1",
-          defaultMessage: "Heading1",
-        })}
+        {t("heading1")}
       </Button>
       <Button style="markdown" onClick={onHeading2}>
-        {intl.formatMessage({
-          id: "components.markdownEditorButtons.heading2",
-          defaultMessage: "Heading2",
-        })}
+        {t("heading2")}
       </Button>
       <Button style="markdown" onClick={onHeading3}>
-        {intl.formatMessage({
-          id: "components.markdownEditorButtons.heading3",
-          defaultMessage: "Heading3",
-        })}
+        {t("heading3")}
       </Button>
     </div>
   );

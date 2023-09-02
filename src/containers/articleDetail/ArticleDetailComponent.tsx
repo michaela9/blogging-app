@@ -3,8 +3,8 @@
 import type { ArticleDetailT, ArticleT } from "@/types/types";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import { imagesEndpoint } from "@/config/router";
 
@@ -28,7 +28,9 @@ export default function ArticleDetailComponent({
   article,
   relatedArticles,
 }: Props) {
-  const intl = useIntl();
+  const t = useTranslations("ArticleDetail");
+  const te = useTranslations("ErrorMessages");
+
   const { response, data, loading, error } = useGet<Blob>(
     `${imagesEndpoint}/${article.imageId}`,
     { responseType: "blob" },
@@ -49,10 +51,7 @@ export default function ArticleDetailComponent({
   }
 
   if (error || !blobURL) {
-    return intl.formatMessage({
-      id: "containers.articleDetailComponent.blobNotFound",
-      defaultMessage: "Blob not found",
-    });
+    return te("noBlobFound");
   }
 
   return (
@@ -64,7 +63,7 @@ export default function ArticleDetailComponent({
         <div className="space-y-2 md:space-y-6 border-b border-l-gray-300 mb-6 md:mb-0 border-b-gray-300 pb-6">
           <div className="text-secondary-text text-xs flex gap-4">
             <Description>
-              <IntlDate value={article.createdAt} />
+              <IntlDate date={new Date(article.createdAt)} />
             </Description>
           </div>
           <div>
@@ -82,10 +81,7 @@ export default function ArticleDetailComponent({
       </div>
       <div className="md:pl-6 md:border-l md:border-l-gray-300 space-y-4 md:space-y-8">
         <Heading headingLevel="h2" size="s3">
-          {intl.formatMessage({
-            id: "containers.articleDetailComponent.title",
-            defaultMessage: "Related articles",
-          })}
+          {t("relatedArticles")}
         </Heading>
         <RelatedArticles relatedArticles={relatedArticles} />
       </div>

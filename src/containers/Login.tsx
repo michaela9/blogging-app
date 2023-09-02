@@ -5,9 +5,9 @@ import type { LoginResponse } from "@/types/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useIntl } from "react-intl";
 
 import { AppUrl, loginEndpoint } from "@/config/router";
 
@@ -23,7 +23,8 @@ import { userSchema } from "@/schema/zodSchema";
 import LoginForm from "./forms/LoginForm";
 
 export default function Login() {
-  const intl = useIntl();
+  const t = useTranslations("ErrorMessages");
+
   const router = useRouter();
   const { login } = useContext(AuthContext);
   const { loading, error, fetchPost } = usePost<LoginResponse, UserSchemaT>(
@@ -53,14 +54,7 @@ export default function Login() {
   }
 
   if (error) {
-    return (
-      <ErrorMessage
-        message={intl.formatMessage({
-          id: "containers.login.errorMessage",
-          defaultMessage: "Login failed, please try again later!",
-        })}
-      />
-    );
+    return <ErrorMessage message={t("loginFailed")} />;
   }
 
   return (

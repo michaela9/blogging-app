@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import { profilePhoto } from "@/data/dummy";
 
 export default function JoinDiscussionForm() {
-  const intl = useIntl();
+  const t = useTranslations("JoinDiscussionForm");
+
   return (
     <div className="flex gap-6">
       <Image
@@ -18,12 +19,7 @@ export default function JoinDiscussionForm() {
         height={100}
       />
       <form className="w-full">
-        <label className="sr-only">
-          {intl.formatMessage({
-            id: "containers.forms.joinDiscussion.label",
-            defaultMessage: "Join the disccussion",
-          })}
-        </label>
+        <label className="sr-only">{t("label")}</label>
         <input
           placeholder="Join the discussion"
           name="joinDiscussion"

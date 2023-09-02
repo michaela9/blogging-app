@@ -2,8 +2,8 @@
 
 import type { ArticleT } from "@/types/types";
 
+import { useTranslations } from "next-intl";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import { imagesEndpoint } from "@/config/router";
 
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export default function ArticleItem({ article }: Props) {
-  const intl = useIntl();
+  const t = useTranslations("ErrorMessages");
 
   const { response, data, loading, error } = useGet<Blob>(
     `${imagesEndpoint}/${article.imageId}`,
@@ -41,14 +41,7 @@ export default function ArticleItem({ article }: Props) {
   }
 
   if (error || !blobURL) {
-    return (
-      <ErrorMessage
-        message={intl.formatMessage({
-          id: "containers.recentArticles.articleItem.blobNotFound",
-          defaultMessage: "Blob not found",
-        })}
-      />
-    );
+    return <ErrorMessage message={t("blobNotFound")} />;
   }
 
   return <ArticleItemComponent article={article} blobURL={blobURL} />;

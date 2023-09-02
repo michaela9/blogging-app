@@ -1,19 +1,15 @@
-import type { NextRequest } from "next/server";
+import createMiddleware from "next-intl/middleware";
 
-export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+export default createMiddleware({
+  // A list of all locales that are supported
+  locales: ["en", "cs"],
 
-  if (
-    [
-      "/logo.png",
-      "/logo.ico",
-      "/img.png",
-      // Your other files in `public`
-    ].includes(pathname)
-  )
-    return;
-}
+  // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
+  defaultLocale: "en",
+});
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image).*)"],
+  // Skip all paths that should not be internationalized. This example skips the
+  // folders "api", "_next" and all files with an extension (e.g. favicon.ico)
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };

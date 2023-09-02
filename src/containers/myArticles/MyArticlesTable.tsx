@@ -4,8 +4,8 @@ import type { Dispatch } from "react";
 import type { ArticleT } from "@/types/types";
 
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
-import { useIntl } from "react-intl";
 
 import { AppUrl } from "@/config/router";
 
@@ -33,7 +33,8 @@ export default function MyArticlesTable({
   setSelectedArticlesIds,
   refetch,
 }: Props) {
-  const intl = useIntl();
+  const t = useTranslations("Article");
+
   const [selectedArticleIdForDeletion, setSelectedArticleIdForDeletion] =
     useState<string | null>(null);
 
@@ -67,36 +68,11 @@ export default function MyArticlesTable({
               onChange={toggleSelectAll}
             />
           </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.title",
-              defaultMessage: "Article title",
-            })}
-          </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.perex",
-              defaultMessage: "Perex",
-            })}
-          </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.author",
-              defaultMessage: "Author",
-            })}
-          </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.numberOfComments",
-              defaultMessage: "# of comments",
-            })}
-          </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.actions",
-              defaultMessage: "Actions",
-            })}
-          </Th>
+          <Th>{t("title")}</Th>
+          <Th>{t("perex")}</Th>
+          <Th>{t("author")}</Th>
+          <Th>{t("numberOfComments")}</Th>
+          <Th>{t("actions")}</Th>
         </TRow>
       </THead>
       <TBody>
