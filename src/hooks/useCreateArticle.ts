@@ -74,8 +74,8 @@ export default function useCreateArticle() {
     if (!articleData || articleError) {
       setError(error as AxiosError);
     }
-
     router.push(AppUrl.myArticles);
+    router.refresh();
   };
 
   return {

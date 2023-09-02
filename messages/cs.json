@@ -1,0 +1,86 @@
+{
+  "RecentArticles": {
+    "title": "Recent Articles"
+  },
+  "Article": {
+    "title": "Article Title",
+    "perex": "Perex",
+    "featuredImage": "Featured Image",
+    "content": "Content",
+    "author": "Author",
+    "numberOfComments": "# of comments",
+    "actions": "Actions"
+  },
+  "CreateArticleFormHeader": {
+    "createArticle": "Create Article",
+    "publishArticle": "Publish Article"
+  },
+
+  "EditArticleFormHeader": {
+    "editArticle": "Edit Article",
+    "saveArticle": "Save Article"
+  },
+  "JoinDiscussionForm": {
+    "label": "Join the disccussion"
+  },
+  "LoginForm": {
+    "title": "Log In",
+    "username": "Username",
+    "button": "Log In"
+  },
+  "SignupForm": {
+    "title": "Sign Up",
+    "name": "Name",
+    "button": "Sign Up"
+  },
+  "ArticleDetail": {
+    "relatedArticles": "Related Articles"
+  },
+  "ArticleItem": {
+    "readArticle": "Read the whole Article",
+    "numberOfComments": "{numberOfComments} comments"
+  },
+  "DeleteArticleModal": {
+    "title": "Delete the article",
+    "confirmation": "Do you really want to delete the article?",
+    "submit": "Yes, please!",
+    "reject": "No, thanks!"
+  },
+  "MyArticles": {
+    "title": "My Articles",
+    "createNewArticle": "Create New Article",
+    "deleteSelectedARticles": "Delete Selected Articles"
+  },
+  "ErrorMessages": {
+    "blobNotFound": "Blob Not Found",
+    "loginFailed": "Login failed, please try again later!",
+    "goToHomepage": "Go to Homepage",
+    "noArticlesFound": "No Articles Found",
+    "noArticleFound": "No Article Found",
+    "errorLoadingArticles": "Error loading articles: {errorMessage}",
+    "errorDeletingArticles": "Error deleting articles: {errorMessage}",
+    "errorLoadingArticleDetail": "Error loading article detail: {errorMessage}"
+  },
+  "Navbar": {
+    "login": "Log In",
+    "logout": "Log Out",
+    "recentArticles": "Recent Articles",
+    "about": "about",
+    "myArticles": "My Articles",
+    "createArticle": "Create Article"
+  },
+  "Comments": {
+    "title": "Comments {numberOfComments}",
+    "joinDiscussion": "Join the Discussion"
+  },
+  "PasswordInput": {
+    "password": "Password"
+  },
+  "MarkdownEditorButtons": {
+    "bold": "Bold",
+    "italic": "Italic",
+    "heading1": "Heading1",
+    "heading2": "Heading2",
+    "heading3": "Heading3"
+  }
+}

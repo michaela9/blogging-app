@@ -1,7 +1,7 @@
 import type { ArticleDetailT } from "@/types/types";
 
+import { useTranslations } from "next-intl";
 import React, { useEffect } from "react";
-import { useIntl } from "react-intl";
 
 import useEditArticle from "@/hooks/useEditArticle";
 
@@ -19,7 +19,7 @@ type Props = {
 };
 
 export default function EditArticleForm({ blobURL, article }: Props) {
-  const intl = useIntl();
+  const t = useTranslations("Article");
 
   const {
     imageLoading,
@@ -51,10 +51,7 @@ export default function EditArticleForm({ blobURL, article }: Props) {
       <Input
         type="text"
         name="title"
-        label={intl.formatMessage({
-          id: "containers.forms.editArticleFormInside.articleTitle",
-          defaultMessage: "Article Title",
-        })}
+        label={t("title")}
         register={register}
         defaultValue={article.title}
         error={errors.title}
@@ -62,10 +59,7 @@ export default function EditArticleForm({ blobURL, article }: Props) {
       />
       <TextArea
         name="perex"
-        label={intl.formatMessage({
-          id: "containers.forms.editArticleFormInside.perex",
-          defaultMessage: "Perex",
-        })}
+        label={t("perex")}
         register={register}
         placeholder="Perex"
         defaultValue={article.perex}
@@ -80,10 +74,7 @@ export default function EditArticleForm({ blobURL, article }: Props) {
       />
       <MarkdownEditorField
         name="content"
-        label={intl.formatMessage({
-          id: "containers.forms.editArticleFormInside.content",
-          defaultMessage: "Content",
-        })}
+        label={t("content")}
         defaultValue={article.content}
         placeholder="Content"
         register={register}

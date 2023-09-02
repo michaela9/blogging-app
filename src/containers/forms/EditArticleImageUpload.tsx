@@ -2,8 +2,8 @@ import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import type { ArticleDetailT } from "@/types/types";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import FormFileField from "@/components/form/FileInput";
 
@@ -24,7 +24,7 @@ export default function EditArticleImageUpload({
   register,
   errors,
 }: Props) {
-  const intl = useIntl();
+  const t = useTranslations("Article");
 
   return (
     <div className="space-y-2">
@@ -39,10 +39,7 @@ export default function EditArticleImageUpload({
       )}
       <FormFileField
         name="image"
-        label={intl.formatMessage({
-          id: "containers.forms.editArticleFormInside.image",
-          defaultMessage: "Featured Image",
-        })}
+        label={t("featuredImage")}
         register={register}
         error={errors.image}
         onChange={handleFileChange}

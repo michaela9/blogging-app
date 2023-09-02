@@ -7,7 +7,7 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 
-import { useIntl } from "react-intl";
+import { useTranslations } from "next-intl";
 
 import Button from "@/components/Button";
 import { Input } from "@/components/form/input";
@@ -31,15 +31,12 @@ export default function LoginForm({
   isSubmitting,
   errors,
 }: Props) {
-  const intl = useIntl();
+  const t = useTranslations("LoginForm");
 
   return (
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-my-shadow border border-gray-100 max-w-sm rounded-md mx-auto">
       <Heading headingLevel="h1" size="s2">
-        {intl.formatMessage({
-          id: "containers.loginForm.title",
-          defaultMessage: "Log In",
-        })}
+        {t("title")}
       </Heading>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -49,10 +46,7 @@ export default function LoginForm({
           <Input
             type="text"
             name="username"
-            label={intl.formatMessage({
-              id: "containers.loginForm.username",
-              defaultMessage: "Username",
-            })}
+            label={t("username")}
             register={register}
             placeholder="novak"
             error={errors.username}
@@ -64,10 +58,7 @@ export default function LoginForm({
           />
         </div>
         <Button style="primary" type="submit" disabled={isSubmitting}>
-          {intl.formatMessage({
-            id: "containers.loginForm.submitButton",
-            defaultMessage: "Log In",
-          })}
+          {t("button")}
         </Button>
       </form>
     </div>

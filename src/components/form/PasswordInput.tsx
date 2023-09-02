@@ -6,8 +6,8 @@ import type {
 } from "react-hook-form";
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
-import { useIntl } from "react-intl";
 
 import FormErrorMessage from "./FormErrorMessage";
 import FormFieldWrapper from "./FormFieldWrapper";
@@ -24,7 +24,7 @@ export default function PasswordInput<T extends FieldValues>({
   error,
   name,
 }: Props<T>) {
-  const intl = useIntl();
+  const t = useTranslations("PasswordInput");
 
   const [visiblePassword, setVisiblePassword] = useState(false);
 
@@ -34,12 +34,7 @@ export default function PasswordInput<T extends FieldValues>({
 
   return (
     <FormFieldWrapper>
-      <Label name={name}>
-        {intl.formatMessage({
-          id: "containers.loginForm.password",
-          defaultMessage: "Password",
-        })}
-      </Label>
+      <Label name={name}>{t("password")}</Label>
       <div className="relative">
         <input
           className="rounded-md border-gray-300 w-full"

@@ -4,8 +4,8 @@ import type { Dispatch } from "react";
 import type { ArticleT } from "@/types/types";
 
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
-import { useIntl } from "react-intl";
 
 import { AppUrl } from "@/config/router";
 
@@ -21,27 +21,27 @@ import TRow from "@/components/table/TRow";
 import DeleteArticleForm from "../modals/DeleteArticleModal";
 
 type Props = {
-  articles: ArticleT[];
+  myArticles: ArticleT[];
   selectedArticlesIds: string[];
   setSelectedArticlesIds: Dispatch<React.SetStateAction<string[]>>;
-  refetch: () => void;
+  refetch?: () => void;
 };
 
 export default function MyArticlesTable({
-  articles,
+  myArticles,
   selectedArticlesIds,
   setSelectedArticlesIds,
-  refetch,
 }: Props) {
-  const intl = useIntl();
+  const t = useTranslations("Article");
+
   const [selectedArticleIdForDeletion, setSelectedArticleIdForDeletion] =
     useState<string | null>(null);
 
   const toggleSelectAll = () => {
     setSelectedArticlesIds((prevSelectedArticlesIds) =>
-      prevSelectedArticlesIds.length === articles.length
+      prevSelectedArticlesIds.length === myArticles.length
         ? []
-        : articles.map((article) => article.articleId),
+        : myArticles.map((article) => article.articleId),
     );
   };
 
@@ -53,7 +53,7 @@ export default function MyArticlesTable({
     );
   };
 
-  const isAllSelected = selectedArticlesIds.length === articles.length;
+  const isAllSelected = selectedArticlesIds.length === myArticles.length;
   const isArticleSelected = (id: string) => selectedArticlesIds.includes(id);
 
   return (
@@ -67,40 +67,15 @@ export default function MyArticlesTable({
               onChange={toggleSelectAll}
             />
           </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.title",
-              defaultMessage: "Article title",
-            })}
-          </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.perex",
-              defaultMessage: "Perex",
-            })}
-          </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.author",
-              defaultMessage: "Author",
-            })}
-          </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.numberOfComments",
-              defaultMessage: "# of comments",
-            })}
-          </Th>
-          <Th>
-            {intl.formatMessage({
-              id: "containers.myArticlesTable.th.actions",
-              defaultMessage: "Actions",
-            })}
-          </Th>
+          <Th>{t("title")}</Th>
+          <Th>{t("perex")}</Th>
+          <Th>{t("author")}</Th>
+          <Th>{t("numberOfComments")}</Th>
+          <Th>{t("actions")}</Th>
         </TRow>
       </THead>
       <TBody>
-        {articles.map((article) => {
+        {myArticles.map((article) => {
           return (
             <TRow key={article.articleId}>
               <Td>
@@ -147,7 +122,6 @@ export default function MyArticlesTable({
                       <DeleteArticleForm
                         articleId={selectedArticleIdForDeletion}
                         closeModal={() => setSelectedArticleIdForDeletion(null)}
-                        refetch={refetch}
                       />
                     </BaseModal>
                   )}
