@@ -30,39 +30,39 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-const defaultApiKey = `${process.env.NEXT_PUBLIC_API_KEY}`;
-
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
 
-  const [apiKey, setApiKey] = useState<string | null>(defaultApiKey);
+  const [apiKey, setApiKey] = useState<string | null>(
+    `${process.env.NEXT_PUBLIC_API_KEY}`,
+  );
   const [token, setToken] = useState<string | null>(Cookies.get("token"));
-
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
-  // const getToken = () => Cookies.get("token");
-
-  const tokenWillExpire = new Date(new Date().getTime() + 1 * 60 * 1000);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!token);
 
   useEffect(() => {
-    setIsLoggedIn(!!token);
-
     if (token) {
-      Cookies.set("token", token, { expires: tokenWillExpire });
+      const expirationTime = Cookies.get("expirationTime");
+      if (expirationTime) {
+        const remainingTime = Number(expirationTime) - new Date().getTime();
+        const timerId = setTimeout(() => {
+          logout();
+        }, remainingTime);
 
-      const logoutTimer = setTimeout(() => {
-        logout();
-        router.refresh();
-      }, 3600 * 1000);
-
-      return () => clearTimeout(logoutTimer);
-    } else {
-      Cookies.remove("token");
+        return () => clearTimeout(timerId);
+      }
     }
   }, [token]);
 
   const login = (newToken: string, expirationTime: number) => {
-    // const expiresAt = new Date(new Date().getTime() + expirationTime * 1000);
+    const expiresAt = new Date(
+      new Date().getTime() + expirationTime * 1000,
+    ).getTime();
+    Cookies.set("token", newToken, {
+      expires: expiresAt,
+    });
+
+    Cookies.set("expirationTime", expiresAt.toString());
+
     setToken(newToken);
     setIsLoggedIn(true);
   };
@@ -72,15 +72,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logout = () => {
+    Cookies.remove("token");
+    Cookies.remove("expirationTime");
     setToken(null);
     setIsLoggedIn(false);
-    Cookies.remove("token");
-
     router.push(AppUrl.home);
-    // router.refresh();
   };
 
-  console.log(isLoggedIn);
   return (
     <AuthContext.Provider
       value={{ token, login, logout, isLoggedIn, signup, apiKey }}

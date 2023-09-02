@@ -1,3 +1,5 @@
+"use client";
+
 import type {
   FieldError,
   FieldValues,
@@ -40,7 +42,7 @@ export default function PasswordInput<T extends FieldValues>({
           className="rounded-md border-gray-300 w-full"
           id={name}
           placeholder="Password"
-          type="password"
+          type={visiblePassword ? "text" : "password"}
           {...register(name)}
         />
         <button
