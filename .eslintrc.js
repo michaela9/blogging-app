@@ -15,7 +15,6 @@ module.exports = {
     "import",
     "simple-import-sort",
     "unused-imports",
-    "formatjs",
   ],
   extends: [
     "eslint:recommended",
@@ -25,6 +24,8 @@ module.exports = {
     "plugin:chai-friendly/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
     "prettier",
   ],
   settings: {
@@ -65,60 +66,6 @@ module.exports = {
     // https://github.com/import-js/eslint-plugin-import
 
     // ********************************************************************************************************************
-    // https://formatjs.io/docs/tooling/linter
-    "formatjs/enforce-description": "off",
-    "formatjs/enforce-default-message": ["error", "literal"],
-    "formatjs/enforce-placeholders": "error",
-    "formatjs/enforce-id": [
-      "off",
-      {
-        idInterpolationPattern: "[sha512:contenthash:base64:6]",
-        idWhitelist: ["^(front|admin)..*"],
-      },
-    ],
-    "formatjs/enforce-plural-rules": [
-      "error",
-      {
-        one: true,
-        other: true,
-        zero: false,
-      },
-    ],
-    "formatjs/no-camel-case": "error",
-    "formatjs/no-emoji": "error",
-    "formatjs/no-multiple-plurals": "error",
-    "formatjs/no-multiple-whitespaces": "error",
-    "formatjs/no-offset": "error",
-    "formatjs/no-id": "off",
-    "formatjs/no-literal-string-in-jsx": [
-      "off",
-      {
-        // Include or exclude additional prop checks (merged with the default checks)
-        props: {
-          include: [
-            // check aria attributes that the screen reader announces.
-            ["*", "aria-{label,description,details,errormessage}"],
-            // check placeholder and title attribute of all native DOM elements.
-            ["[a-z]*([a-z0-9])", "(placeholder|title)"],
-            // check alt attribute of the img tag.
-            ["img", "alt"],
-          ],
-          // Exclude will always override include.
-          exclude: [
-            // do not check `message` of the `Foo` tag.
-            ["Foo", "message"],
-            // do not check aria-label and aria-description of `Bar` tag.
-            ["Bar", "aria-{label,description}"],
-          ],
-        },
-      },
-    ],
-    "formatjs/no-complex-selectors": [
-      "error",
-      {
-        limit: 10,
-      },
-    ],
 
     // ********************************************************************************************************************
     //#region  //*=========== Unused Import ===========
