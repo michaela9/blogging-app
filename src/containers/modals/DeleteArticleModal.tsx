@@ -10,20 +10,17 @@ import Button from "@/components/Button";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
+import { useRouter } from "next/navigation";
 
 type Props = {
   articleId: string;
   closeModal: () => void;
-  refetch: () => void;
 };
 
-export default function DeleteArticleModal({
-  articleId,
-  closeModal,
-  refetch,
-}: Props) {
+export default function DeleteArticleModal({ articleId, closeModal }: Props) {
   const t = useTranslations("DeleteArticleModal");
   const te = useTranslations("ErrorMessages");
+  const router = useRouter();
 
   const { loading, error, fetchDelete } = useDelete<{
     articleId: string;
@@ -32,7 +29,7 @@ export default function DeleteArticleModal({
   const handleDeleteClick = async () => {
     await fetchDelete(`${articlesEndpoint}/${articleId}`);
     closeModal();
-    refetch();
+    router.refresh();
   };
 
   if (loading) {

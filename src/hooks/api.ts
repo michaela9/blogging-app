@@ -48,7 +48,7 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
 
 export function usePost<ResponseData, InputData>(
   url: string,
-  contentType: "application/json" | "multipart/form-data" = "application/json",
+  contentType?: "application/json" | "multipart/form-data",
   options?: AxiosRequestConfig,
 ) {
   const [response, setResponse] = useState<AxiosResponse<ResponseData> | null>(
@@ -66,7 +66,7 @@ export function usePost<ResponseData, InputData>(
       const response = await axios.post<ResponseData>(url, formData, {
         method: "POST",
         headers: {
-          "Content-Type": contentType,
+          "Content-Type": contentType ?? "application/json",
           "X-API-KEY": apiKey,
           Authorization: token,
         },

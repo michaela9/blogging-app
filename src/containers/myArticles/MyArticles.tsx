@@ -1,6 +1,6 @@
 "use client";
 
-import type { ArticleT, PaginationT } from "@/types/types";
+import type { ArticleT } from "@/types/types";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useTranslations } from "next-intl";
@@ -8,8 +8,7 @@ import React, { useState } from "react";
 
 import { AppUrl, articlesEndpoint } from "@/config/router";
 
-import { useDelete, useGet } from "@/hooks/api";
-import { sortArticles } from "@/utils/sortArticles";
+import { useDelete } from "@/hooks/api";
 
 import CustomLink from "@/components/CustomLink";
 import HeaderWrapper from "@/components/HeaderWrapper";
@@ -18,16 +17,15 @@ import Loader from "@/components/Loader";
 
 import MyArticlesTable from "./MyArticlesTable";
 
-export default function MyArticles() {
+type Props = {
+  myArticles: ArticleT[];
+};
+
+export default function MyArticles({ myArticles }: Props) {
   const t = useTranslations("MyArticles");
   const te = useTranslations("ErrorMessages");
 
   const [selectedArticlesIds, setSelectedArticlesIds] = useState<string[]>([]);
-
-  const { data, loading, error, refetch } = useGet<{
-    pagination: PaginationT;
-    items: ArticleT[];
-  }>(articlesEndpoint);
 
   const {
     loading: deleteLoading,
@@ -37,7 +35,7 @@ export default function MyArticles() {
     articleId: string;
   }>();
 
-  if (loading || deleteLoading) {
+  if (deleteLoading) {
     return <Loader />;
   }
 
@@ -52,23 +50,11 @@ export default function MyArticles() {
   const handleDeleteSelectedClick = async () => {
     await deleteSelectedArticles();
     setSelectedArticlesIds([]);
-    refetch();
   };
 
   if (deleteError) {
     return te("errorDeletingArticles", { errorMessage: deleteError.message });
   }
-
-  if (error) {
-    return te("errorLoadingArticles", { errorMessage: error.message });
-  }
-
-  if (!data || data.items.length === 0) {
-    return te("noArticlesFound");
-  }
-
-  const articles = data.items;
-  const sortedArticles = sortArticles(articles);
 
   return (
     <div className="space-y-6 sm:space-y-14">
@@ -89,10 +75,9 @@ export default function MyArticles() {
         ) : null}
       </HeaderWrapper>
       <MyArticlesTable
-        articles={sortedArticles}
+        myArticles={myArticles}
         selectedArticlesIds={selectedArticlesIds}
         setSelectedArticlesIds={setSelectedArticlesIds}
-        refetch={refetch}
       />
     </div>
   );

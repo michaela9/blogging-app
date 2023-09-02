@@ -1,63 +1,85 @@
 "use client";
 
-import type { ArticleDetailT, ArticleT, PaginationT } from "@/types/types";
+import type { ArticleDetailT, ArticleT } from "@/types/types";
 
 import { useTranslations } from "next-intl";
 import React from "react";
 
-import { articlesEndpoint } from "@/config/router";
+import Description from "@/components/Description";
+import Heading from "@/components/Heading";
+import { IntlDate } from "@/components/IntlDate";
+import Markdown from "@/components/Markdown";
 
+import RelatedArticles from "./RelatedArticles";
+import Comments from "../comments/Comments";
+import Image from "next/image";
 import { useGet } from "@/hooks/api";
-import { sortArticles } from "@/utils/sortArticles";
-
+import { imagesEndpoint } from "@/config/router";
 import Loader from "@/components/Loader";
 
-import ArticleDetailComponent from "./ArticleDetailComponent";
-
 type Props = {
-  id: string;
+  article: ArticleDetailT;
+  relatedArticles: ArticleT[];
 };
 
-export default function ArticleDetail({ id }: Props) {
-  const t = useTranslations("ErrorMessages");
+export default function ArticleDetail({ article, relatedArticles }: Props) {
+  const t = useTranslations("ArticleDetail");
+  const te = useTranslations("ErrorMessages");
 
-  const { data, loading, error } = useGet<ArticleDetailT>(
-    `${articlesEndpoint}/${id}`,
+  const { response, data, loading, error } = useGet<Blob>(
+    `${imagesEndpoint}/${article.imageId}`,
+    { responseType: "blob" },
   );
 
-  const {
-    data: relatedArticlesData,
-    loading: relatedArticlesLoading,
-    error: relatedArticlesError,
-  } = useGet<{
-    pagination: PaginationT;
-    items: ArticleT[];
-  }>(articlesEndpoint);
+  let blobURL;
 
-  if (loading || relatedArticlesLoading) {
+  if (loading) {
     return <Loader />;
   }
 
-  if (!relatedArticlesData || relatedArticlesData.items.length === 0) {
-    return t("noArticlesFound");
+  if (response) {
+    const blob = new Blob([response.data], {
+      type: response.headers["content-type"] as string,
+    });
+
+    blobURL = URL.createObjectURL(blob);
   }
 
-  if (error) {
-    return t("errorLoadingArticleDetail", { errorMessage: error.message });
+  if (error || !blobURL) {
+    return te("noBlobFound");
   }
-
-  if (!data) {
-    return t("noArticleFound");
-  }
-
-  if (relatedArticlesError) {
-    return t("noArticlesFound");
-  }
-
-  const articles = relatedArticlesData.items;
-  const sortedArticles = sortArticles(articles);
 
   return (
-    <ArticleDetailComponent article={data} relatedArticles={sortedArticles} />
+    <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr]">
+      <div className="space-y-2 md:space-y-6 pr-6 border-b border-b-gray-300 pb-6 mb-6 md:mb-0 md:pb-0 md:border-none">
+        <Heading headingLevel="h1" size="s1">
+          {article.title}
+        </Heading>
+        <div className="space-y-2 md:space-y-6 border-b border-l-gray-300 mb-6 md:mb-0 border-b-gray-300 pb-6">
+          <div className="text-secondary-text text-xs flex gap-4">
+            <Description>
+              <IntlDate date={new Date(article.createdAt)} />
+            </Description>
+          </div>
+          <div>
+            <Image
+              src={blobURL}
+              alt={article.title}
+              className="shrink-0 object-cover overflow-hidden"
+              width={760}
+              height={500}
+            />
+          </div>
+          <Markdown>{article.content}</Markdown>
+        </div>
+        <Comments comments={article.comments} />
+      </div>
+      <div className="md:pl-6 md:border-l md:border-l-gray-300 space-y-4 md:space-y-8">
+        <Heading headingLevel="h2" size="s3">
+          {t("relatedArticles")}
+        </Heading>
+        <RelatedArticles relatedArticles={relatedArticles} />
+      </div>
+    </div>
   );
 }
