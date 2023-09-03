@@ -3,6 +3,7 @@
 import type { ArticleT } from "@/types/types";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 
@@ -16,7 +17,6 @@ import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
 
 import MyArticlesTable from "./MyArticlesTable";
-import { useRouter } from "next/navigation";
 
 type Props = {
   myArticles: ArticleT[];

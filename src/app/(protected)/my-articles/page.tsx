@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
-import MyArticles from "@/containers/myArticles/MyArticles";
-import { fetchArticles } from "@/utils/getArticles";
+import { fetchArticles } from "@/utils/fetchArticles";
 import { sortArticles } from "@/utils/sortArticles";
+
+import MyArticles from "@/containers/myArticles/MyArticles";
 
 export const metadata: Metadata = {
   title: "Admin - My Articles",

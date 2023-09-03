@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 import { articlesEndpoint } from "@/config/router";
@@ -10,7 +11,6 @@ import Button from "@/components/Button";
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
-import { useRouter } from "next/navigation";
 
 type Props = {
   articleId: string;

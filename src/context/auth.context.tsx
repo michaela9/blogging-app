@@ -2,14 +2,14 @@
 
 import type { ReactNode } from "react";
 
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState } from "react";
 
 import { AppUrl } from "@/config/router";
-import Cookies from "js-cookie";
 
 type AuthContextType = {
-  token: string | null;
+  token: string | (() => string | null) | null;
   login: (token: string, expirationTime: number) => void;
   logout: () => void;
   isLoggedIn: boolean;
@@ -36,7 +36,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [apiKey, setApiKey] = useState<string | null>(
     `${process.env.NEXT_PUBLIC_API_KEY}`,
   );
-  const [token, setToken] = useState<string | null>(Cookies.get("token"));
+  const [token, setToken] = useState<string | null>(
+    Cookies.get("token") || null,
+  );
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!token);
 
   useEffect(() => {
@@ -74,7 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     Cookies.remove("token");
     Cookies.remove("expirationTime");
-    setToken(null);
+    setToken("");
     setIsLoggedIn(false);
     router.push(AppUrl.home);
   };

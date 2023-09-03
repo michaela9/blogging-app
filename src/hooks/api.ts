@@ -21,12 +21,15 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
 
   const fetchGet = async () => {
     setLoading(true);
+
+    const validApiKey = typeof apiKey === "string" ? apiKey : undefined;
+    const validToken = typeof token === "string" ? token : undefined;
     try {
       const response = await axios.get<D>(url, {
         method: "GET",
         headers: {
-          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
-          Authorization: token,
+          "X-API-KEY": validApiKey,
+          Authorization: validToken,
         },
         ...options,
       });
@@ -48,7 +51,7 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
 
 export function usePost<ResponseData, InputData>(
   url: string,
-  contentType?: "application/json" | "multipart/form-data",
+  contentType: "application/json" | "multipart/form-data" = "application/json",
   options?: AxiosRequestConfig,
 ) {
   const [response, setResponse] = useState<AxiosResponse<ResponseData> | null>(
@@ -62,13 +65,17 @@ export function usePost<ResponseData, InputData>(
     formData?: InputData,
   ): Promise<ResponseData | null> => {
     setLoading(true);
+
+    const validApiKey = typeof apiKey === "string" ? apiKey : undefined;
+    const validToken = typeof token === "string" ? token : undefined;
+
     try {
       const response = await axios.post<ResponseData>(url, formData, {
         method: "POST",
         headers: {
-          "Content-Type": contentType ?? "application/json",
-          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
-          Authorization: token,
+          "Content-Type": contentType,
+          "X-API-KEY": validApiKey,
+          Authorization: validToken,
         },
         ...options,
       });
@@ -94,12 +101,15 @@ export function useDelete<D>() {
 
   const fetchDelete = async (url: string) => {
     setLoading(true);
+
+    const validApiKey = typeof apiKey === "string" ? apiKey : undefined;
+    const validToken = typeof token === "string" ? token : undefined;
     try {
       const response = await axios.delete(url, {
         method: "DELETE",
         headers: {
-          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
-          Authorization: token,
+          "X-API-KEY": validApiKey,
+          Authorization: validToken,
         },
       });
 
@@ -127,11 +137,13 @@ export function usePatch<ResponseData, InputData>(url: string) {
     formData?: InputData,
   ): Promise<ResponseData | null> => {
     setLoading(true);
+    const validApiKey = typeof apiKey === "string" ? apiKey : undefined;
+    const validToken = typeof token === "string" ? token : undefined;
     try {
       const response = await axios.patch<ResponseData>(url, formData, {
         headers: {
-          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
-          Authorization: token,
+          "X-API-KEY": validApiKey,
+          Authorization: validToken,
         },
       });
 

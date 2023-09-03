@@ -3,8 +3,6 @@ import type { ArticleT } from "@/types/types";
 import { useTranslations } from "next-intl";
 import React from "react";
 
-import { sortArticles } from "@/utils/sortArticles";
-
 import Heading from "@/components/Heading";
 
 import ArticleItem from "./ArticleItem";

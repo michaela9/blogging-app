@@ -1,37 +1,64 @@
 "use client";
 
-import type {
-  FieldErrors,
-  SubmitHandler,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import type { LoginResponse } from "@/types/types";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+
+import { AppUrl, loginEndpoint } from "@/config/router";
+
+import { usePost } from "@/hooks/api";
 
 import Button from "@/components/Button";
+import ErrorMessage from "@/components/ErrorMessage";
 import { Input } from "@/components/form/input";
 import PasswordInput from "@/components/form/PasswordInput";
 import Heading from "@/components/Heading";
+import Loader from "@/components/Loader";
 
+import { AuthContext } from "@/context/auth.context";
 import type { UserSchemaT } from "@/schema/zodSchema";
+import { userSchema } from "@/schema/zodSchema";
 
-type Props = {
-  onSubmit: SubmitHandler<UserSchemaT>;
-  handleSubmit: UseFormHandleSubmit<UserSchemaT>;
-  register: UseFormRegister<UserSchemaT>;
-  errors: FieldErrors<UserSchemaT>;
-  isSubmitting: boolean;
-};
-
-export default function LoginForm({
-  onSubmit,
-  handleSubmit,
-  register,
-  isSubmitting,
-  errors,
-}: Props) {
+export default function LoginForm() {
   const t = useTranslations("LoginForm");
+  const te = useTranslations("ErrorMessages");
+
+  const router = useRouter();
+  const { login } = useContext(AuthContext);
+  const { loading, error, fetchPost } = usePost<LoginResponse, UserSchemaT>(
+    loginEndpoint,
+  );
+
+  const {
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    register,
+  } = useForm<UserSchemaT>({
+    resolver: zodResolver(userSchema),
+    mode: "onBlur",
+  });
+
+  const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
+    const fetchedData = await fetchPost(formData);
+
+    if (fetchedData && fetchedData.access_token) {
+      login(fetchedData.access_token, fetchedData.expires_in);
+      router.push(AppUrl.myArticles);
+    }
+  };
+
+  if (loading || isSubmitting) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <ErrorMessage message={te("loginFailed")} />;
+  }
 
   return (
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-my-shadow border border-gray-100 max-w-sm rounded-md mx-auto">

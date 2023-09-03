@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    jest: true,
   },
   globals: {
     React: true,
@@ -15,16 +16,18 @@ module.exports = {
     "import",
     "simple-import-sort",
     "unused-imports",
-    "formatjs",
   ],
   extends: [
     "eslint:recommended",
     "next",
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
+    // "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:chai-friendly/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
+    // "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
   settings: {
@@ -34,7 +37,7 @@ module.exports = {
   rules: {
     "no-empty-function": "off",
     "no-console": "warn",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
+    // "@typescript-eslint/explicit-module-boundary-types": "off",
 
     "react/display-name": "off",
     "react/jsx-curly-brace-presence": [
@@ -43,87 +46,33 @@ module.exports = {
     ],
 
     "@next/next/no-img-element": "off",
-    "@typescript-eslint/prefer-nullish-coalescing": "off",
-    "@typescript-eslint/ban-ts-comment": [
-      "error",
-      { "ts-expect-error": "allow-with-description" },
-    ],
-    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-    "@typescript-eslint/no-base-to-string": ["error"],
-    "@typescript-eslint/consistent-type-imports": "error",
-    "@typescript-eslint/no-unnecessary-type-assertion": "off",
-    "@typescript-eslint/no-misused-promises": [
-      2,
-      {
-        checksVoidReturn: {
-          attributes: false,
-        },
-      },
-    ],
+    // "@typescript-eslint/prefer-nullish-coalescing": "off",
+    // "@typescript-eslint/ban-ts-comment": [
+    //   "error",
+    //   { "ts-expect-error": "allow-with-description" },
+    // ],
+    // "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    // "@typescript-eslint/no-base-to-string": ["error"],
+    // "@typescript-eslint/consistent-type-imports": "error",
+    // "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    // "@typescript-eslint/no-misused-promises": [
+    //   2,
+    //   {
+    //     checksVoidReturn: {
+    //       attributes: false,
+    //     },
+    //   },
+    // ],
 
     // ********************************************************************************************************************
     // https://github.com/import-js/eslint-plugin-import
 
     // ********************************************************************************************************************
-    // https://formatjs.io/docs/tooling/linter
-    "formatjs/enforce-description": "off",
-    "formatjs/enforce-default-message": ["error", "literal"],
-    "formatjs/enforce-placeholders": "error",
-    "formatjs/enforce-id": [
-      "off",
-      {
-        idInterpolationPattern: "[sha512:contenthash:base64:6]",
-        idWhitelist: ["^(front|admin)..*"],
-      },
-    ],
-    "formatjs/enforce-plural-rules": [
-      "error",
-      {
-        one: true,
-        other: true,
-        zero: false,
-      },
-    ],
-    "formatjs/no-camel-case": "error",
-    "formatjs/no-emoji": "error",
-    "formatjs/no-multiple-plurals": "error",
-    "formatjs/no-multiple-whitespaces": "error",
-    "formatjs/no-offset": "error",
-    "formatjs/no-id": "off",
-    "formatjs/no-literal-string-in-jsx": [
-      "off",
-      {
-        // Include or exclude additional prop checks (merged with the default checks)
-        props: {
-          include: [
-            // check aria attributes that the screen reader announces.
-            ["*", "aria-{label,description,details,errormessage}"],
-            // check placeholder and title attribute of all native DOM elements.
-            ["[a-z]*([a-z0-9])", "(placeholder|title)"],
-            // check alt attribute of the img tag.
-            ["img", "alt"],
-          ],
-          // Exclude will always override include.
-          exclude: [
-            // do not check `message` of the `Foo` tag.
-            ["Foo", "message"],
-            // do not check aria-label and aria-description of `Bar` tag.
-            ["Bar", "aria-{label,description}"],
-          ],
-        },
-      },
-    ],
-    "formatjs/no-complex-selectors": [
-      "error",
-      {
-        limit: 10,
-      },
-    ],
 
     // ********************************************************************************************************************
     //#region  //*=========== Unused Import ===========
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "off",
+    // "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "warn",
     "unused-imports/no-unused-vars": [
       "warn",
