@@ -74,7 +74,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     Cookies.remove("token");
     Cookies.remove("expirationTime");
-    setToken(null);
+    setToken("");
     setIsLoggedIn(false);
     router.push(AppUrl.home);
   };
