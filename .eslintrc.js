@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    jest: true,
   },
   globals: {
     React: true,
@@ -20,12 +21,13 @@ module.exports = {
     "eslint:recommended",
     "next",
     "next/core-web-vitals",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:chai-friendly/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
-    "plugin:testing-library/react",
-    "plugin:jest-dom/recommended",
+    "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
   settings: {
