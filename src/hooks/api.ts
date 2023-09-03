@@ -11,7 +11,7 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
   const [response, setResponse] = useState<AxiosResponse<D> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>();
-  const { token } = useContext(AuthContext);
+  const { token, apiKey } = useContext(AuthContext);
   const [refetchIndex, setRefetchIndex] = useState(0);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
       const response = await axios.get<D>(url, {
         method: "GET",
         headers: {
-          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
+          "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY,
           Authorization: token,
         },
         ...options,
@@ -40,11 +40,6 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
     setLoading(false);
   };
 
-  const refetch = () => {
-    setRefetchIndex((prev) => prev + 1);
-  };
-  return { data: response?.data, response, loading, error, refetch };
-}
 
 export function usePost<ResponseData, InputData>(
   url: string,
