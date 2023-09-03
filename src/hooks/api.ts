@@ -39,11 +39,16 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
     }
     setLoading(false);
   };
+
+  const refetch = () => {
+    setRefetchIndex((prev) => prev + 1);
+  };
+  return { data: response?.data, response, loading, error, refetch };
 }
 
 export function usePost<ResponseData, InputData>(
   url: string,
-  contentType?: "application/json" | "multipart/form-data",
+  contentType: "application/json" | "multipart/form-data" = "application/json",
   options?: AxiosRequestConfig,
 ) {
   const [response, setResponse] = useState<AxiosResponse<ResponseData> | null>(
@@ -61,7 +66,7 @@ export function usePost<ResponseData, InputData>(
       const response = await axios.post<ResponseData>(url, formData, {
         method: "POST",
         headers: {
-          "Content-Type": contentType ?? "application/json",
+          "Content-Type": contentType,
           "X-API-KEY": apiKey,
           Authorization: token,
         },
