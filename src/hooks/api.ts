@@ -25,7 +25,7 @@ export function useGet<D>(url: string, options: AxiosRequestConfig<D> = {}) {
       const response = await axios.get<D>(url, {
         method: "GET",
         headers: {
-          "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY,
+          "X-API-KEY": apiKey,
           Authorization: token,
         },
         ...options,
@@ -51,7 +51,7 @@ export function usePost<ResponseData, InputData>(
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>();
-  const { token } = useContext(AuthContext);
+  const { token,apiKey } = useContext(AuthContext);
 
   const fetchPost = async (
     formData?: InputData,
@@ -62,7 +62,7 @@ export function usePost<ResponseData, InputData>(
         method: "POST",
         headers: {
           "Content-Type": contentType ?? "application/json",
-          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
+          "X-API-KEY": apiKey,
           Authorization: token,
         },
         ...options,
@@ -85,7 +85,7 @@ export function useDelete<D>() {
   const [response, setResponse] = useState<AxiosResponse<D> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>();
-  const { token } = useContext(AuthContext);
+  const { token,apiKey } = useContext(AuthContext);
 
   const fetchDelete = async (url: string) => {
     setLoading(true);
@@ -93,7 +93,7 @@ export function useDelete<D>() {
       const response = await axios.delete(url, {
         method: "DELETE",
         headers: {
-          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
+          "X-API-KEY":apiKey,
           Authorization: token,
         },
       });
@@ -116,7 +116,7 @@ export function usePatch<ResponseData, InputData>(url: string) {
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>();
-  const { token } = useContext(AuthContext);
+  const { token,apiKey } = useContext(AuthContext);
 
   const fetchPatch = async (
     formData?: InputData,
@@ -125,7 +125,7 @@ export function usePatch<ResponseData, InputData>(url: string) {
     try {
       const response = await axios.patch<ResponseData>(url, formData, {
         headers: {
-          "X-API-KEY": `${process.env.NEXT_PUBLIC_API_KEY}`,
+          "X-API-KEY":apiKey,
           Authorization: token,
         },
       });
