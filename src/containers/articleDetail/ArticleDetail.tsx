@@ -2,20 +2,22 @@
 
 import type { ArticleDetailT, ArticleT } from "@/types/types";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import React from "react";
+
+import { imagesEndpoint } from "@/config/router";
+
+import { useGet } from "@/hooks/api";
 
 import Description from "@/components/Description";
 import Heading from "@/components/Heading";
 import { IntlDate } from "@/components/IntlDate";
+import Loader from "@/components/Loader";
 import Markdown from "@/components/Markdown";
 
 import RelatedArticles from "./RelatedArticles";
 import Comments from "../comments/Comments";
-import Image from "next/image";
-import { useGet } from "@/hooks/api";
-import { imagesEndpoint } from "@/config/router";
-import Loader from "@/components/Loader";
 
 type Props = {
   article: ArticleDetailT;
@@ -26,7 +28,7 @@ export default function ArticleDetail({ article, relatedArticles }: Props) {
   const t = useTranslations("ArticleDetail");
   const te = useTranslations("ErrorMessages");
 
-  const { response, data, loading, error } = useGet<Blob>(
+  const { response, loading, error } = useGet<Blob>(
     `${imagesEndpoint}/${article.imageId}`,
     { responseType: "blob" },
   );

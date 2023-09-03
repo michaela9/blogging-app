@@ -2,27 +2,22 @@
 
 import type { ArticleT } from "@/types/types";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import React from "react";
+import { PuffLoader } from "react-spinners";
 
-import { imagesEndpoint } from "@/config/router";
+import { AppUrl, imagesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
-import ErrorMessage from "@/components/ErrorMessage";
-import Loader from "@/components/Loader";
-
-import Image from "next/image";
-
-import { AppUrl } from "@/config/router";
-
 import CustomLink from "@/components/CustomLink";
 import Description from "@/components/Description";
+import ErrorMessage from "@/components/ErrorMessage";
 import Heading from "@/components/Heading";
 import { IntlDate } from "@/components/IntlDate";
 
 import { articleDetail } from "@/data/dummy";
-import { PuffLoader } from "react-spinners";
 
 type Props = {
   article: ArticleT;

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { AppUrl } from "./config/router";
 
 export function middleware(request: NextRequest) {

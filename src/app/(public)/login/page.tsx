@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import Login from "@/containers/Login";
+import Login from "@/containers/forms/LoginForm";
 
 export const metadata: Metadata = {
   title: "Login",

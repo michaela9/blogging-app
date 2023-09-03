@@ -2,11 +2,11 @@
 
 import type { ReactNode } from "react";
 
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { createContext, useEffect, useState } from "react";
 
 import { AppUrl } from "@/config/router";
-import Cookies from "js-cookie";
 
 type AuthContextType = {
   token: string | null;
