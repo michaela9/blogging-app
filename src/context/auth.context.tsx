@@ -36,9 +36,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [apiKey, setApiKey] = useState<string | null>(
     `${process.env.NEXT_PUBLIC_API_KEY}`,
   );
-  const [token, setToken] = useState<string | null | undefined>(
-    Cookies.get("token"),
-  );
+  const [token, setToken] = useState(Cookies.get("token"));
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!token);
 
   useEffect(() => {
