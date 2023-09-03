@@ -9,7 +9,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { AppUrl } from "@/config/router";
 
 type AuthContextType = {
-  token: string | null;
+  token: string | (() => string | null) | null;
   login: (token: string, expirationTime: number) => void;
   logout: () => void;
   isLoggedIn: boolean;
@@ -36,7 +36,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [apiKey, setApiKey] = useState<string | null>(
     `${process.env.NEXT_PUBLIC_API_KEY}`,
   );
-  const [token, setToken] = useState<string | null>(Cookies.get("token"));
+  const [token, setToken] = useState<string | null | undefined>(
+    Cookies.get("token"),
+  );
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!token);
 
   useEffect(() => {
