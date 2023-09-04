@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import useCreateArticle from "@/hooks/useCreateArticle";
 
@@ -14,7 +14,7 @@ import Loader from "@/components/Loader";
 import CreateArticleFormHeader from "./CreateArticleFormHeader";
 
 export default function CreateArticleForm() {
-  const t = useTranslations("Article");
+  const intl = useIntl();
 
   const {
     handleSubmit,
@@ -40,14 +40,20 @@ export default function CreateArticleForm() {
         <Input
           type="text"
           name="title"
-          label={t("title")}
+          label={intl.formatMessage({
+            id: "containers.forms.createArticleForm.articleTitle",
+            defaultMessage: "Article Title",
+          })}
           register={register}
           error={errors.title}
           placeholder="Article Title"
         />
         <TextArea
           name="perex"
-          label={t("perex")}
+          label={intl.formatMessage({
+            id: "containers.forms.createArticleForm.perex",
+            defaultMessage: "Perex",
+          })}
           placeholder="Perex"
           register={register}
           error={errors.perex}
@@ -55,13 +61,19 @@ export default function CreateArticleForm() {
         />
         <FormFileField
           name="image"
-          label={t("featuredImage")}
+          label={intl.formatMessage({
+            id: "containers.forms.createArticleForm.image",
+            defaultMessage: "Featured Image",
+          })}
           register={register}
           error={errors.image}
         />
         <MarkdownEditorField
           name="content"
-          label={t("content")}
+          label={intl.formatMessage({
+            id: "containers.forms.createArticleForm.content",
+            defaultMessage: "Content",
+          })}
           placeholder="Content"
           register={register}
           error={errors.content}

@@ -2,8 +2,8 @@
 
 import type { CommentT } from "@/types/types";
 
-import { useTranslations } from "next-intl";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import Heading from "@/components/Heading";
 
@@ -15,13 +15,20 @@ type Props = {
 };
 
 export default function Comments({ comments }: Props) {
-  const t = useTranslations("Comments");
+  const intl = useIntl();
 
   return (
     <div className="space-y-4">
       <Heading headingLevel="h2" size="s3">
-        {t("title", { numberOfComments: comments.length })}
-        {t("joinDiscussion")}
+        {intl.formatMessage(
+          {
+            id: "containers.comments.title",
+            defaultMessage: "Comments {number_of_comments}",
+          },
+          {
+            number_of_comments: comments.length,
+          },
+        )}
       </Heading>
       <JoinDiscussionForm />
       <div className="space-y-6">

@@ -5,9 +5,9 @@ import type { LoginResponse } from "@/types/types";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useIntl } from "react-intl";
 
 import { AppUrl, loginEndpoint } from "@/config/router";
 
@@ -25,8 +25,7 @@ import type { UserSchemaT } from "@/schema/zodSchema";
 import { userSchema } from "@/schema/zodSchema";
 
 export default function LoginForm() {
-  const t = useTranslations("LoginForm");
-  const te = useTranslations("ErrorMessages");
+  const intl = useIntl();
 
   const router = useRouter();
   const { login } = useContext(AuthContext);
@@ -57,13 +56,23 @@ export default function LoginForm() {
   }
 
   if (error) {
-    return <ErrorMessage message={te("loginFailed")} />;
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.login.errorMessage",
+          defaultMessage: "Login failed, please try again later!",
+        })}
+      />
+    );
   }
 
   return (
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-my-shadow border border-gray-100 max-w-sm rounded-md mx-auto">
       <Heading headingLevel="h1" size="s2">
-        {t("title")}
+        {intl.formatMessage({
+          id: "containers.loginForm.title",
+          defaultMessage: "Log In",
+        })}
       </Heading>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -73,7 +82,10 @@ export default function LoginForm() {
           <Input
             type="text"
             name="username"
-            label={t("username")}
+            label={intl.formatMessage({
+              id: "containers.loginForm.username",
+              defaultMessage: "Username",
+            })}
             register={register}
             placeholder="novak"
             error={errors.username}
@@ -85,7 +97,10 @@ export default function LoginForm() {
           />
         </div>
         <Button style="primary" type="submit" disabled={isSubmitting}>
-          {t("button")}
+          {intl.formatMessage({
+            id: "containers.loginForm.submitButton",
+            defaultMessage: "Log In",
+          })}
         </Button>
       </form>
     </div>

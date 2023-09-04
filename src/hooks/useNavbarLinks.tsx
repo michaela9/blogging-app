@@ -1,17 +1,23 @@
-import { useTranslations } from "next-intl";
+import { useIntl } from "react-intl";
 
 export default function useNavbarLinks() {
-  const t = useTranslations("Navbar");
+  const intl = useIntl();
 
   const baseLinks = [
     {
       id: 1,
-      label: t("recentArticles"),
+      label: intl.formatMessage({
+        id: "containers.navbar.recentArticles",
+        defaultMessage: "Recent Articles",
+      }),
       href: "/",
     },
     {
       id: 2,
-      label: t("about"),
+      label: intl.formatMessage({
+        id: "containers.navbar.about",
+        defaultMessage: "About",
+      }),
       href: "/about",
     },
   ];
@@ -19,12 +25,18 @@ export default function useNavbarLinks() {
   const loggedInLinks = [
     {
       id: 3,
-      label: t("myArticles"),
+      label: intl.formatMessage({
+        id: "containers.navbar.myArticles",
+        defaultMessage: "My Articles",
+      }),
       href: "/my-articles",
     },
     {
       id: 4,
-      label: t("createArticle"),
+      label: intl.formatMessage({
+        id: "containers.navbar.createArticle",
+        defaultMessage: "Create Article",
+      }),
       href: "/create-article",
     },
   ];

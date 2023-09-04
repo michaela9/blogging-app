@@ -3,14 +3,15 @@
 import type { ArticleDetailT, ArticleT } from "@/types/types";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { imagesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
 import Description from "@/components/Description";
+import ErrorMessage from "@/components/ErrorMessage";
 import Heading from "@/components/Heading";
 import { IntlDate } from "@/components/IntlDate";
 import Loader from "@/components/Loader";
@@ -25,8 +26,7 @@ type Props = {
 };
 
 export default function ArticleDetail({ article, relatedArticles }: Props) {
-  const t = useTranslations("ArticleDetail");
-  const te = useTranslations("ErrorMessages");
+  const intl = useIntl();
 
   const { response, loading, error } = useGet<Blob>(
     `${imagesEndpoint}/${article.imageId}`,
@@ -48,7 +48,14 @@ export default function ArticleDetail({ article, relatedArticles }: Props) {
   }
 
   if (error || !blobURL) {
-    return te("noBlobFound");
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.articleDetail.errorMessage",
+          defaultMessage: "Error loading article detail.",
+        })}
+      />
+    );
   }
 
   return (
@@ -60,7 +67,7 @@ export default function ArticleDetail({ article, relatedArticles }: Props) {
         <div className="space-y-2 md:space-y-6 border-b border-l-gray-300 mb-6 md:mb-0 border-b-gray-300 pb-6">
           <div className="text-secondary-text text-xs flex gap-4">
             <Description>
-              <IntlDate date={new Date(article.createdAt)} />
+              <IntlDate value={article.createdAt} />
             </Description>
           </div>
           <div>
@@ -78,7 +85,10 @@ export default function ArticleDetail({ article, relatedArticles }: Props) {
       </div>
       <div className="md:pl-6 md:border-l md:border-l-gray-300 space-y-4 md:space-y-8">
         <Heading headingLevel="h2" size="s3">
-          {t("relatedArticles")}
+          {intl.formatMessage({
+            id: "containers.articleDetailComponent.title",
+            defaultMessage: "Related articles",
+          })}
         </Heading>
         <RelatedArticles relatedArticles={relatedArticles} />
       </div>

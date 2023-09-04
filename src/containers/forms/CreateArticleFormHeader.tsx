@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import Button from "@/components/Button";
 import HeaderWrapper from "@/components/HeaderWrapper";
@@ -9,15 +9,21 @@ type Props = {
   isSubmitting: boolean;
 };
 export default function CreateArticleFormHeader({ isSubmitting }: Props) {
-  const t = useTranslations("CreateArticleFormHeader");
+  const intl = useIntl();
 
   return (
     <HeaderWrapper>
       <Heading headingLevel="h1" size="s1">
-        {t("createArticle")}
+        {intl.formatMessage({
+          id: "containers.forms.createArticleFormHeader.title",
+          defaultMessage: "Create Article",
+        })}
       </Heading>
       <Button style="primary" type="submit" disabled={isSubmitting}>
-        {t("publishArticle")}
+        {intl.formatMessage({
+          id: "containers.forms.createArticleFormHeader.articlePublish",
+          defaultMessage: "Publish Article",
+        })}{" "}
       </Button>
     </HeaderWrapper>
   );

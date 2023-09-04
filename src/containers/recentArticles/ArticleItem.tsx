@@ -3,8 +3,8 @@
 import type { ArticleT } from "@/types/types";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
 import React from "react";
+import { useIntl } from "react-intl";
 import { PuffLoader } from "react-spinners";
 
 import { AppUrl, imagesEndpoint } from "@/config/router";
@@ -24,8 +24,7 @@ type Props = {
 };
 
 export default function ArticleItem({ article }: Props) {
-  const t = useTranslations("ArticleItem");
-  const te = useTranslations("ErrorMessages");
+  const intl = useIntl();
 
   const { response, data, loading, error } = useGet<Blob>(
     `${imagesEndpoint}/${article.imageId}`,
@@ -51,7 +50,14 @@ export default function ArticleItem({ article }: Props) {
   }
 
   if (error) {
-    return <ErrorMessage message={te("blobNotFound")} />;
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.recentArticles.articleItem.blobNotFound",
+          defaultMessage: "Blob not found",
+        })}
+      />
+    );
   }
 
   if (!blobURL) {
@@ -82,18 +88,27 @@ export default function ArticleItem({ article }: Props) {
           <Description>{articleDetail.comments[0].author}</Description>
           <div className="w-1 h-1 rounded-full bg-middle-gray" />
           <Description>
-            <IntlDate date={new Date(article.createdAt)} />
+            <IntlDate value={article.createdAt} />
           </Description>
         </div>
         <Description>{article.perex}</Description>
         <div className="text-sm flex gap-4 items-center">
           <CustomLink href={`/articles/${article.articleId}`} style="secondary">
-            {t("readArticle")}
+            {intl.formatMessage({
+              id: "containers.articleItemComponent.title",
+              defaultMessage: "Read the whole article",
+            })}
           </CustomLink>
           <Description className="text-secondary-text" size="sm">
-            {t("numberOfComments", {
-              numberOfComments: articleDetail.comments.length,
-            })}
+            {intl.formatMessage(
+              {
+                id: "containers.articleItemComponent.numberOfComments",
+                defaultMessage: "{number_of_comments} comments",
+              },
+              {
+                number_of_comments: articleDetail.comments.length,
+              },
+            )}
           </Description>
         </div>
       </div>

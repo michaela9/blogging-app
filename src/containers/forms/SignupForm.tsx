@@ -6,7 +6,7 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 
-import { useTranslations } from "next-intl";
+import { useIntl } from "react-intl";
 
 import Button from "@/components/Button";
 import { Input } from "@/components/form/input";
@@ -28,12 +28,15 @@ export default function SignupForm({
   errors,
   isSubmitting,
 }: Props) {
-  const t = useTranslations("SignupForm");
+  const intl = useIntl();
 
   return (
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-my-shadow border border-gray-100 max-w-sm rounded-md mx-auto">
       <Heading headingLevel="h1" size="s2">
-        {t("title")}
+        {intl.formatMessage({
+          id: "containers.signupForm.title",
+          defaultMessage: "Sign Up",
+        })}{" "}
       </Heading>
       <form
         onSubmit={() => onSubmit}
@@ -43,7 +46,10 @@ export default function SignupForm({
           <Input
             type="text"
             name="name"
-            label={t("name")}
+            label={intl.formatMessage({
+              id: "containers.signupForm.name",
+              defaultMessage: "Name",
+            })}
             register={register}
             error={errors.name}
             placeholder="Jan Novák"
@@ -56,7 +62,10 @@ export default function SignupForm({
           />
         </div>
         <Button style="primary" type="submit" disabled={isSubmitting}>
-          {t("button")}
+          {intl.formatMessage({
+            id: "containers.signupForm.submitButton",
+            defaultMessage: "Sign Up",
+          })}
         </Button>
       </form>
     </div>

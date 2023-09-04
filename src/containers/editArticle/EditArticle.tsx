@@ -2,12 +2,13 @@
 
 import type { ArticleDetailT } from "@/types/types";
 
-import { useTranslations } from "next-intl";
+import { useIntl } from "react-intl";
 
 import { articlesEndpoint } from "@/config/router";
 
 import { useGet } from "@/hooks/api";
 
+import ErrorMessage from "@/components/ErrorMessage";
 import Loader from "@/components/Loader";
 
 import EditArticleBlob from "./EditArticleBlob";
@@ -16,7 +17,7 @@ type Props = {
   id: string;
 };
 export default function EditArticle({ id }: Props) {
-  const t = useTranslations("ErrorMessages");
+  const intl = useIntl();
 
   const { data, loading, error } = useGet<ArticleDetailT>(
     `${articlesEndpoint}/${id}`,
@@ -27,11 +28,28 @@ export default function EditArticle({ id }: Props) {
   }
 
   if (error) {
-    return t("errorLoadingArticles", { errorMessage: error.message });
+    return (
+      <ErrorMessage
+        message={intl.formatMessage(
+          {
+            id: "containers.editArticle.errorMessage",
+            defaultMessage: "Error loading article: {error_message}",
+          },
+          { error_message: error.message },
+        )}
+      />
+    );
   }
 
   if (!data) {
-    return t("noArticleFound");
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.editArticle.noArticleFound",
+          defaultMessage: "No article found.",
+        })}
+      />
+    );
   }
 
   return <EditArticleBlob article={data} />;

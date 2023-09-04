@@ -1,7 +1,6 @@
 import type { ReactElement } from "react-markdown/lib/react-markdown";
 
-import { useTranslations } from "next-intl";
-import React from "react";
+import { useIntl } from "react-intl";
 
 import { AppUrl } from "@/config/router";
 
@@ -11,13 +10,16 @@ type Props = {
   message: string | ReactElement;
 };
 export default function ErrorMessage({ message }: Props) {
-  const t = useTranslations("ErrorMessages");
+  const intl = useIntl();
 
   return (
     <div className="py-20 flex items-center justify-center flex-col gap-8">
       <p className="text-red-500">{message}</p>
       <CustomLink href={AppUrl.home} style="primary">
-        {t("goToHomepage")}
+        {intl.formatMessage({
+          id: "components.errorMessage.goToHomepage",
+          defaultMessage: "Go to Homepage.",
+        })}
       </CustomLink>
     </div>
   );

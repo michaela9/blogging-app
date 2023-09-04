@@ -1,20 +1,48 @@
 "use client";
 
-import { useFormatter } from "next-intl";
+import type { ReactNode } from "react";
+import type { CustomFormatConfig } from "react-intl";
 
-type Props = {
-  date: number | Date;
+import { FormattedDate } from "react-intl";
+
+type ValueT = {
+  value: string | number | Date | undefined;
 };
 
-export function IntlDate({ date }: Props) {
-  const format = useFormatter();
+type EmptyT = {
+  emptyValue?: ReactNode;
+};
 
-  const fDate = new Date(date);
+type OptionsT = Intl.DateTimeFormatOptions & CustomFormatConfig;
 
-  const formattedDate = format.dateTime(fDate, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-  return formattedDate;
+type DateT = Pick<OptionsT, "year" | "month" | "day" | "weekday">;
+
+export function IntlDateTimeFormat({
+  value,
+  emptyValue = null,
+  ...restProps
+}: ValueT & EmptyT & OptionsT) {
+  return (
+    <>{value ? <FormattedDate value={value} {...restProps} /> : emptyValue}</>
+  );
+}
+
+export function IntlDate({
+  value,
+  emptyValue = null,
+  year = "2-digit",
+  month = "2-digit",
+  day = "2-digit",
+  weekday = undefined,
+}: ValueT & EmptyT & DateT) {
+  return (
+    <IntlDateTimeFormat
+      value={value}
+      emptyValue={emptyValue}
+      year={year}
+      month={month}
+      day={day}
+      weekday={weekday}
+    />
+  );
 }

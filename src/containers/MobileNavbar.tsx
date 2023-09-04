@@ -3,8 +3,8 @@
 import { Popover } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { usePathname, useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import React, { useContext } from "react";
+import { useIntl } from "react-intl";
 
 import { AppUrl } from "@/config/router";
 
@@ -18,7 +18,7 @@ import Logo from "@/components/Logo";
 import { AuthContext } from "@/context/auth.context";
 
 export default function MobileNavbar() {
-  const t = useTranslations("Navbar");
+  const intl = useIntl();
 
   const router = useRouter();
 
@@ -71,7 +71,10 @@ export default function MobileNavbar() {
                       }}
                       style="primary"
                     >
-                      {t("logout")}
+                      {intl.formatMessage({
+                        id: "containers.navbar.logout",
+                        defaultMessage: "Log Out",
+                      })}
                     </Popover.Button>
                     {loggedInLinks.map((link) => (
                       <Popover.Button
@@ -91,7 +94,10 @@ export default function MobileNavbar() {
                     href={AppUrl.login}
                     style="primary"
                   >
-                    {t("login")}
+                    {intl.formatMessage({
+                      id: "containers.navbar.login",
+                      defaultMessage: "Log In",
+                    })}
                   </Popover.Button>
                 )}
               </>

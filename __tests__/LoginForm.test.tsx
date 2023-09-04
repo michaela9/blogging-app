@@ -12,10 +12,11 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock("next-intl", () => ({
-  useTranslations: () => (key) => key,
+jest.mock("react-intl", () => ({
+  useIntl: () => ({
+    formatMessage: ({ id, defaultMessage }) => defaultMessage || id,
+  }),
 }));
-
 jest.mock("../src/hooks/api", () => ({
   usePost: jest.fn(),
 }));
@@ -51,9 +52,9 @@ describe("LoginForm", () => {
   describe("With valid inputs", () => {
     it("should call the onSubmit function", async () => {
       render(<LoginForm />);
-      const usernameInput = screen.getByLabelText("username");
-      const passwordInput = screen.getByLabelText("password");
-      const buttonByRole = screen.getByRole("button", { name: "button" });
+      const usernameInput = screen.getByLabelText("Username");
+      const passwordInput = screen.getByLabelText("Password");
+      const buttonByRole = screen.getByRole("button", { name: "Log In" });
 
       fireEvent.change(usernameInput, {
         target: { value: "novak" },
@@ -73,7 +74,7 @@ describe("LoginForm", () => {
   describe("With invalid username", () => {
     it("should render username validation error message", async () => {
       render(<LoginForm />);
-      const usernameInput = screen.getByLabelText("username");
+      const usernameInput = screen.getByLabelText("Username");
 
       fireEvent.change(usernameInput, {
         target: { value: "" },
@@ -88,7 +89,7 @@ describe("LoginForm", () => {
   describe("With invalid password", () => {
     it("should render password validation error message", async () => {
       render(<LoginForm />);
-      const passwordInput = screen.getByLabelText("password");
+      const passwordInput = screen.getByLabelText("Password");
 
       fireEvent.change(passwordInput, {
         target: { value: "p" },

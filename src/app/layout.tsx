@@ -2,10 +2,7 @@ import "@/styles/globals.css";
 
 import type { ReactNode } from "react";
 
-import { NextIntlClientProvider, useMessages } from "next-intl";
 import React from "react";
-
-import { defaultLocale } from "@/config/intl";
 
 import RootLayoutComponent from "@/components/RootLayoutComponent";
 
@@ -19,13 +16,5 @@ type Props = {
 };
 
 export default function RootLayout({ children }: Props) {
-  const messages = useMessages();
-
-  return (
-    <html lang={defaultLocale}>
-      <NextIntlClientProvider locale={defaultLocale} messages={messages}>
-        <RootLayoutComponent>{children}</RootLayoutComponent>
-      </NextIntlClientProvider>
-    </html>
-  );
+  return <RootLayoutComponent>{children}</RootLayoutComponent>;
 }

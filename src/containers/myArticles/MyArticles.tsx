@@ -4,14 +4,15 @@ import type { ArticleT } from "@/types/types";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
 import { AppUrl, articlesEndpoint } from "@/config/router";
 
 import { useDelete } from "@/hooks/api";
 
 import CustomLink from "@/components/CustomLink";
+import ErrorMessage from "@/components/ErrorMessage";
 import HeaderWrapper from "@/components/HeaderWrapper";
 import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
@@ -23,8 +24,8 @@ type Props = {
 };
 
 export default function MyArticles({ myArticles }: Props) {
-  const t = useTranslations("MyArticles");
-  const te = useTranslations("ErrorMessages");
+  const intl = useIntl();
+
   const router = useRouter();
 
   const [selectedArticlesIds, setSelectedArticlesIds] = useState<string[]>([]);
@@ -56,24 +57,44 @@ export default function MyArticles({ myArticles }: Props) {
   };
 
   if (deleteError) {
-    return te("errorDeletingArticles", { errorMessage: deleteError.message });
+    return (
+      <ErrorMessage
+        message={intl.formatMessage(
+          {
+            id: "containers.myArticles.errorMessage",
+            defaultMessage: "Error deleting articles: {error_message}",
+          },
+          { error_message: deleteError.message },
+        )}
+      />
+    );
   }
 
   return (
     <div className="space-y-6 sm:space-y-14">
       <HeaderWrapper>
         <Heading headingLevel="h1" size="s1">
-          {t("title")}
+          {intl.formatMessage({
+            id: "containers.myArticles.title",
+            defaultMessage: "My articles",
+          })}
         </Heading>
         <CustomLink href={AppUrl.createArticle} style="primary">
-          {t("createNewArticle")}
+          {intl.formatMessage({
+            id: "containers.myArticles.button.createNewArticle",
+            defaultMessage: "Create New Article",
+          })}
         </CustomLink>
         {selectedArticlesIds.length ? (
           <button
             className="flex gap-2 text-red-500"
             onClick={handleDeleteSelectedClick}
           >
-            <TrashIcon className="w-5" /> {t("deleteSelectedArticles")}
+            <TrashIcon className="w-5" />
+            {intl.formatMessage({
+              id: "containers.myArticles.button.delete",
+              defaultMessage: "Delete Selected Articles",
+            })}
           </button>
         ) : null}
       </HeaderWrapper>

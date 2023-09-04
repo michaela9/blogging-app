@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useIntl } from "react-intl";
 
 import { articlesEndpoint } from "@/config/router";
 
@@ -9,6 +9,7 @@ import { useDelete } from "@/hooks/api";
 
 import Button from "@/components/Button";
 import Description from "@/components/Description";
+import ErrorMessage from "@/components/ErrorMessage";
 import Heading from "@/components/Heading";
 import Loader from "@/components/Loader";
 
@@ -18,8 +19,8 @@ type Props = {
 };
 
 export default function DeleteArticleModal({ articleId, closeModal }: Props) {
-  const t = useTranslations("DeleteArticleModal");
-  const te = useTranslations("ErrorMessages");
+  const intl = useIntl();
+
   const router = useRouter();
 
   const { loading, error, fetchDelete } = useDelete<{
@@ -37,23 +38,47 @@ export default function DeleteArticleModal({ articleId, closeModal }: Props) {
   }
 
   if (error) {
-    return te("errorDeletingArticles", { errorMessage: error.message });
+    return (
+      <ErrorMessage
+        message={intl.formatMessage(
+          {
+            id: "containers.modals.deleteArticleModal.errorMessage",
+            defaultMessage: "Error deleting article: {error_message}",
+          },
+          { error_message: error.message },
+        )}
+      />
+    );
   }
 
   return (
     <div className="space-y-10">
       <div className="space-y-6">
         <Heading headingLevel="h1" size="s1">
-          {t("title")}
+          {intl.formatMessage({
+            id: "containers.modals.deleteArticleModal.title",
+            defaultMessage: "Delete the article",
+          })}
         </Heading>
-        <Description className="text-gray-500">{t("confirmation")}</Description>
+        <Description className="text-gray-500">
+          {intl.formatMessage({
+            id: "containers.modals.deleteArticleModal.description",
+            defaultMessage: "Do you really want to delete the article?",
+          })}
+        </Description>
       </div>
       <div className="flex gap-4 items-center">
         <Button style="primary" onClick={handleDeleteClick}>
-          {t("submit")}
+          {intl.formatMessage({
+            id: "containers.modals.deleteArticleModal.submit",
+            defaultMessage: "Yes, please!",
+          })}
         </Button>
         <Button style="secondary" onClick={closeModal}>
-          {t("reject")}
+          {intl.formatMessage({
+            id: "containers.modals.deleteArticleModal.closeButton",
+            defaultMessage: "No, thanks!",
+          })}
         </Button>
       </div>
     </div>
