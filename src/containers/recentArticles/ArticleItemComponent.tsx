@@ -22,6 +22,7 @@ type Props = {
 
 export default function ArticleItemComponent({ article, blobURL }: Props) {
   const intl = useIntl();
+
   return (
     <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
       <CustomLink

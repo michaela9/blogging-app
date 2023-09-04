@@ -27,7 +27,6 @@ export default function RootLayoutComponent({ children }: Props) {
   const messages = useMemo(() => {
     return getMessagesByLocale(shortLocaleVerified);
   }, [shortLocaleVerified]);
-
   return (
     <html lang="en">
       <AuthProvider>

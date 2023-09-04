@@ -21,27 +21,27 @@ import TRow from "@/components/table/TRow";
 import DeleteArticleForm from "../modals/DeleteArticleModal";
 
 type Props = {
-  articles: ArticleT[];
+  myArticles: ArticleT[];
   selectedArticlesIds: string[];
   setSelectedArticlesIds: Dispatch<React.SetStateAction<string[]>>;
-  refetch: () => void;
+  refetch?: () => void;
 };
 
 export default function MyArticlesTable({
-  articles,
+  myArticles,
   selectedArticlesIds,
   setSelectedArticlesIds,
-  refetch,
 }: Props) {
   const intl = useIntl();
+
   const [selectedArticleIdForDeletion, setSelectedArticleIdForDeletion] =
     useState<string | null>(null);
 
   const toggleSelectAll = () => {
     setSelectedArticlesIds((prevSelectedArticlesIds) =>
-      prevSelectedArticlesIds.length === articles.length
+      prevSelectedArticlesIds.length === myArticles.length
         ? []
-        : articles.map((article) => article.articleId),
+        : myArticles.map((article) => article.articleId),
     );
   };
 
@@ -53,7 +53,7 @@ export default function MyArticlesTable({
     );
   };
 
-  const isAllSelected = selectedArticlesIds.length === articles.length;
+  const isAllSelected = selectedArticlesIds.length === myArticles.length;
   const isArticleSelected = (id: string) => selectedArticlesIds.includes(id);
 
   return (
@@ -100,7 +100,7 @@ export default function MyArticlesTable({
         </TRow>
       </THead>
       <TBody>
-        {articles.map((article) => {
+        {myArticles.map((article) => {
           return (
             <TRow key={article.articleId}>
               <Td>
@@ -147,7 +147,6 @@ export default function MyArticlesTable({
                       <DeleteArticleForm
                         articleId={selectedArticleIdForDeletion}
                         closeModal={() => setSelectedArticleIdForDeletion(null)}
-                        refetch={refetch}
                       />
                     </BaseModal>
                   )}

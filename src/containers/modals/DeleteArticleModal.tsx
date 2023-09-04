@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useIntl } from "react-intl";
 
 import { articlesEndpoint } from "@/config/router";
@@ -15,15 +16,12 @@ import Loader from "@/components/Loader";
 type Props = {
   articleId: string;
   closeModal: () => void;
-  refetch: () => void;
 };
 
-export default function DeleteArticleModal({
-  articleId,
-  closeModal,
-  refetch,
-}: Props) {
+export default function DeleteArticleModal({ articleId, closeModal }: Props) {
   const intl = useIntl();
+
+  const router = useRouter();
 
   const { loading, error, fetchDelete } = useDelete<{
     articleId: string;
@@ -32,7 +30,7 @@ export default function DeleteArticleModal({
   const handleDeleteClick = async () => {
     await fetchDelete(`${articlesEndpoint}/${articleId}`);
     closeModal();
-    refetch();
+    router.refresh();
   };
 
   if (loading) {

@@ -1,7 +1,6 @@
 "use client";
 
 import type {
-  Control,
   FieldErrors,
   UseFormHandleSubmit,
   UseFormRegister,
@@ -10,8 +9,8 @@ import type {
 import { useIntl } from "react-intl";
 
 import Button from "@/components/Button";
-import FormPasswordField from "@/components/form/FormPasswordField";
-import FormTextField from "@/components/form/FormTextField";
+import { Input } from "@/components/form/input";
+import PasswordInput from "@/components/form/PasswordInput";
 import Heading from "@/components/Heading";
 
 import type { CreateUserSchemaT } from "@/schema/zodSchema";
@@ -20,7 +19,6 @@ type Props = {
   onSubmit: UseFormHandleSubmit<CreateUserSchemaT>;
   register: UseFormRegister<CreateUserSchemaT>;
   errors: FieldErrors<CreateUserSchemaT>;
-  control: Control<CreateUserSchemaT>;
   isSubmitting: boolean;
 };
 
@@ -28,7 +26,6 @@ export default function SignupForm({
   onSubmit,
   register,
   errors,
-  control,
   isSubmitting,
 }: Props) {
   const intl = useIntl();
@@ -39,31 +36,27 @@ export default function SignupForm({
         {intl.formatMessage({
           id: "containers.signupForm.title",
           defaultMessage: "Sign Up",
-        })}
+        })}{" "}
       </Heading>
       <form
         onSubmit={() => onSubmit}
         className="space-y-8 flex flex-col justify-end items-end"
       >
         <div className="w-full flex flex-col gap-4">
-          <FormTextField
+          <Input
+            type="text"
             name="name"
             label={intl.formatMessage({
               id: "containers.signupForm.name",
               defaultMessage: "Name",
             })}
-            control={control}
-            placeholder="Jan Novák"
             register={register}
             error={errors.name}
+            placeholder="Jan Novák"
           />
-          <FormPasswordField
+
+          <PasswordInput
             name="password"
-            label={intl.formatMessage({
-              id: "containers.login.password",
-              defaultMessage: "Password",
-            })}
-            control={control}
             register={register}
             error={errors.password}
           />

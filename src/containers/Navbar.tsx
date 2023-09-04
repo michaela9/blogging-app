@@ -17,6 +17,7 @@ import { AuthContext } from "@/context/auth.context";
 
 export default function Navbar() {
   const intl = useIntl();
+
   const router = useRouter();
   const { logout, isLoggedIn } = useContext(AuthContext);
   const { baseLinks, loggedInLinks } = useNavbarLinks();
@@ -46,7 +47,7 @@ export default function Navbar() {
               {intl.formatMessage({
                 id: "containers.navbar.login",
                 defaultMessage: "Log In",
-              })}
+              })}{" "}
               <ArrowRightIcon className="w-4" />
             </div>
           </CustomLink>
@@ -72,7 +73,7 @@ export default function Navbar() {
               {intl.formatMessage({
                 id: "containers.navbar.logout",
                 defaultMessage: "Log Out",
-              })}
+              })}{" "}
             </Button>
           </div>
         )}

@@ -1,40 +1,70 @@
 "use client";
 
-import type {
-  Control,
-  FieldErrors,
-  SubmitHandler,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
+import type { LoginResponse } from "@/types/types";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
 
+import { AppUrl, loginEndpoint } from "@/config/router";
+
+import { usePost } from "@/hooks/api";
+
 import Button from "@/components/Button";
-import FormPasswordField from "@/components/form/FormPasswordField";
-import FormTextField from "@/components/form/FormTextField";
+import ErrorMessage from "@/components/ErrorMessage";
+import { Input } from "@/components/form/input";
+import PasswordInput from "@/components/form/PasswordInput";
 import Heading from "@/components/Heading";
+import Loader from "@/components/Loader";
 
+import { AuthContext } from "@/context/auth.context";
 import type { UserSchemaT } from "@/schema/zodSchema";
+import { userSchema } from "@/schema/zodSchema";
 
-type Props = {
-  onSubmit: SubmitHandler<UserSchemaT>;
-  handleSubmit: UseFormHandleSubmit<UserSchemaT>;
-  register: UseFormRegister<UserSchemaT>;
-  errors: FieldErrors<UserSchemaT>;
-  control: Control<UserSchemaT>;
-  isSubmitting: boolean;
-};
-
-export default function LoginForm({
-  onSubmit,
-  handleSubmit,
-  register,
-  isSubmitting,
-  errors,
-  control,
-}: Props) {
+export default function LoginForm() {
   const intl = useIntl();
+
+  const router = useRouter();
+  const { login } = useContext(AuthContext);
+  const { loading, error, fetchPost } = usePost<LoginResponse, UserSchemaT>(
+    loginEndpoint,
+  );
+
+  const {
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    register,
+  } = useForm<UserSchemaT>({
+    resolver: zodResolver(userSchema),
+    mode: "onBlur",
+  });
+
+  const onSubmit: SubmitHandler<UserSchemaT> = async (formData) => {
+    const fetchedData = await fetchPost(formData);
+
+    if (fetchedData && fetchedData.access_token) {
+      login(fetchedData.access_token, fetchedData.expires_in);
+      router.push(AppUrl.myArticles);
+    }
+  };
+
+  if (loading || isSubmitting) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return (
+      <ErrorMessage
+        message={intl.formatMessage({
+          id: "containers.login.errorMessage",
+          defaultMessage: "Login failed, please try again later!",
+        })}
+      />
+    );
+  }
 
   return (
     <div className="space-y-6 px-4 py-4 sm:px-6 sm:py-8 shadow-my-shadow border border-gray-100 max-w-sm rounded-md mx-auto">
@@ -49,24 +79,19 @@ export default function LoginForm({
         className="space-y-8 flex flex-col justify-end items-end"
       >
         <div className="w-full flex flex-col gap-4">
-          <FormTextField
+          <Input
+            type="text"
             name="username"
             label={intl.formatMessage({
               id: "containers.loginForm.username",
               defaultMessage: "Username",
             })}
-            control={control}
-            placeholder="novak"
             register={register}
+            placeholder="novak"
             error={errors.username}
           />
-          <FormPasswordField
+          <PasswordInput
             name="password"
-            label={intl.formatMessage({
-              id: "containers.loginForm.password",
-              defaultMessage: "Password",
-            })}
-            control={control}
             register={register}
             error={errors.password}
           />

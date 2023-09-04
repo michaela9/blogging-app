@@ -1,4 +1,3 @@
-import React from "react";
 import { useIntl } from "react-intl";
 
 import Button from "@/components/Button";
@@ -16,13 +15,13 @@ export default function EditArticleFormHeader({ isSubmitting }: Props) {
         {intl.formatMessage({
           id: "containers.forms.editArticleFormHeader.title",
           defaultMessage: "Edit Article",
-        })}
+        })}{" "}
       </Heading>
       <Button style="primary" type="submit" disabled={isSubmitting}>
         {intl.formatMessage({
           id: "containers.forms.editArticleFormHeader.articleSave",
           defaultMessage: "Save Article",
-        })}
+        })}{" "}
       </Button>
     </div>
   );

@@ -1,21 +1,14 @@
 import "@/styles/globals.css";
 
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import React from "react";
 
 import RootLayoutComponent from "@/components/RootLayoutComponent";
 
-export const metadata: Metadata = {
-  icons: {
-    icon: "/logo.ico",
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
+export const metadata = {
+  title: "Blogging App",
+  description: "Make a new post with our app.",
 };
 
 type Props = {

@@ -16,6 +16,7 @@ type Props = {
 
 export default function Comments({ comments }: Props) {
   const intl = useIntl();
+
   return (
     <div className="space-y-4">
       <Heading headingLevel="h2" size="s3">

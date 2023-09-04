@@ -8,6 +8,7 @@ import { profilePhoto } from "@/data/dummy";
 
 export default function JoinDiscussionForm() {
   const intl = useIntl();
+
   return (
     <div className="flex gap-6">
       <Image
@@ -19,6 +20,7 @@ export default function JoinDiscussionForm() {
       />
       <form className="w-full">
         <label className="sr-only">
+          {" "}
           {intl.formatMessage({
             id: "containers.forms.joinDiscussion.label",
             defaultMessage: "Join the disccussion",

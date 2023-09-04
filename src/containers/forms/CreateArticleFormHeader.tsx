@@ -23,7 +23,7 @@ export default function CreateArticleFormHeader({ isSubmitting }: Props) {
         {intl.formatMessage({
           id: "containers.forms.createArticleFormHeader.articlePublish",
           defaultMessage: "Publish Article",
-        })}
+        })}{" "}
       </Button>
     </HeaderWrapper>
   );

@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    jest: true,
   },
   globals: {
     React: true,
@@ -21,10 +22,13 @@ module.exports = {
     "eslint:recommended",
     "next",
     "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
+    // "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:chai-friendly/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
+    // "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
   settings: {
@@ -34,7 +38,7 @@ module.exports = {
   rules: {
     "no-empty-function": "off",
     "no-console": "warn",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
+    // "@typescript-eslint/explicit-module-boundary-types": "off",
 
     "react/display-name": "off",
     "react/jsx-curly-brace-presence": [
@@ -43,23 +47,23 @@ module.exports = {
     ],
 
     "@next/next/no-img-element": "off",
-    "@typescript-eslint/prefer-nullish-coalescing": "off",
-    "@typescript-eslint/ban-ts-comment": [
-      "error",
-      { "ts-expect-error": "allow-with-description" },
-    ],
-    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-    "@typescript-eslint/no-base-to-string": ["error"],
-    "@typescript-eslint/consistent-type-imports": "error",
-    "@typescript-eslint/no-unnecessary-type-assertion": "off",
-    "@typescript-eslint/no-misused-promises": [
-      2,
-      {
-        checksVoidReturn: {
-          attributes: false,
-        },
-      },
-    ],
+    // "@typescript-eslint/prefer-nullish-coalescing": "off",
+    // "@typescript-eslint/ban-ts-comment": [
+    //   "error",
+    //   { "ts-expect-error": "allow-with-description" },
+    // ],
+    // "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    // "@typescript-eslint/no-base-to-string": ["error"],
+    // "@typescript-eslint/consistent-type-imports": "error",
+    // "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    // "@typescript-eslint/no-misused-promises": [
+    //   2,
+    //   {
+    //     checksVoidReturn: {
+    //       attributes: false,
+    //     },
+    //   },
+    // ],
 
     // ********************************************************************************************************************
     // https://github.com/import-js/eslint-plugin-import
@@ -119,11 +123,10 @@ module.exports = {
         limit: 10,
       },
     ],
-
     // ********************************************************************************************************************
     //#region  //*=========== Unused Import ===========
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "off",
+    // "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "warn",
     "unused-imports/no-unused-vars": [
       "warn",

@@ -1,4 +1,10 @@
 {
+  "components.errorMessage.goToHomepage": [
+    {
+      "type": 0,
+      "value": "Go to Homepage."
+    }
+  ],
   "components.markdownEditorButtons.bold": [
     {
       "type": 0,
@@ -32,23 +38,7 @@
   "containers.articleDetail.errorMessage": [
     {
       "type": 0,
-      "value": "Error loading article detail: "
-    },
-    {
-      "type": 1,
-      "value": "error_message"
-    }
-  ],
-  "containers.articleDetail.noArticleFound": [
-    {
-      "type": 0,
-      "value": "Article detail not found."
-    }
-  ],
-  "containers.articleDetailComponent.blobNotFound": [
-    {
-      "type": 0,
-      "value": "Blob not found"
+      "value": "Error loading article detail."
     }
   ],
   "containers.articleDetailComponent.title": [
@@ -189,12 +179,6 @@
       "value": "Password"
     }
   ],
-  "containers.loginForm.password": [
-    {
-      "type": 0,
-      "value": "Password"
-    }
-  ],
   "containers.loginForm.submitButton": [
     {
       "type": 0,
@@ -262,17 +246,11 @@
   "containers.myArticles.errorMessage": [
     {
       "type": 0,
-      "value": "Error loading articles: "
+      "value": "Error deleting articles: "
     },
     {
       "type": 1,
       "value": "error_message"
-    }
-  ],
-  "containers.myArticles.noArticlesFound": [
-    {
-      "type": 0,
-      "value": "No articles found."
     }
   ],
   "containers.myArticles.title": [
@@ -327,44 +305,6 @@
     {
       "type": 0,
       "value": "Blob not found"
-    }
-  ],
-  "containers.recentArticles.errorMessage": [
-    {
-      "type": 0,
-      "value": "Error loading articles: "
-    },
-    {
-      "type": 1,
-      "value": "error_message"
-    }
-  ],
-  "containers.recentArticles.noArticlesFound": [
-    {
-      "type": 0,
-      "value": "No articles found."
-    }
-  ],
-  "containers.recentArticles.title": [
-    {
-      "type": 0,
-      "value": "Recent Articles"
-    }
-  ],
-  "containers.relatedArticles.errorMessage": [
-    {
-      "type": 0,
-      "value": "Error loading related articles: "
-    },
-    {
-      "type": 1,
-      "value": "error_message"
-    }
-  ],
-  "containers.relatedArticles.noArticlesFound": [
-    {
-      "type": 0,
-      "value": "No articles found."
     }
   ],
   "containers.signupForm.name": [

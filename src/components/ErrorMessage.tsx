@@ -1,4 +1,5 @@
-import React from "react";
+import type { ReactElement } from "react-markdown/lib/react-markdown";
+
 import { useIntl } from "react-intl";
 
 import { AppUrl } from "@/config/router";
@@ -6,7 +7,7 @@ import { AppUrl } from "@/config/router";
 import CustomLink from "./CustomLink";
 
 type Props = {
-  message: string;
+  message: string | ReactElement;
 };
 export default function ErrorMessage({ message }: Props) {
   const intl = useIntl();

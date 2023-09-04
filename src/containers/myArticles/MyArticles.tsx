@@ -1,15 +1,15 @@
 "use client";
 
-import type { ArticleT, PaginationT } from "@/types/types";
+import type { ArticleT } from "@/types/types";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { AppUrl, articlesEndpoint } from "@/config/router";
 
-import { useDelete, useGet } from "@/hooks/api";
-import { sortArticles } from "@/utils/sortArticles";
+import { useDelete } from "@/hooks/api";
 
 import CustomLink from "@/components/CustomLink";
 import ErrorMessage from "@/components/ErrorMessage";
@@ -19,14 +19,16 @@ import Loader from "@/components/Loader";
 
 import MyArticlesTable from "./MyArticlesTable";
 
-export default function MyArticles() {
-  const intl = useIntl();
-  const [selectedArticlesIds, setSelectedArticlesIds] = useState<string[]>([]);
+type Props = {
+  myArticles: ArticleT[];
+};
 
-  const { data, loading, error, refetch } = useGet<{
-    pagination: PaginationT;
-    items: ArticleT[];
-  }>(articlesEndpoint);
+export default function MyArticles({ myArticles }: Props) {
+  const intl = useIntl();
+
+  const router = useRouter();
+
+  const [selectedArticlesIds, setSelectedArticlesIds] = useState<string[]>([]);
 
   const {
     loading: deleteLoading,
@@ -36,7 +38,7 @@ export default function MyArticles() {
     articleId: string;
   }>();
 
-  if (loading || deleteLoading) {
+  if (deleteLoading) {
     return <Loader />;
   }
 
@@ -51,7 +53,7 @@ export default function MyArticles() {
   const handleDeleteSelectedClick = async () => {
     await deleteSelectedArticles();
     setSelectedArticlesIds([]);
-    refetch();
+    router.refresh();
   };
 
   if (deleteError) {
@@ -67,34 +69,6 @@ export default function MyArticles() {
       />
     );
   }
-
-  if (error) {
-    return (
-      <ErrorMessage
-        message={intl.formatMessage(
-          {
-            id: "containers.myArticles.errorMessage",
-            defaultMessage: "Error loading articles: {error_message}",
-          },
-          { error_message: error.message },
-        )}
-      />
-    );
-  }
-
-  if (!data || data.items.length === 0) {
-    return (
-      <ErrorMessage
-        message={intl.formatMessage({
-          id: "containers.myArticles.noArticlesFound",
-          defaultMessage: "No articles found.",
-        })}
-      />
-    );
-  }
-
-  const articles = data.items;
-  const sortedArticles = sortArticles(articles);
 
   return (
     <div className="space-y-6 sm:space-y-14">
@@ -125,10 +99,9 @@ export default function MyArticles() {
         ) : null}
       </HeaderWrapper>
       <MyArticlesTable
-        articles={sortedArticles}
+        myArticles={myArticles}
         selectedArticlesIds={selectedArticlesIds}
         setSelectedArticlesIds={setSelectedArticlesIds}
-        refetch={refetch}
       />
     </div>
   );

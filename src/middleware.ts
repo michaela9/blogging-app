@@ -1,19 +1,21 @@
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+
+import { AppUrl } from "./config/router";
 
 export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+  const token = request.cookies.get("token");
 
-  if (
-    [
-      "/logo.png",
-      "/logo.ico",
-      "/img.png",
-      // Your other files in `public`
-    ].includes(pathname)
-  )
-    return;
+  const isLoggedIn = !!token;
+
+  if (!isLoggedIn) {
+    if (
+      request.nextUrl.pathname.startsWith(AppUrl.myArticles) ||
+      request.nextUrl.pathname.startsWith(AppUrl.editArticle) ||
+      request.nextUrl.pathname.startsWith(AppUrl.createArticle)
+    ) {
+      return NextResponse.redirect(new URL(AppUrl.home, request.url));
+    }
+  }
+
+  return NextResponse.next();
 }
-
-export const config = {
-  matcher: ["/((?!api|_next/static|_next/image).*)"],
-};

@@ -5,7 +5,7 @@ import Image from "next/image";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import FormFileField from "@/components/form/FormFileField";
+import FormFileField from "@/components/form/FileInput";
 
 import type { EditArticleSchemaT } from "@/schema/zodSchema";
 

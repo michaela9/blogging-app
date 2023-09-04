@@ -6,6 +6,7 @@ import { useGet } from "./api";
 
 export default function useGetBlobFromImageId(imageId: string) {
   const intl = useIntl();
+
   const {
     response,
     data,
