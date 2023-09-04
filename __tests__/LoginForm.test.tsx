@@ -14,7 +14,7 @@ jest.mock("next/navigation", () => ({
 
 jest.mock("react-intl", () => ({
   useIntl: () => ({
-    formatMessage: ({ id, defaultMessage }) => defaultMessage || id,
+    formatMessage: ({ defaultMessage }) => defaultMessage,
   }),
 }));
 jest.mock("../src/hooks/api", () => ({
@@ -26,6 +26,14 @@ const mockRouter = {
 };
 
 const mockLogin = jest.fn();
+
+const renderWithAuthContext = (component) => {
+  return render(
+    <AuthContext.Provider value={{ login: jest.fn() }}>
+      {component}
+    </AuthContext.Provider>,
+  );
+};
 
 describe("LoginForm", () => {
   beforeEach(() => {
@@ -42,16 +50,12 @@ describe("LoginForm", () => {
   });
 
   it("should render without crashing", () => {
-    render(
-      <AuthContext.Provider value={{ login: jest.fn() }}>
-        <LoginForm />
-      </AuthContext.Provider>,
-    );
+    renderWithAuthContext(<LoginForm />);
   });
 
   describe("With valid inputs", () => {
     it("should call the onSubmit function", async () => {
-      render(<LoginForm />);
+      renderWithAuthContext(<LoginForm />);
       const usernameInput = screen.getByLabelText("Username");
       const passwordInput = screen.getByLabelText("Password");
       const buttonByRole = screen.getByRole("button", { name: "Log In" });
@@ -73,7 +77,7 @@ describe("LoginForm", () => {
 
   describe("With invalid username", () => {
     it("should render username validation error message", async () => {
-      render(<LoginForm />);
+      renderWithAuthContext(<LoginForm />);
       const usernameInput = screen.getByLabelText("Username");
 
       fireEvent.change(usernameInput, {
